@@ -1,0 +1,1520 @@
+<?php
+
+require "../config/Conexion.php";
+
+class Tablas {
+
+    public $cnx; //variable publica para la conexion a la BD
+
+    function __construct() //constructor
+    {
+        $this->cnx = Conexion::ConectarDB(); //conexion a la base de datos
+    }
+
+/**************************  FUNCIONES TABLA DE TIPOS DE PRESTAMOS ****************************************************************************************** */
+    //funcion para listar los datos de la tabla tipos de prestamos
+    function ListarTiposPrestamos()
+    {
+        $query = "SELECT prestamo.idTipoPrestamo, prestamo.idEstadoTipoPrestamo, prestamo.Descripcion as Prestamo, prestamo.tasa,
+                        prestamo.PlazoMaximo, prestamo.montoMaximo, prestamo.montoMinimo, estado.descripcion as Estado
+                  FROM tbl_mn_tipos_prestamos prestamo
+                  INNER JOIN tbl_mn_estadotipoprestamo estado ON estado.idestadoTipoPrestamo = prestamo.idEstadoTipoPrestamo"; //sentencia sql
+        $result = $this->cnx->prepare($query);
+        if($result->execute())
+        {
+            if($result->rowCount() > 0){ //validacion para verificar si trae datos
+                while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                    $datos[] = $fila;
+                }
+                return $datos;
+            }
+        }
+        return false;
+    }
+
+
+    //FUNCION PARA REGISTRArUN TIPO DE PRESTAMO
+    function RegistrarTipoPrestamo($Descripcion, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo){
+        $query = "INSERT INTO tbl_mn_tipos_prestamos (idEstadoTipoPrestamo, Descripcion, tasa, PlazoMaximo, montoMaximo, montoMinimo)
+                 VALUES(1, ?, ?, ?, ?, ?)";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$tasa);
+        $result->bindParam(3,$PlazoMaximo);
+        $result->bindParam(4,$montoMaximo);
+        $result->bindParam(5,$montoMinimo);
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+     //funcion que trae los datos del prestamo a actualizar
+     function ObtenerTipoPrestamoPorId($idTipoPrestamo)
+     {
+         $query = "SELECT * FROM tbl_mn_tipos_prestamos WHERE idTipoPrestamo = ?"; 
+         $result = $this->cnx->prepare($query);
+         $result->bindParam(1,$idTipoPrestamo);
+         if($result->execute())
+         {
+            return $result->fetch(PDO::FETCH_ASSOC);
+         }
+         return false;
+     }
+
+   //FUNCION QUE trae el estado del prestamo a actualizar para el select
+    function ListarEstadoPrestamoSelectEdit($idTipoPrestamo) {
+        $query = "SELECT estado.idestadoTipoPrestamo, estado.descripcion 
+                 FROM tbl_mn_tipos_prestamos prestamo
+                 INNER JOIN tbl_mn_estadotipoprestamo estado ON prestamo.idEstadoTipoPrestamo = estado.idestadoTipoPrestamo
+                 WHERE prestamo.idTipoPrestamo = ? UNION SELECT idestadoTipoPrestamo, descripcion FROM tbl_mn_estadotipoprestamo"; 
+        $result = $this->cnx->prepare($query);
+        $result->bindParam(1,$idTipoPrestamo);
+        if($result->execute())
+        {
+            if($result->rowCount() > 0){ //validacion para verificar si trae datos
+                
+               while($fila = $result->fetch(PDO::FETCH_ASSOC)){
+                   $datos[] = $fila;
+               }
+                return $datos;
+            }
+        }
+        return false;
+    }
+
+      //FUNCION PARA ACTUALIZR el tipo de prestamo
+    function ActualizarTipoPrestamo($idTipoPrestamo, $idEstadoTipoPrestamo, $Descripcion, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo){
+        $query = "UPDATE tbl_mn_tipos_prestamos SET idEstadoTipoPrestamo = ?, Descripcion = ?, tasa = ?, PlazoMaximo = ?, montoMaximo = ?, montoMinimo = ?
+                  WHERE idTipoPrestamo = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$idEstadoTipoPrestamo);
+        $result->bindParam(2,$Descripcion);
+        $result->bindParam(3,$tasa);
+        $result->bindParam(4,$PlazoMaximo);
+        $result->bindParam(5,$montoMaximo);
+        $result->bindParam(6,$montoMinimo);
+        $result->bindParam(7,$idTipoPrestamo);
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+    //FUNCION PARA PONER INACTIVO UN TIPO DE PRESTAMO
+    function InactivarTipoPrestamo($idTipoPrestamo){
+        $query = "UPDATE tbl_mn_tipos_prestamos SET idEstadoTipoPrestamo = 2 WHERE idTipoPrestamo = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$idTipoPrestamo);
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    function ActivarTipoPrestamo($idTipoPrestamo){
+        $query = "UPDATE tbl_mn_tipos_prestamos SET idEstadoTipoPrestamo = 1 WHERE idTipoPrestamo = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$idTipoPrestamo);
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+
+/****************************** FUNCIONES TABLA ESTADO CIVIL **************************************************************** */
+
+  //funcion para listar los datos de la tabla estado civil
+  function ListarEstadoCivil()
+  {
+      $query = "SELECT * FROM tbl_mn_estadocivil"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+
+  //FUNCION PARA REGISTRAR UN NUEVO ESTADO CIVIL
+  function RegistrarEstadoCivil($Descripcion){
+    $query = "INSERT INTO tbl_mn_estadocivil (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del prestamo a actualizar
+ function ObtenerEstadoCivilPorId($idEstadoCivil)
+ {
+     $query = "SELECT * FROM tbl_mn_estadocivil WHERE idEstadoCivil = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idEstadoCivil);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS ESTADO CIVILES
+    function ActualizarEstadoCivil($idEstadoCivil, $Descripcion){
+        $query = "UPDATE tbl_mn_estadocivil SET Descripcion = ? WHERE idEstadoCivil = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idEstadoCivil);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN ESTADO CIVIL
+    function EliminarEstadoCivil($idEstadoCivil) {
+        try {
+            $query = "DELETE FROM tbl_mn_estadocivil WHERE idEstadoCivil = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idEstadoCivil);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+    
+
+
+
+/*********************FUNCIONES DE LA TABLA PARENTESCO  ********************************************************/
+
+
+  //funcion para listar los datos de la tabla estado civil
+  function ListarParentesco()
+  {
+      $query = "SELECT * FROM tbl_mn_parentesco"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarParentesco($Descripcion){
+    $query = "INSERT INTO tbl_mn_parentesco (descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerParentescoPorId($idParentesco)
+ {
+     $query = "SELECT * FROM tbl_mn_parentesco WHERE idParentesco = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idParentesco);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarParentesco($idParentesco, $descripcion){
+        $query = "UPDATE tbl_mn_parentesco SET descripcion = ? WHERE idParentesco = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$descripcion);
+        $result->bindParam(2,$idParentesco);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarParentesco($idParentesco) {
+        try {
+            $query = "DELETE FROM tbl_mn_parentesco WHERE idParentesco = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idParentesco);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+    
+
+/*********************FUNCIONES DE LA TABLA Categoria casa ********************************************************/
+
+
+  //funcion para listar los datos de la CATEGORIA
+  function ListarCategoriaCasa()
+  {
+      $query = "SELECT * FROM tbl_mn_categoria_casa"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+//FUNCION PARA REGISTRAR UN NUEVO CATEGORIA
+function RegistrarCategoria($Descripcion){
+    $query = "INSERT INTO tbl_mn_categoria_casa (descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerCategoriaPorId($idcategoriaCasa)
+ {
+     $query = "SELECT * FROM tbl_mn_categoria_casa WHERE idcategoriaCasa = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idcategoriaCasa);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarCategoria($idcategoriaCasa, $descripcion){
+        $query = "UPDATE tbl_mn_categoria_casa SET descripcion = ? WHERE idcategoriaCasa = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$descripcion);
+        $result->bindParam(2,$idcategoriaCasa);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+    //FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarCategoria($idcategoriaCasa) {
+        try {
+            $query = "DELETE FROM tbl_mn_categoria_casa WHERE idcategoriaCasa = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idcategoriaCasa);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+    /*********************FUNCIONES DE LA TABLA GENERO  ********************************************************/
+
+
+  //funcion para listar los datos de la tabla GENERO
+  function ListarGenero()
+  {
+      $query = "SELECT * FROM tbl_mn_genero"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarGenero($Descripcion){
+    $query = "INSERT INTO tbl_mn_genero (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerGenerocoPorId($idGenero)
+ {
+     $query = "SELECT * FROM tbl_mn_genero WHERE idGenero = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idGenero);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarGenero($idGenero, $Descripcion){
+        $query = "UPDATE tbl_mn_genero SET Descripcion = ? WHERE idGenero = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idGenero);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarGenero($idGenero) {
+        try {
+            $query = "DELETE FROM tbl_mn_genero WHERE idGenero = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idGenero);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+   /*********************FUNCIONES DE LA TABLA CONTACTO ********************************************************/
+
+
+  //funcion para listar los datos de la tabla GENERO
+  function ListarContacto()
+  {
+      $query = "SELECT * FROM tbl_mn_tipo_contacto"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarContacto($Descripcion){
+    $query = "INSERT INTO tbl_mn_tipo_contacto (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerContactoPorId($idTipoContacto)
+ {
+     $query = "SELECT * FROM tbl_mn_tipo_contacto WHERE idTipoContacto = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idTipoContacto);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarContacto($idTipoContacto, $Descripcion){
+        $query = "UPDATE tbl_mn_tipo_contacto SET Descripcion = ? WHERE idTipoContacto = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idTipoContacto);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarContacto($idTipoContacto) {
+        try {
+            $query = "DELETE FROM tbl_mn_tipo_contacto WHERE idTipoContacto = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idTipoContacto);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+    
+    /*********************FUNCIONES DE LA TABLA BIENES ********************************************************/
+
+
+  //funcion para listar los datos de la tabla GENERO
+  function ListarBienes()
+  {
+      $query = "SELECT * FROM tbl_mn_personas_bienes"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarBienes($Descripcion){
+    $query = "INSERT INTO tbl_mn_personas_bienes (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerBienesPorId($idPersonaBienes)
+ {
+     $query = "SELECT * FROM tbl_mn_personas_bienes WHERE idPersonaBienes = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idPersonaBienes);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarBienes($idPersonaBienes, $Descripcion){
+        $query = "UPDATE tbl_mn_personas_bienes SET Descripcion = ? WHERE idPersonaBienes = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idPersonaBienes);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarBienes($idPersonaBienes) {
+        try {
+            $query = "DELETE FROM tbl_mn_personas_bienes WHERE idPersonaBienes = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idPersonaBienes);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+     /*********************FUNCIONES DE LA TABLA NACIONALIDAD ********************************************************/
+
+
+  //funcion para listar los datos de la tabla BIENES 
+  function ListarNacionalidad()
+  {
+      $query = "SELECT * FROM tbl_mn_nacionalidades"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO BIENES 
+ function RegistrarNacionalidad($Descripcion){
+    $query = "INSERT INTO tbl_mn_nacionalidades (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del BIENES  a actualizar
+ function ObtenerNacionalidadPorId($idNacionalidad)
+ {
+     $query = "SELECT * FROM tbl_mn_nacionalidades WHERE idNacionalidad = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idNacionalidad);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS BIENES 
+    function ActualizarNacionalidad($idNacionalidad, $Descripcion){
+        $query = "UPDATE tbl_mn_nacionalidades SET Descripcion = ? WHERE idNacionalidad = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idNacionalidad);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN BIENES 
+    function EliminarNacionalidad($idNacionalidad) {
+        try {
+            $query = "DELETE FROM tbl_mn_nacionalidades WHERE idNacionalidad = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idNacionalidad);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+      /*********************FUNCIONES DE LA TABLA TIEMPO LABORAL  ********************************************************/
+
+
+  //funcion para listar los datos de la tabla estado civil
+  function ListarLaboral()
+  {
+      $query = "SELECT * FROM tbl_mn_tiempo_laboral"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarLaboral($Descripcion){
+    $query = "INSERT INTO tbl_mn_tiempo_laboral (descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerLaboralPorId($idTiempoLaboral)
+ {
+     $query = "SELECT * FROM tbl_mn_tiempo_laboral WHERE idTiempoLaboral = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idTiempoLaboral);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarLaboral($idTiempoLaboral, $descripcion){
+        $query = "UPDATE tbl_mn_tiempo_laboral SET descripcion = ? WHERE idTiempoLaboral = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$descripcion);
+        $result->bindParam(2,$idTiempoLaboral);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarLaboral($idTiempoLaboral) {
+        try {
+            $query = "DELETE FROM tbl_mn_tiempo_laboral WHERE idTiempoLaboral = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idTiempoLaboral);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+        /*********************FUNCIONES DE LA TABLA ESTADO PLAN PAGO********************************************************/
+
+
+  //funcion para listar los datos de la tabla BIENES 
+  function ListarEstadoplanpago()
+  {
+      $query = "SELECT * FROM tbl_mn_estadoplanpagos"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO BIENES 
+ function RegistrarEstadoplanpago($Descripcion){
+    $query = "INSERT INTO tbl_mn_estadoplanpagos (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del BIENES  a actualizar
+ function ObtenerEstadoplanpagoPorId($idEstadoPlanPagos)
+ {
+     $query = "SELECT * FROM tbl_mn_estadoplanpagos WHERE idEstadoPlanPagos = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idEstadoPlanPagos);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS BIENES 
+    function ActualizarEstadoplanpago($idEstadoPlanPagos, $Descripcion){
+        $query = "UPDATE tbl_mn_estadoplanpagos SET Descripcion = ? WHERE idEstadoPlanPagos = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idEstadoPlanPagos);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN BIENES 
+    function EliminarEstadoplanpago($idEstadoPlanPagos) {
+        try {
+            $query = "DELETE FROM tbl_mn_estadoplanpagos WHERE idEstadoPlanPagos = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idEstadoPlanPagos);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    } 
+      /*********************FUNCIONES DE LA TABLA TIEMPO VIVIR ********************************************************/
+
+
+  //funcion para listar los datos de la tabla estado civil
+  function ListarTiempovivir()
+  {
+      $query = "SELECT * FROM tbl_mn_tiempo_vivir"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarTiempovivir($Descripcion){
+    $query = "INSERT INTO tbl_mn_tiempo_vivir (descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerTiempovivirPorId($idtiempoVivir)
+ {
+     $query = "SELECT * FROM tbl_mn_tiempo_vivir WHERE idtiempoVivir = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idtiempoVivir);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarTiempovivir($idtiempoVivir, $descripcion){
+        $query = "UPDATE tbl_mn_tiempo_vivir SET descripcion = ? WHERE idtiempoVivir = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$descripcion);
+        $result->bindParam(2,$idtiempoVivir);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarTiempovivir($idtiempoVivir) {
+        try {
+            $query = "DELETE FROM tbl_mn_tiempo_vivir WHERE idtiempoVivir = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idtiempoVivir);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+      /*********************FUNCIONES DE LA TABLA ESTADO TIPO PRESTAMO ********************************************************/
+
+
+  //funcion para listar los datos de la tabla estado civil
+  function ListarEstadotipoprestamo()
+  {
+      $query = "SELECT * FROM tbl_mn_estadotipoprestamo"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarEstadotipoprestamo($Descripcion){
+    $query = "INSERT INTO tbl_mn_estadotipoprestamo (descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerEstadotipoprestamoPorId($idestadoTipoPrestamo)
+ {
+     $query = "SELECT * FROM tbl_mn_estadotipoprestamo WHERE idestadoTipoPrestamo = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idestadoTipoPrestamo);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarEstadotipoprestamo($idestadoTipoPrestamo, $descripcion){
+        $query = "UPDATE tbl_mn_estadotipoprestamo SET descripcion = ? WHERE idestadoTipoPrestamo = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$descripcion);
+        $result->bindParam(2,$idestadoTipoPrestamo);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarEstadotipoprestamo($idestadoTipoPrestamo) {
+        try {
+            $query = "DELETE FROM tbl_mn_estadotipoprestamo WHERE idestadoTipoPrestamo = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idestadoTipoPrestamo);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+    /*********************FUNCIONES DE LA TABLA ESTADO PLAN PAGO********************************************************/
+
+
+  //funcion para listar los datos de la tabla BIENES 
+  function ListarEstadosolicitud()
+  {
+      $query = "SELECT * FROM tbl_mn_estados_solicitudes"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO BIENES 
+ function RegistrarEstadosolicitud($Descripcion){
+    $query = "INSERT INTO tbl_mn_estados_solicitudes (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del BIENES  a actualizar
+ function ObtenerEstadosolicitudPorId($idEstadoSolicitud)
+ {
+     $query = "SELECT * FROM tbl_mn_estados_solicitudes WHERE idEstadoSolicitud = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idEstadoSolicitud);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS BIENES 
+    function ActualizarEstadosolicitud($idEstadoSolicitud, $Descripcion){
+        $query = "UPDATE tbl_mn_estados_solicitudes SET Descripcion = ? WHERE idEstadoSolicitud = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idEstadoSolicitud);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN BIENES 
+    function EliminarEstadosolicitud($idEstadoSolicitud) {
+        try {
+            $query = "DELETE FROM tbl_mn_estados_solicitudes WHERE idEstadoSolicitud = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idEstadoSolicitud);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    } 
+     /*********************FUNCIONES DE LA TABLA ESTADO RUBRO********************************************************/
+
+
+  //funcion para listar los datos de la tabla BIENES 
+  function ListarRubro()
+  {
+      $query = "SELECT * FROM tbl_mn_rubros"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO BIENES 
+ function RegistrarRubro($Descripcion){
+    $query = "INSERT INTO tbl_mn_rubros (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del BIENES  a actualizar
+ function ObtenerRubroPorId($idRubro)
+ {
+     $query = "SELECT * FROM tbl_mn_rubros WHERE idRubro = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idRubro);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS BIENES 
+    function ActualizarRubro($idRubro, $Descripcion){
+        $query = "UPDATE tbl_mn_rubros SET Descripcion = ? WHERE idRubro = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idRubro);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN BIENES 
+    function EliminarRubro($idRubro) {
+        try {
+            $query = "DELETE FROM tbl_mn_rubros WHERE idRubro = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idRubro);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    } 
+    /*********************FUNCIONES DE LA TABLA Profesion ********************************************************/
+
+
+  //funcion para listar los datos de la tabla GENERO
+  function ListarProfesion()
+  {
+      $query = "SELECT * FROM tbl_mn_profesiones_oficios"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarProfesion($Descripcion){
+    $query = "INSERT INTO tbl_mn_profesiones_oficios (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerProfesionPorId($idProfesion)
+ {
+     $query = "SELECT * FROM tbl_mn_profesiones_oficios WHERE idProfesion = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idProfesion);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarProfesion($idProfesion, $Descripcion){
+        $query = "UPDATE tbl_mn_profesiones_oficios SET Descripcion = ? WHERE idProfesion = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idProfesion);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarProfesion($idProfesion) {
+        try {
+            $query = "DELETE FROM tbl_mn_profesiones_oficios WHERE idProfesion = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idProfesion);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+
+    /*********************FUNCIONES DE LA TABLA ESTADO USUARIO ********************************************************/
+
+
+  //funcion para listar los datos de la tabla GENERO
+  function listar_Estadousuario()
+  {
+      $query = "SELECT * FROM tbl_ms_estado_usuario"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+    
+  }
+     
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarEstadousuario($Descripcion){
+    $query = "INSERT INTO tbl_ms_estado_usuario (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerEstadousuarioPorId($idEstadoUsuario)
+ {
+     $query = "SELECT * FROM tbl_ms_estado_usuario WHERE idEstadoUsuario = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idEstadoUsuario);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarEstadousuario($idEstadoUsuario, $Descripcion){
+        $query = "UPDATE tbl_ms_estado_usuario SET Descripcion = ? WHERE idEstadoUsuario = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idEstadoUsuario);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarEstadousuario($idEstadoUsuario) {
+        try {
+            $query = "DELETE FROM tbl_ms_estado_usuario WHERE idEstadoUsuario = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idEstadoUsuario);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+    /*********************FUNCIONES DE LA TABLA MUNICIPIO********************************************************/
+
+
+  //funcion para listar los datos de la tabla GENERO
+  function ListarMunicipio()
+  {
+      $query = "SELECT * FROM tbl_mn_municipio"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+ //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
+ function RegistrarMunicipio($Descripcion){
+    $query = "INSERT INTO tbl_mn_municipio (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del parentesco a actualizar
+ function ObtenerMunicipioPorId($idMunicipio)
+ {
+     $query = "SELECT * FROM tbl_mn_municipio WHERE idMunicipio = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idMunicipio);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS PARENTESCO 
+    function ActualizarMunicipio($idMunicipio, $Descripcion){
+        $query = "UPDATE tbl_mn_municipio SET Descripcion = ? WHERE idMunicipio = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idMunicipio);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN PARENTESCO
+    function EliminarMunicipio($idMunicipio) {
+        try {
+            $query = "DELETE FROM tbl_mn_municipio WHERE idMunicipio = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idMunicipio);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+ }
