@@ -232,11 +232,11 @@ async function actualizar_registro(parametros) {
                 $('#Actualizarpermiso').modal('hide'); //cierra el modal
                 table.ajax.reload();  //actualiza la tabla
                 table_modulos_actualizacion.ajax.reload();
-                swal('Actualización Exitosa', 'Se guardado correctamente los datos', 'success'); //mensaje
+                swal.fire('Actualización Exitosa', 'Se guardado correctamente los datos', 'success'); //mensaje
             } else if (response == "requerid") {
-                swal('¡Atención!', 'Complete todos los datos por favor', 'error'); //mensaje
+                swal.fire('¡Atención!', 'Complete todos los datos por favor', 'error'); //mensaje
             } else {
-                swal('¡Atención!', 'error inesperado', 'error'); //mensaje
+                swal.fire('¡Atención!', 'error inesperado', 'error'); //mensaje
             }
         }
     })
@@ -244,7 +244,7 @@ async function actualizar_registro(parametros) {
 
 }
 function eliminar_permiso(id) {
-    swal({
+    swal.fire({
         title: "¿Esta seguro que desea Eliminar?",
         text: "Esta Accion no puede revertirse",
         icon: "warning",
@@ -264,9 +264,9 @@ function eliminar_permiso(id) {
                     console.log(response);
                     if (response == "success") {
                         table.ajax.reload();  //actualiza la tabla
-                        swal('Eliminación Exitosa', 'Se guardado correctamente los datos', 'success'); //mensaje
+                        swal.fire('Eliminación Exitosa', 'Se guardado correctamente los datos', 'success'); //mensaje
                     } else {
-                        swal('¡Atención!', 'error inesperado', 'error'); //mensaje
+                        swal.fire('¡Atención!', 'error inesperado', 'error'); //mensaje
                     }
                 }
             })
