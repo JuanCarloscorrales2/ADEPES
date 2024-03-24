@@ -6,7 +6,7 @@ if (isset($_SESSION["user"])) {
 	require "../model/Permisos.php";
 	$permiso = new Permisos();
 	$rol = $_SESSION["user"]["idRol"];
-	$tiene_permiso = $permiso->ListarPermisosRol(25, $rol);
+	$tiene_permiso = $permiso->ListarPermisosRol(32, $rol);
 	$_SESSION["actualizar"] = $tiene_permiso ? $tiene_permiso["actualizar"] : 0;
 	$_SESSION["eliminar"] = $tiene_permiso ? $tiene_permiso["eliminar"] : 0;
 	$_SESSION["consultar"] = $tiene_permiso ? $tiene_permiso["consultar"] : 0;
