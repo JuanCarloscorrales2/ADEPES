@@ -33,7 +33,7 @@ class PDF extends FPDF
       $this->SetTextColor(0, 0, 0);
       $this->Cell(122); // mover a la derecha
       $this->SetFont('Arial', 'B', 12);
-      $this->Cell(20, 10, utf8_decode("LISTADO DE CATEGORIA DE CASA"), 0, 1, 'C', 0);
+      $this->Cell(20, 10, utf8_decode("LISTADO DE CATEGORÍA DE CASA"), 0, 1, 'C', 0);
       $this->Ln(7);
       $this->SetLeftMargin(105);
 
@@ -45,7 +45,7 @@ class PDF extends FPDF
       $this->SetFont('Arial', 'B', 10);
 
      $this->Cell(10, 10, utf8_decode('N°'), 1, 0, 'C', 1);
-     $this->Cell(60, 10, utf8_decode('CATEGORIA DE CASA'), 1, 0, 'C', 1);
+     $this->Cell(60, 10, utf8_decode('CATEGORÍA DE CASA'), 1, 0, 'C', 1);
      $this->Ln();
    }
    // Pie de página

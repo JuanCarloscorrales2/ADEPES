@@ -69,7 +69,7 @@
             <ul class="menu-content">
               <li><a href="../pages/TBLPrestamo.php" class="icon-table">  Tipo Prestamo</a></li>
               <li><a href="../pages/TBLEstadoCivil.php" class="icon-table">  Estado Civil</a></li>
-              <li><a href="../pages/TBLCategoriaCasa.php" class="icon-table">  Categoria Casa</a></li>
+              <li><a href="../pages/TBLCategoriaCasa.php" class="icon-table">  Categoría Casa</a></li>
               <li><a href="../pages/TBLParentesco.php" class="icon-table">  Parentesco</a></li>
               <li><a href="../pages/TBLGenero.php" class="icon-table">  Género</a></li>
               <li><a href="../pages/TBLContacto.php" class="icon-table">  Tipo Contacto</a></li>
@@ -81,7 +81,7 @@
               <li><a href="../pages/TBLEPrestamo.php" class="icon-table">  Estado Tipo Prestamo</a></li>
               <li><a href="../pages/TBLESolicitud.php" class="icon-table">  Estado Solicitudes</a></li>
               <li><a href="../pages/TBLRubros.php" class="icon-table">  Rubros</a></li>
-              <li><a href="../pages/TBLProfesion.php" class="icon-table">  Profesion u Oficio</a></li>
+              <li><a href="../pages/TBLProfesion.php" class="icon-table">  Profesión u Oficio</a></li>
               <li><a href="../pages/TBLestadoUser.php" class="icon-table">  Estado Usuario</a></li>
               <li><a href="../pages/TBLMunicipio.php" class="icon-table">  Municipio</a></li>
             </ul>
