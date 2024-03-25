@@ -132,7 +132,7 @@ if (isset($_SESSION["user"])) {
 		<script>
 			swal.fire({
 				title: "¡Prohibido!",
-				text: "¡No puedes Accedeer a este recurso!",
+				text: "¡No puedes Acceder a este recurso!",
 				icon: "warning",
 				allowOutsideClick: false
 			}).then(function() {
