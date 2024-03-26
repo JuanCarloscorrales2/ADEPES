@@ -45,7 +45,7 @@ function eventoCerrarModal(){
             $('#plazoMaximo').val('');
             $('#montoMinimo').val('');
             $('#montoMaximo').val('');
-        
+    
       
           } else {
             // Si el usuario cancela, vuelve a abrir el modal
