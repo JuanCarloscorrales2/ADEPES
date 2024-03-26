@@ -44,7 +44,7 @@ function eventoCerrarModal(){
       
           } else {
             // Si el usuario cancela, vuelve a abrir el modal
-            $('#Registar_Profesion').modal('show');
+            $('#registral_Profesion').modal('show');
           }
         });
     }

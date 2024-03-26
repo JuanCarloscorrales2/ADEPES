@@ -137,7 +137,7 @@ if (isset($_SESSION["user"])) {
 	<!--TABLAS jS -->
 	<script src="../assets/js/EstadoUser.js"></script>
 	<!--Reporte de Estado Usuario -->
-
+	<script src="../assets/js/listadoEstadoUser.js"></script>
 
 
 
