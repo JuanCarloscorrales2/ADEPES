@@ -1270,7 +1270,7 @@ function ObtenerContactoPorId(idTipoContacto, Acciones){
               
 
             }else if(Acciones == "eliminar"){
-              AlertaEliminarContacto(data[0]['ID'], data[0]['cONTACTO']);
+              AlertaEliminarContacto(data[0]['ID'], data[0]['CONTACTO']);
             }
           }
          
@@ -1365,7 +1365,7 @@ function EliminarContacto(idTipoContacto){
 }
 function AlertaEliminarContacto(idTipoContacto, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Contacto: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
