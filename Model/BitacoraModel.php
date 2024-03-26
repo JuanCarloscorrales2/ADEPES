@@ -15,8 +15,10 @@ class Bitacora {
     //funcion para listar los datos de bitaccora
     function ListarBitacora()
     {
-        $query = "SELECT usu.Usuario, bita.Accion, bita.Descripcion, bita.Fecha FROM tbl_ms_bitacora bita 
-                  INNER JOIN tbl_ms_usuario usu ON bita.idUsuario  = usu.idUsuario"; //sentencia sql
+        $query = "SELECT usu.Usuario, obj.Objeto, bita.Accion, bita.Descripcion, 
+        DATE_FORMAT(bita.Fecha, '%m-%d-%Y %h:%i:%s') AS Fecha FROM tbl_ms_bitacora bita 
+            INNER JOIN tbl_ms_objetos obj ON obj.idObjetos = bita.idObjetos 
+            INNER JOIN tbl_ms_usuario usu ON bita.idUsuario = usu.idUsuario"; //sentencia sql
         $result = $this->cnx->prepare($query);
         if($result->execute())
         {
@@ -48,6 +50,28 @@ class Bitacora {
 
     }
 
+     //funcion para listar los datos de bitaccora por rango de fecha
+     function FiltrarPorFecha($fechaInicio, $fechaFinal)
+     {
+        $query = "SELECT usu.Usuario, obj.Objeto, bita.Accion, bita.Descripcion, 
+            DATE_FORMAT(bita.Fecha, '%m-%d-%Y %h:%i:%s') AS Fecha FROM tbl_ms_bitacora bita 
+            INNER JOIN tbl_ms_objetos obj ON obj.idObjetos = bita.idObjetos 
+            INNER JOIN tbl_ms_usuario usu ON bita.idUsuario = usu.idUsuario
+            WHERE DATE(bita.Fecha) >= ? AND DATE(bita.Fecha) <= ?;"; //sentencia sql
+        $result = $this->cnx->prepare($query);
+        $result->bindParam(1,$fechaInicio);
+        $result->bindParam(2,$fechaFinal);
+        if($result->execute())
+        {
+            if($result->rowCount() > 0){ //validacion para verificar si trae datos
+                while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                    $datos[] = $fila;
+                }
+                return $datos;
+            }
+        }
+        return false;
+     }
 
  
     

@@ -41,11 +41,36 @@ if (isset($_SESSION["user"])) {
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<?php
-									if ($tiene_permiso &&  $tiene_permiso["reportes"] >= 1) {
-										echo '<button id="boton_descargar_Rbitacora_pdf" class="btn  btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
-									}
-									?>
+									<div class="col-md-2">
+										<b>Fecha Inicio:</b>
+										<input type="date" class="form-control" id="fechainicio">
+									</div>
+									<div class="col-md-2">
+										<b>Fecha Final:</b>
+										<input type="date" class="form-control" id="fechafinal">
+									</div>
+									<div class="col-md-1">
+										<label for=""></label>
+									<button type="button" class="btn btn-success" onclick="LlenarTablaBitacoraPorFecha();"><span class="icon-search"></span>Filtrar</button> 
+									</div>
+							
+									<div class="col-md-1">
+										<label></label>
+										<?php
+										if ($tiene_permiso &&  $tiene_permiso["eliminar"] >= 1) {
+											echo '<button type="button" class="btn btn-warning" onclick=""><span class="icon-warning"></span>Depurar</button> ';
+										}
+										?>
+									</div>
+
+									<div class="col-md-1">
+										<label></label>
+										<?php
+										if ($tiene_permiso &&  $tiene_permiso["reportes"] >= 1) {
+											echo '<button id="boton_descargar_Rbitacora_pdf" class="btn  btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
+										}
+										?>
+									</div>
 									<h4 class="card-title" id="basic-layout-form">
 
 
@@ -63,11 +88,14 @@ if (isset($_SESSION["user"])) {
 											<table id="tabla_bitacora" class="table table-bordered table-sm">
 												<thead>
 													<tr>
-														<td width="15%">
+														<td>
 															<input type="text" class="form-control filter-input" placeholder="Buscar por Usuario" data-column="0">
 														</td>
-														<td width="30%">
-															<select data-column="1" class="form-control filter-select">
+
+														<td></td>
+														
+														<td>
+															<select data-column="2" class="form-control filter-select">
 																<option value="">Seleccione una Acción</option>
 																<option>Modifico</option>
 																<option>Inserto</option>
@@ -80,10 +108,11 @@ if (isset($_SESSION["user"])) {
 
 													</tr>
 													<tr>
-														<th width="15%">Usuario</th>
-														<th width="30%">Acción</th>
-														<th width="40%">Descripción</th>
-														<th width="15%">Fecha</th>
+														<th>Usuario</th>
+														<th>Objeto</th>
+														<th>Acción</th>
+														<th>Descripción</th>
+														<th>Fecha</th>
 
 													</tr>
 												</thead>
@@ -115,7 +144,8 @@ if (isset($_SESSION["user"])) {
 
 	<!-- referencias para las alertas -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+	<!-- Advertencias Toastr -->
+	<script src="../app-assets/plugins/toastr/toastr.min.js">  </script> 
 	<!--Bitacora jS -->
 	<script src="../assets/js/Bitacora.js"></script>
 	<!--Bitacora jS: Agg. el Reporte de Bitacora -->
