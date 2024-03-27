@@ -15,12 +15,17 @@ class Parametro {
     //funcion para listar los roles
     function ListarParametros()
     {
-        $query = "SELECT * FROM tbl_ms_parametros "; //sentencia sql
+        $query = "SELECT 
+                    (@row_number:=@row_number + 1) AS numero_secuencial,
+                    tbl_ms_parametros.*
+                  FROM 
+                    (SELECT @row_number := 0) AS init,
+                    tbl_ms_parametros"; // Consulta SQL con variable de usuario
         $result = $this->cnx->prepare($query);
         if($result->execute())
         {
-            if($result->rowCount() > 0){ //validacion para verificar si trae datos
-                while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+            if($result->rowCount() > 0){ // Validación para verificar si trae datos
+                while($fila = $result->fetch(PDO::FETCH_ASSOC)){  // Guardar los datos en un arreglo
                     $datos[] = $fila;
                 }
                 return $datos;
@@ -28,6 +33,7 @@ class Parametro {
         }
         return false;
     }
+    
 
 
 
@@ -64,7 +70,32 @@ class Parametro {
     
     }
 
- 
+    //funcion que valida que el usuario
+    function tipoDatoParametro($idParametro) //funcion que trae el tipo de dato del parametro
+    {
+        $query = "SELECT idTipoDato FROM tbl_ms_parametros WHERE idParametro=?"; 
+        $result = $this->cnx->prepare($query);
+        $result->bindParam(1,$idParametro);
+        if($result->execute())
+        {
+           return $result->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
+    
+    function cantidadPreguntas() //funcion que trae la cantidad de preguntas
+    {
+        $query = "SELECT count(idPregunta) as cantidad FROM tbl_ms_preguntas;"; 
+        $result = $this->cnx->prepare($query);
+        
+        if($result->execute())
+        {
+           return $result->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
+
+
 
  
  }

@@ -1,5 +1,6 @@
 <?php
 require "../model/parametros.php";
+date_default_timezone_set('America/Tegucigalpa');
 session_start();
 //instancia de la clase rol
 $parametros = new Parametro();
@@ -20,6 +21,7 @@ switch ($_REQUEST["operador"]) {
                 onclick="ObtenerParametroPorId(' . $datos[$i]['idParametro'] . ",'editar'" . ');"><i class="icon-edit"></i> Editar </a>
  ' : '<span class="tag tag-warning">No puede editar</span>';
                 $list[] = array(
+                    "IDSECUENCIAL"=>$datos[$i]['numero_secuencial'],
                     "Id" => $datos[$i]['idParametro'], //nombre de la tablas en la base de datos
                     "parametro" => $datos[$i]['Parametro'], //nombre de la tablas en la base de datos
                     "valor" => $datos[$i]['Valor'],
@@ -67,24 +69,67 @@ switch ($_REQUEST["operador"]) {
         break;
 
 
-    case "actualizar_parametro":
-        if (isset($_POST["idParametro"], $_POST["Valor"]) && !empty($_POST["idParametro"]) && !empty($_POST["Valor"])) {
-
-            $idParametro = $_POST["idParametro"];
-            $Valor = $_POST["Valor"];
-            $FechaModificacion = date('Y-m-d');
-
-            if ($parametros->ActualizarParametro($idParametro, $Valor, $FechaModificacion)) {
-                $response = "success";  //si se inserto en la BD manda mensaje de exito
-
-            } else {
-                $response = "error";  //error al insertar en BD
+        case "actualizar_parametro":
+            if( isset($_POST["idParametro"] ,$_POST["Valor"] ) && !empty($_POST["idParametro"]) && !empty($_POST["Valor"])){
+                   
+                    $idParametro = $_POST["idParametro"];
+                    $Valor = $_POST["Valor"];
+                    $FechaModificacion = date('Y-m-d');
+    
+                    if($datoP =  $parametros->tipoDatoParametro($idParametro ) ){
+                        foreach ($datoP as $campos => $valor){
+                            $tipoDato["valores"][$campos] = $valor; //ALMACENA EL tipo de dato
+                        }
+                    }
+    
+                    
+    
+                    if($cantidadP =  $parametros->cantidadPreguntas() ){
+                        foreach ($cantidadP as $campos => $valor){
+                            $cant["valores"][$campos] = $valor; //ALMACENA la cantidad de preguntas
+                        }
+                    }
+                    $preguntas = $cant["valores"]["cantidad"];
+    
+    
+                    if($idParametro == 10 ){  //valida que el parametro de correo acepte numero
+                        if( $parametros->ActualizarParametro($idParametro, $Valor, $FechaModificacion ) ){
+                            $response = "success";  //si se inserto en la BD manda mensaje de exito
+                       
+                        }else{
+                            $response = "error";  //error al insertar en BD
+                        }
+    
+                    }else if(!preg_match('/^(?=.*[1-9])\d*\.?\d+$/', $Valor)&& $tipoDato["valores"]["idTipoDato"] == 2){ //solo numero
+                       
+                        $response = "soloNumero"; 
+    
+                    }else if(!preg_match('/^[a-zA-Z\s]+$/', $Valor) && $tipoDato["valores"]["idTipoDato"] == 1){ //solo letra 
+                        $response = "soloLetra";
+    
+                    }else if($idParametro == 2 && $Valor > $preguntas){ //solo letra 
+                        $response = "excedePreguntas";
+    
+                    }else{
+                        
+                        if( $parametros->ActualizarParametro($idParametro, $Valor, $FechaModificacion ) ){
+                            $response = "success";  //si se inserto en la BD manda mensaje de exito
+                       
+                        }else{
+                            $response = "error";  //error al insertar en BD
+                        }
+                    }
+    
+                
+                
+                    
+               
+            }else{
+                $response = "requerid"; //validad que ingresa todo los datos requeridos
             }
-        } else {
-            $response = "requerid"; //validad que ingresa todo los datos requeridos
-        }
-
-        echo $response;
-
+    
+            echo $response;
+    
         break;
+    
 } //fin switch

@@ -28,8 +28,8 @@ function LlenarTablaParametros(){
         },
         ajax: "../controller/ParametroController.php?operador=listar_parametros",
         columns : [
-            { data : 'Id'},  //se ponen los datos del RolController.php
-            { data : 'parametro'},  //se ponen los datos del RolController.php
+            { data : 'IDSECUENCIAL'},  
+            { data : 'parametro'},  
             { data : 'valor'},
             { data : 'Fecha'},
             { data : 'FechaM'},
@@ -70,43 +70,63 @@ function ObtenerParametroPorId(idParametro, Acciones){
 
 
     //funcion para actualizar el parametro
-    function ActualizarParametro(){
-        idParametro = $('#idp_editar').val();  //id de los input del modal de actualizar
-        Valor = $('#valor_edit').val();
+  function ActualizarParametro(){
+      idParametro = $('#idp_editar').val();  //id de los input del modal de actualizar
+      Valor = $('#valor_edit').val();
 
-        parametros = {
-            "idParametro":idParametro,"Valor":Valor //parametros que se mandan al controlador: actualizar_estado_civil
-        }
-        $.ajax({
-          data:parametros,
-          url:'../controller/ParametroController.php?operador=actualizar_parametro', //url del controlador 
-          type:'POST',
-          beforeSend:function(){},
-          success:function(response){
-              if(response == "success"){  //si inserto correctamente
-                table.ajax.reload();  //actualiza la tabla
-                 $('#ActualizarParametro').modal('hide'); //cierra el modal id del modal
+      parametros = {
+          "idParametro":idParametro,"Valor":Valor //parametros que se mandan al controlador: actualizar_estado_civil
+      }
+      $.ajax({
+        data:parametros,
+        url:'../controller/ParametroController.php?operador=actualizar_parametro', //url del controlador 
+        type:'POST',
+        beforeSend:function(){},
+        success:function(response){
+            if(response == "success"){  //si inserto correctamente
+              table.ajax.reload();  //actualiza la tabla
+               $('#ActualizarParametro').modal('hide'); //cierra el modal id del modal
+              Swal.fire({
+                icon: 'success',
+                title: 'Actualización Exitosa',
+                text: 'Se han actualizado correctamente los datos',
+              })
+    
+            }else if(response == "requerid"){
                 Swal.fire({
-                  icon: 'success',
-                  title: 'Actualización Exitosa',
-                  text: 'Se han actualizado correctamente los datos',
-                })
-      
-              }else if(response == "requerid"){
-                  Swal.fire({
-                    icon: 'warning',
-                    title: '¡Atención!',
-                    text: 'Complete todos los datos por favor',
-                  })     
-      
-             }else{
+                  icon: 'warning',
+                  title: '¡Atención!',
+                  text: 'Complete todos los datos por favor',
+                })     
+            }else if(response == "soloNumero"){
+              Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'Este tipo de parámetro solo acepta números',
+              }) 
+
+            }else if(response == "soloLetra"){
+              Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'Este tipo de parámetro solo acepta letras',
+              }) 
+            
+            }else if(response == "excedePreguntas"){
+              Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'El parámetro de preguntas no puede ser mayor que las preguntas registradas en la tabla Preguntas',
+            })
+
+            }else{
                   Swal.fire({
                     icon: 'error',
                     title: '¡Atención!',
                     text: 'error al actualizar en la base de datos',
                   })
               }
-          }
-      })
-      
-      }
+        }
+    })
+    
+  }

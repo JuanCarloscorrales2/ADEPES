@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
         <form autocomplete="off">
-              <input type="hidden"  class="form-control" id="idp_editar" >
+              <input type="hidden"  class="form-control" id="idp_editar" onkeyup="CambiarMayuscula(this.value)" >
 
             <div class="form-group">
               <label for="" class="col-form-label">Parámetro:</label>
@@ -18,7 +18,7 @@
 
             <div class="form-group">
               <label for="" class="col-form-label">Valor:</label>
-              <input type="text" placeholder="INGRESE EL VALOR"  class="form-control" id="valor_edit" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);"  onblur="limpiaUsuario()" maxlength="100" onkeyup="espacios(this);" >
+              <input type="text" placeholder="INGRESE EL VALOR"  class="form-control" id="valor_edit" onblur="CambiarMayuscula(this);"  onblur="limpiaUsuario()" maxlength="100" onkeyup="espacios(this);" >
             </div>
      
         </form>
@@ -38,8 +38,15 @@
 /******************************************************************* */
   //Valida que solo ingrese mayusculas 
   function CambiarMayuscula(elemento){
+    var idParametros = document.getElementById("idp_editar").value; //trae el id del parametros
     let texto = elemento.value;
-    elemento.value = texto.toUpperCase();
+    if(idParametros == 10 || idParametro = 11 )// 10 correo  11 clave del servidor
+     //no cambia a mayuscula el parametro de correo
+     input.value=input.value.replace('  ','');
+    }else{
+      elemento.value = texto.toUpperCase();
+    }
+    
   }
 //funcion para solo letras del input usuario
 function soloLetras(e) {
@@ -59,27 +66,10 @@ function soloLetras(e) {
       if(letras.indexOf(tecla) == -1 && !tecla_especial)
           return false;
   }
-  //user
-  function limpiaUsuario() {
-      var val = document.getElementById("valor_edit").value;
-      var tam = val.length;
-      for(i = 0; i < tam; i++) {
-          if(!isNaN(val[i]))
-              document.getElementById("valor_edit").value = '';
-      }
-  }
-  //nombre
-  function limpiaNombre() {
-      var val = document.getElementById("nombre_edit").value;
-      var tam = val.length;
-      for(i = 0; i < tam; i++) {
-          if(!isNaN(val[i]))
-              document.getElementById("nombre_edit").value = '';
-      }
-  }
+
   //funcion que valida un solo espacio entre palabras
   espacios=function(input){
-     input.value=input.value.replace('  ',' ');//sustituimos dos espacios seguidos por uno 
+    input.value = input.value.replace(/\s{2,}/g, ' ');//sustituimos dos espacios seguidos por uno 
 }
 /************************************************************************* */
 // funcion que valida que no se repite mas de 3 veces una misma letra
