@@ -2149,5 +2149,481 @@ case "eliminar_Municipio":
     echo $response;
  
  break;
+ /**************  VALIDACIONES TABLA TIPO PAGO *****************************************************************************/
+ case "listar_Tipo_Pago":
+    $resultados = array(
+        "sEcho" => 0,
+        "iTotalRecords" => 0,
+        "iTotalDisplayRecords" => 0,
+        "aaData" => []
+    );
+    $datos = $_SESSION["consultar"] >= 1 ? $tablas->ListarTipoPago() : []; //obtiene los datos del metodo
+    if ($datos) {
+
+        for ($i = 0; $i < count($datos); $i++) {
+            $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" data-toggle="modal" data-target="#actualizar_Tipopago" 
+        onclick="ObtenerTipoPagoPorId(' . $datos[$i]['idTipoPago'] . ",'editar'" . ');">
+        <i class="icon-edit"></i> Editar </a>' : '<span class="tag tag-warning">No puede editar</span>';
+            $boton_eliminar = $_SESSION["eliminar"] >= 1 ? '<a class="dropdown-item" onclick="ObtenerTipoPagoPorId(' . $datos[$i]['idTipoPago'] . ",'eliminar'" . ');">
+        <i class="icon-trash"></i> Eliminar </a>' : '<span class="tag tag-danger">No puede eliminar</span>';
+
+            $list[] = array(
+                "Acciones" => '<div class="btn-group"> 
+            <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
+            </button>
+            <div class="dropdown-menu">
+            ' . $boton_editar . $boton_eliminar . '
+                    
+                </div>
+            </div>',
+                "NO" => $datos[$i]['idTipoPago'], //nombre de la tablas en la base de datos
+                "TIPOPAGO" => $datos[$i]['descripcion'],
+
+
+            );
+        }
+
+        $resultados = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($list),
+            "iTotalDisplayRecords" => count($list),
+            "aaData" => $list
+        );
+    }
+    echo json_encode($resultados); //datos en formato json para la datatable
+
+    break;
+case "obtener_tipo_pago_por_id": //sirve para obtener el id para poder actualizar o eliminar
+    if (isset($_POST["idTipoPago"]) && !empty($_POST["idTipoPago"])) {
+        $data = $tablas->ObtenerTipoPagoPorId($_POST["idTipoPago"]);
+        if ($data) {
+            $list[] = array(
+                "ID" => $data['idTipoPago'],  //nombres de la base de datos
+                "TIPOPAGO" => $data['descripcion'], //nombres de la base de datos
+
+
+            );
+            echo json_encode($list);
+        }
+    }
+
+    break;
+
+case "registrar_Tipopago":
+    if (isset($_POST["descripcion"]) && !empty($_POST["descripcion"])) {
+
+        $descripcion = $_POST["descripcion"];
+
+        if ($tablas->RegistrarTipoPago($descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+        } else {
+            $response = "error";
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+
+    break;
+
+case "actualizar_tipopago":
+    if (isset($_POST["idTipoPago"], $_POST["descripcion"])  && !empty($_POST["idTipoPago"]) && !empty($_POST["descripcion"])) {
+
+        $idTipoPago = $_POST["idTipoPago"];
+        $descripcion = $_POST["descripcion"];
+
+
+        if ($tablas->ActualizarTipoPago($idTipoPago, $descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+
+        } else {
+            $response = "error";  //error al insertar en BD
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+    break;
+
+case "eliminar_Tipopago":
+    if (isset($_POST["idTipoPago"]) && !empty($_POST["idTipoPago"])) {
+
+        $eliminar = $tablas->EliminarTipoPago($_POST["idTipoPago"]);
+        if ($eliminar == "elimino") {
+            $response = "success";  //si elimino correctamente
+
+        } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+            $response = "llave_uso";
+        } else {
+            $response = "error";  //cualquier otro tipo de error
+        }
+    } else {
+        $response = "error";
+    }
+    echo $response;
+
+    break;
+     /**************  VALIDACIONES TABLA TIPO Cliente *****************************************************************************/
+ case "listar_Tipo_Cliente":
+    $resultados = array(
+        "sEcho" => 0,
+        "iTotalRecords" => 0,
+        "iTotalDisplayRecords" => 0,
+        "aaData" => []
+    );
+    $datos = $_SESSION["consultar"] >= 1 ? $tablas->ListarTipoCliente() : []; //obtiene los datos del metodo
+    if ($datos) {
+
+        for ($i = 0; $i < count($datos); $i++) {
+            $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" data-toggle="modal" data-target="#actualizar_Tipocliente" 
+        onclick="ObtenerTipoClientePorId(' . $datos[$i]['idTipoCliente'] . ",'editar'" . ');">
+        <i class="icon-edit"></i> Editar </a>' : '<span class="tag tag-warning">No puede editar</span>';
+            $boton_eliminar = $_SESSION["eliminar"] >= 1 ? '<a class="dropdown-item" onclick="ObtenerTipoClientePorId(' . $datos[$i]['idTipoCliente'] . ",'eliminar'" . ');">
+        <i class="icon-trash"></i> Eliminar </a>' : '<span class="tag tag-danger">No puede eliminar</span>';
+
+            $list[] = array(
+                "Acciones" => '<div class="btn-group"> 
+            <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
+            </button>
+            <div class="dropdown-menu">
+            ' . $boton_editar . $boton_eliminar . '
+                    
+                </div>
+            </div>',
+                "NO" => $datos[$i]['idTipoCliente'], //nombre de la tablas en la base de datos
+                "TIPOCLIENTE" => $datos[$i]['Descripcion'],
+
+
+            );
+        }
+
+        $resultados = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($list),
+            "iTotalDisplayRecords" => count($list),
+            "aaData" => $list
+        );
+    }
+    echo json_encode($resultados); //datos en formato json para la datatable
+
+    break;
+case "obtener_tipo_cliente_por_id": //sirve para obtener el id para poder actualizar o eliminar
+    if (isset($_POST["idTipoCliente"]) && !empty($_POST["idTipoCliente"])) {
+        $data = $tablas->ObtenerTipoClientePorId($_POST["idTipoCliente"]);
+        if ($data) {
+            $list[] = array(
+                "ID" => $data['idTipoCliente'],  //nombres de la base de datos
+                "TIPOCLIENTE" => $data['Descripcion'], //nombres de la base de datos
+
+
+            );
+            echo json_encode($list);
+        }
+    }
+
+    break;
+
+case "registrar_Tipocliente":
+    if (isset($_POST["Descripcion"]) && !empty($_POST["Descripcion"])) {
+
+        $descripcion = $_POST["Descripcion"];
+
+        if ($tablas->RegistrarTipoCliente($descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+        } else {
+            $response = "error";
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+
+    break;
+
+case "actualizar_tipocliente":
+    if (isset($_POST["idTipoCliente"], $_POST["Descripcion"])  && !empty($_POST["idTipoCliente"]) && !empty($_POST["Descripcion"])) {
+
+        $idTipoCliente = $_POST["idTipoCliente"];
+        $descripcion = $_POST["Descripcion"];
+
+
+        if ($tablas->ActualizarTipoCliente($idTipoCliente, $descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+
+        } else {
+            $response = "error";  //error al insertar en BD
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+    break;
+
+case "eliminar_Tipocliente":
+    if (isset($_POST["idTipoCliente"]) && !empty($_POST["idTipoCliente"])) {
+
+        $eliminar = $tablas->EliminarTipoCliente($_POST["idTipoCliente"]);
+        if ($eliminar == "elimino") {
+            $response = "success";  //si elimino correctamente
+
+        } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+            $response = "llave_uso";
+        } else {
+            $response = "error";  //cualquier otro tipo de error
+        }
+    } else {
+        $response = "error";
+    }
+    echo $response;
+
+    break;
+/**************  VALIDACIONES TABLA ESTADO CREDITO *****************************************************************************/
+case "listar_Estado_Credito":
+    $resultados = array(
+        "sEcho" => 0,
+        "iTotalRecords" => 0,
+        "iTotalDisplayRecords" => 0,
+        "aaData" => []
+    );
+    $datos = $_SESSION["consultar"] >= 1 ? $tablas->ListarEstadoCredito() : []; //obtiene los datos del metodo
+    if ($datos) {
+
+        for ($i = 0; $i < count($datos); $i++) {
+            $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" data-toggle="modal" data-target="#actualizar_Estadocredito" 
+        onclick="ObtenerEstadoCreditoPorId(' . $datos[$i]['idEstadoCredito'] . ",'editar'" . ');">
+        <i class="icon-edit"></i> Editar </a>' : '<span class="tag tag-warning">No puede editar</span>';
+            $boton_eliminar = $_SESSION["eliminar"] >= 1 ? '<a class="dropdown-item" onclick="ObtenerEstadoCreditoPorId(' . $datos[$i]['idEstadoCredito'] . ",'eliminar'" . ');">
+        <i class="icon-trash"></i> Eliminar </a>' : '<span class="tag tag-danger">No puede eliminar</span>';
+
+            $list[] = array(
+                "Acciones" => '<div class="btn-group"> 
+            <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
+            </button>
+            <div class="dropdown-menu">
+            ' . $boton_editar . $boton_eliminar . '
+                    
+                </div>
+            </div>',
+                "NO" => $datos[$i]['idEstadoCredito'], //nombre de la tablas en la base de datos
+                "ESTADOCREDITO" => $datos[$i]['Descripcion'],
+
+
+            );
+        }
+
+        $resultados = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($list),
+            "iTotalDisplayRecords" => count($list),
+            "aaData" => $list
+        );
+    }
+    echo json_encode($resultados); //datos en formato json para la datatable
+
+    break;
+case "obtener_estado_credito_por_id": //sirve para obtener el id para poder actualizar o eliminar
+    if (isset($_POST["idEstadoCredito"]) && !empty($_POST["idEstadoCredito"])) {
+        $data = $tablas->ObtenerEstadoCreditoPorId($_POST["idEstadoCredito"]);
+        if ($data) {
+            $list[] = array(
+                "ID" => $data['idEstadoCredito'],  //nombres de la base de datos
+                "ESTADOCREDITO" => $data['Descripcion'], //nombres de la base de datos
+
+
+            );
+            echo json_encode($list);
+        }
+    }
+
+    break;
+
+case "registrar_Estadocredito":
+    if (isset($_POST["Descripcion"]) && !empty($_POST["Descripcion"])) {
+
+        $descripcion = $_POST["Descripcion"];
+
+        if ($tablas->RegistrarEstadoCredito($descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+        } else {
+            $response = "error";
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+
+    break;
+
+case "actualizar_estadocredito":
+    if (isset($_POST["idEstadoCredito"], $_POST["Descripcion"])  && !empty($_POST["idEstadoCredito"]) && !empty($_POST["Descripcion"])) {
+
+        $idEstadoCredito = $_POST["idEstadoCredito"];
+        $descripcion = $_POST["Descripcion"];
+
+
+        if ($tablas->ActualizarEstadoCredito($idEstadoCredito, $descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+
+        } else {
+            $response = "error";  //error al insertar en BD
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+    break;
+
+case "eliminar_Estadocredito":
+    if (isset($_POST["idEstadoCredito"]) && !empty($_POST["idEstadoCredito"])) {
+
+        $eliminar = $tablas->EliminarEstadoCredito($_POST["idEstadoCredito"]);
+        if ($eliminar == "elimino") {
+            $response = "success";  //si elimino correctamente
+
+        } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+            $response = "llave_uso";
+        } else {
+            $response = "error";  //cualquier otro tipo de error
+        }
+    } else {
+        $response = "error";
+    }
+    echo $response;
+
+    break;
+    /**************  VALIDACIONES TABLA TIPO PAGO *****************************************************************************/
+ case "listar_Analisis":
+    $resultados = array(
+        "sEcho" => 0,
+        "iTotalRecords" => 0,
+        "iTotalDisplayRecords" => 0,
+        "aaData" => []
+    );
+    $datos = $_SESSION["consultar"] >= 1 ? $tablas->ListarAnalisis() : []; //obtiene los datos del metodo
+    if ($datos) {
+
+        for ($i = 0; $i < count($datos); $i++) {
+            $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" data-toggle="modal" data-target="#actualizar_Analisis" 
+        onclick="ObtenerAnalisisPorId(' . $datos[$i]['idestadoAnalisisCrediticio'] . ",'editar'" . ');">
+        <i class="icon-edit"></i> Editar </a>' : '<span class="tag tag-warning">No puede editar</span>';
+            $boton_eliminar = $_SESSION["eliminar"] >= 1 ? '<a class="dropdown-item" onclick="ObtenerAnalisisPorId(' . $datos[$i]['idestadoAnalisisCrediticio'] . ",'eliminar'" . ');">
+        <i class="icon-trash"></i> Eliminar </a>' : '<span class="tag tag-danger">No puede eliminar</span>';
+
+            $list[] = array(
+                "Acciones" => '<div class="btn-group"> 
+            <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
+            </button>
+            <div class="dropdown-menu">
+            ' . $boton_editar . $boton_eliminar . '
+                    
+                </div>
+            </div>',
+                "NO" => $datos[$i]['idestadoAnalisisCrediticio'], //nombre de la tablas en la base de datos
+                "ANALISIS" => $datos[$i]['descripcion'],
+
+
+            );
+        }
+
+        $resultados = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($list),
+            "iTotalDisplayRecords" => count($list),
+            "aaData" => $list
+        );
+    }
+    echo json_encode($resultados); //datos en formato json para la datatable
+
+    break;
+case "obtener_analisis_por_id": //sirve para obtener el id para poder actualizar o eliminar
+    if (isset($_POST["idestadoAnalisisCrediticio"]) && !empty($_POST["idestadoAnalisisCrediticio"])) {
+        $data = $tablas->ObtenerAnalisisPorId($_POST["idestadoAnalisisCrediticio"]);
+        if ($data) {
+            $list[] = array(
+                "ID" => $data['idestadoAnalisisCrediticio'],  //nombres de la base de datos
+                "ANALISIS" => $data['descripcion'], //nombres de la base de datos
+
+
+            );
+            echo json_encode($list);
+        }
+    }
+
+    break;
+
+case "registrar_Analisis":
+    if (isset($_POST["descripcion"]) && !empty($_POST["descripcion"])) {
+
+        $descripcion = $_POST["descripcion"];
+
+        if ($tablas->RegistrarAnalisis($descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+        } else {
+            $response = "error";
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+
+    break;
+
+case "actualizar_analisis":
+    if (isset($_POST["idestadoAnalisisCrediticio"], $_POST["descripcion"])  && !empty($_POST["idestadoAnalisisCrediticio"]) && !empty($_POST["descripcion"])) {
+
+        $idestadoAnalisisCrediticio = $_POST["idestadoAnalisisCrediticio"];
+        $descripcion = $_POST["descripcion"];
+
+
+        if ($tablas->ActualizarAnalisis($idestadoAnalisisCrediticio, $descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+
+        } else {
+            $response = "error";  //error al insertar en BD
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+    break;
+
+case "eliminar_Analisis":
+    if (isset($_POST["idestadoAnalisisCrediticio"]) && !empty($_POST["idestadoAnalisisCrediticio"])) {
+
+        $eliminar = $tablas->EliminarAnalisis($_POST["idestadoAnalisisCrediticio"]);
+        if ($eliminar == "elimino") {
+            $response = "success";  //si elimino correctamente
+
+        } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+            $response = "llave_uso";
+        } else {
+            $response = "error";  //cualquier otro tipo de error
+        }
+    } else {
+        $response = "error";
+    }
+    echo $response;
+
+    break;
 
 } //fin switch

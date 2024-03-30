@@ -15,6 +15,10 @@ var tablaEstadosolicitud;
 var tablaRubro;
 var tablaProfesion;
 var tablaMunicipio;
+var tablaTipopago;
+var tablaTipocliente;
+var tablaEstadocredito;
+var tablaAnalisis;
 
 init();
 //funcion que se ejecutara al inicio
@@ -37,6 +41,10 @@ function init(){
     LlenarTablaRubro();
     LlenarTablaProfesion();
     LlenarTablaMunicipio();
+    LlenarTablaTipopago();
+    LlenarTablaTipocliente();
+    LlenarTablaEstadocredito();
+    LlenarTablaAnalisis();
 }
 
 
@@ -3403,9 +3411,806 @@ function AlertaEliminarMunicipio(idMunicipio, descripcion){
   })
 }
  
+/***************************FUNCIONES DE TIPO PAGO***************************************************************************************************** */
 
+//FUNCION PARA LLENAR LA TABLA DE TPO PAGO AJAX
+function LlenarTablaTipopago(){
+  tablaTipopago = $('#tabla_tipopago').DataTable({
+      pageLength:10,
+      responsive: true,
+      processign: true,
+      "language": {   //para cambiar de idiomas a la tabla
+          "lengthMenu": "Mostrar _MENU_ Registro por páginas",
+          "zeroRecords": "El registro no existe",
+          "info": "Mostrando la página _PAGE_ de _PAGES_",
+          "infoEmpty": "No records available",
+          "infoFiltered": "(Filtrado de _MAX_ Registros Totales)",
+          "search": 'Buscar Registro:',
+          "paginate": {
+              'next': 'Siguiente',
+              'previous': 'Anterior'
+          }
+      },
+      
+      ajax: "../controller/TablasController.php?operador=listar_Tipo_Pago",
+      columns : [
+          { data : 'Acciones'},
+          { data : 'NO'},  //se ponen los datos del Controller
+          { data : 'TIPOPAGO'}, //se ponen los datos del Controller
+          
+          
+      ]
+  });
+}
+ //FUNCION PARA REGISTRA UN estado civil AJAX
+function RegistrarTipoPago(){
+  descripcion = $('#descripcion_Tipopago').val(); //id del modal
 
+  parametros = {
+      "descripcion":descripcion
+  }
 
+  $.ajax({
+      data:parametros,
+      url:"../controller/TablasController.php?operador=registrar_Tipopago",
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+
+          if(response == "success"){  //si inserto correctamente
+             tablaTipopago.ajax.reload();  //actualiza la tablaSSSS
+             LimpiarControles();
+             $('#registral_tipopago').modal('hide'); //cierra el modal
+             Swal.fire({
+              icon: 'success',
+              title: 'Registro exitoso',
+              text: 'Se ha guardado correctamente los datos',
+            })
+          }else if(response == "requerid"){
+              Swal.fire({
+                  icon: 'warning',
+                  title: '¡Atención!',
+                  text: 'Complete todos los campos',
+                })
+          }else{
+              Swal.fire({
+                  icon: 'error',
+                  title: '¡Atención!',
+                  text: 'No se puedieron guardar los datos',
+                })
+          }
+      }
+  })
+} 
+//funcion para obtener el id del cliente para actualizarlo
+function ObtenerTipoPagoPorId(idTipoPago, Acciones){
+  $.ajax({
+      data: { "idTipoPago": idTipoPago },
+      url:'../controller/TablasController.php?operador=obtener_tipo_pago_por_id', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+         // console.log(response);  //para probar que traiga datos en consola
+          data = $.parseJSON(response);
+          if(data.length > 0){
+
+            if(Acciones == "editar"){
+              $('#id_edit').val(data[0]['ID']);
+              $('#descripcion_tipopago_edit').val(data[0]['TIPOPAGO']);  //modal de actualizar estado civil
+              
+
+            }else if(Acciones == "eliminar"){
+              AlertaEliminarTipopago(data[0]['ID'], data[0]['TIPOPAGO']);
+            }
+          }
+         
+      }
+
+  });
+}
+//funcion para actualizar el estado civil
+function ActualizarTipoPago(){
+  idTipoPago = $('#id_edit').val();  //id de los input del modal de actualizar
+  descripcion = $('#descripcion_tipopago_edit').val();
+ 
+  
+ 
+  parametros = {
+      "idTipoPago":idTipoPago, "descripcion":descripcion //parametros que se mandan al controlador: actualizar_estado_civil
+  }
+
+  console.log("NOMBRE:"+descripcion);
+  console.log("ID:"+idTipoPago);
+  $.ajax({
+    data:parametros,
+    url:'../controller/TablasController.php?operador=actualizar_tipopago', //url del controlador 
+    type:'POST',
+    beforeSend:function(){},
+    success:function(response){
+        if(response == "success"){  //si inserto correctamente
+          tablaTipopago.ajax.reload();  //actualiza la tabla
+           $('#actualizar_Tipopago').modal('hide'); //cierra el modal id del modal
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Actualización Exitosa',
+            text: 'Se han actualizado correctamente los datos',
+          })
+
+        }else if(response == "requerid"){
+            Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'Complete todos los datos por favor',
+            })     
+
+       }else{
+            Swal.fire({
+              icon: 'error',
+              title: '¡Atención!',
+              text: 'error al actualizar en la base de datos',
+            })
+        }
+    }
+})
+
+}
+//funcion paraEliminar Categoria
+function EliminarTipoPago(idTipoPago){
+  $.ajax({
+      data: { "idTipoPago": idTipoPago },
+      url:'../controller/TablasController.php?operador=eliminar_Tipopago', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+          
+          if(response == "success"){
+               //actualizar tabla
+               tablaTipopago.ajax.reload();
+               swal.fire({
+                  icon: "success",
+                  title: "Eliminado",
+                  text: "El registro se elimino"   
+              })
+            
+          }else if(response == "llave_uso"){
+              swal.fire({
+                  icon: "warning",
+                  title: "Atención",
+                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+              })
+          }else{
+              swal.fire({
+                  icon: "error",
+                  title: "Atención",
+                  text: "No se a podido eliminar"
+                  
+              })
+          }
+         
+      }
+
+  });
+
+}
+function AlertaEliminarTipopago(idTipoPago, descripcion){
+  Swal.fire({
+    title: '¿Esta seguro que desea eliminar?',
+    text: "Tipo de pago: "+descripcion,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      
+      EliminarTipoPago(idTipoPago); //funcion que eliminar el estado
+
+    }
+  })
+}
+/***************************FUNCIONES DE TIPO CLIENTE***************************************************************************************************** */
+
+//FUNCION PARA LLENAR LA TABLA DE TPO CLIENTE AJAX
+function LlenarTablaTipocliente(){
+  tablaTipocliente = $('#tabla_tipocliente').DataTable({
+      pageLength:10,
+      responsive: true,
+      processign: true,
+      "language": {   //para cambiar de idiomas a la tabla
+          "lengthMenu": "Mostrar _MENU_ Registro por páginas",
+          "zeroRecords": "El registro no existe",
+          "info": "Mostrando la página _PAGE_ de _PAGES_",
+          "infoEmpty": "No records available",
+          "infoFiltered": "(Filtrado de _MAX_ Registros Totales)",
+          "search": 'Buscar Registro:',
+          "paginate": {
+              'next': 'Siguiente',
+              'previous': 'Anterior'
+          }
+      },
+      
+      ajax: "../controller/TablasController.php?operador=listar_Tipo_Cliente",
+      columns : [
+          { data : 'Acciones'},
+          { data : 'NO'},  //se ponen los datos del Controller
+          { data : 'TIPOCLIENTE'}, //se ponen los datos del Controller
+          
+          
+      ]
+  });
+}
+ //FUNCION PARA REGISTRA UN estado civil AJAX
+function RegistrarTipoCliente(){
+  descripcion = $('#descripcion_Tipocliente').val(); //id del modal
+
+  parametros = {
+      "Descripcion":descripcion
+  }
+
+  $.ajax({
+      data:parametros,
+      url:"../controller/TablasController.php?operador=registrar_Tipocliente",
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+
+          if(response == "success"){  //si inserto correctamente
+             tablaTipocliente.ajax.reload();  //actualiza la tablaSSSS
+             LimpiarControles();
+             $('#registral_tipocliente').modal('hide'); //cierra el modal
+             Swal.fire({
+              icon: 'success',
+              title: 'Registro exitoso',
+              text: 'Se ha guardado correctamente los datos',
+            })
+          }else if(response == "requerid"){
+              Swal.fire({
+                  icon: 'warning',
+                  title: '¡Atención!',
+                  text: 'Complete todos los campos',
+                })
+          }else{
+              Swal.fire({
+                  icon: 'error',
+                  title: '¡Atención!',
+                  text: 'No se puedieron guardar los datos',
+                })
+          }
+      }
+  })
+} 
+//funcion para obtener el id del cliente para actualizarlo
+function ObtenerTipoClientePorId(idTipoCliente, Acciones){
+  $.ajax({
+      data: { "idTipoCliente": idTipoCliente },
+      url:'../controller/TablasController.php?operador=obtener_tipo_cliente_por_id', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+         // console.log(response);  //para probar que traiga datos en consola
+          data = $.parseJSON(response);
+          if(data.length > 0){
+
+            if(Acciones == "editar"){
+              $('#id_edit').val(data[0]['ID']);
+              $('#descripcion_tipocliente_edit').val(data[0]['TIPOCLIENTE']);  //modal de actualizar estado civil
+              
+
+            }else if(Acciones == "eliminar"){
+              AlertaEliminarTipocliente(data[0]['ID'], data[0]['TIPOCLIENTE']);
+            }
+          }
+         
+      }
+
+  });
+}
+//funcion para actualizar el estado civil
+function ActualizarTipoCliente(){
+  idTipoCliente = $('#id_edit').val();  //id de los input del modal de actualizar
+  descripcion = $('#descripcion_tipocliente_edit').val();
+ 
+  
+ 
+  parametros = {
+      "idTipoCliente":idTipoCliente, "Descripcion":descripcion //parametros que se mandan al controlador: actualizar_estado_civil
+  }
+
+  console.log("NOMBRE:"+descripcion);
+  console.log("ID:"+idTipoCliente);
+  $.ajax({
+    data:parametros,
+    url:'../controller/TablasController.php?operador=actualizar_tipocliente', //url del controlador 
+    type:'POST',
+    beforeSend:function(){},
+    success:function(response){
+        if(response == "success"){  //si inserto correctamente
+          tablaTipocliente.ajax.reload();  //actualiza la tabla
+           $('#actualizar_Tipocliente').modal('hide'); //cierra el modal id del modal
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Actualización Exitosa',
+            text: 'Se han actualizado correctamente los datos',
+          })
+
+        }else if(response == "requerid"){
+            Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'Complete todos los datos por favor',
+            })     
+
+       }else{
+            Swal.fire({
+              icon: 'error',
+              title: '¡Atención!',
+              text: 'error al actualizar en la base de datos',
+            })
+        }
+    }
+})
+
+}
+//funcion paraEliminar Categoria
+function EliminarTipoCliente(idTipoCliente){
+  $.ajax({
+      data: { "idTipoCliente": idTipoCliente },
+      url:'../controller/TablasController.php?operador=eliminar_Tipocliente', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+          
+          if(response == "success"){
+               //actualizar tabla
+               tablaTipocliente.ajax.reload();
+               swal.fire({
+                  icon: "success",
+                  title: "Eliminado",
+                  text: "El registro se elimino"   
+              })
+            
+          }else if(response == "llave_uso"){
+              swal.fire({
+                  icon: "warning",
+                  title: "Atención",
+                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+              })
+          }else{
+              swal.fire({
+                  icon: "error",
+                  title: "Atención",
+                  text: "No se a podido eliminar"
+                  
+              })
+          }
+         
+      }
+
+  });
+
+}
+function AlertaEliminarTipocliente(idTipoCliente, descripcion){
+  Swal.fire({
+    title: '¿Esta seguro que desea eliminar?',
+    text: "Tipo de Cliente: "+descripcion,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      
+      EliminarTipoCliente(idTipoCliente); //funcion que eliminar el estado
+
+    }
+  })
+}
+/***************************FUNCIONES DE ESTADO CREDITO***************************************************************************************************** */
+
+//FUNCION PARA LLENAR LA TABLA DE ESTADO CREDITO AJAX
+function LlenarTablaEstadocredito(){
+  tablaEstadocredito = $('#tabla_estadocredito').DataTable({
+      pageLength:10,
+      responsive: true,
+      processign: true,
+      "language": {   //para cambiar de idiomas a la tabla
+          "lengthMenu": "Mostrar _MENU_ Registro por páginas",
+          "zeroRecords": "El registro no existe",
+          "info": "Mostrando la página _PAGE_ de _PAGES_",
+          "infoEmpty": "No records available",
+          "infoFiltered": "(Filtrado de _MAX_ Registros Totales)",
+          "search": 'Buscar Registro:',
+          "paginate": {
+              'next': 'Siguiente',
+              'previous': 'Anterior'
+          }
+      },
+      
+      ajax: "../controller/TablasController.php?operador=listar_Estado_Credito",
+      columns : [
+          { data : 'Acciones'},
+          { data : 'NO'},  //se ponen los datos del Controller
+          { data : 'ESTADOCREDITO'}, //se ponen los datos del Controller
+          
+          
+      ]
+  });
+}
+ //FUNCION PARA REGISTRA UN estado civil AJAX
+function RegistrarEstadoCredito(){
+  descripcion = $('#descripcion_Estadocredito').val(); //id del modal
+
+  parametros = {
+      "Descripcion":descripcion
+  }
+
+  $.ajax({
+      data:parametros,
+      url:"../controller/TablasController.php?operador=registrar_Estadocredito",
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+
+          if(response == "success"){  //si inserto correctamente
+            tablaEstadocredito.ajax.reload();  //actualiza la tablaSSSS
+             LimpiarControles();
+             $('#registral_estadocredito').modal('hide'); //cierra el modal
+             Swal.fire({
+              icon: 'success',
+              title: 'Registro exitoso',
+              text: 'Se ha guardado correctamente los datos',
+            })
+          }else if(response == "requerid"){
+              Swal.fire({
+                  icon: 'warning',
+                  title: '¡Atención!',
+                  text: 'Complete todos los campos',
+                })
+          }else{
+              Swal.fire({
+                  icon: 'error',
+                  title: '¡Atención!',
+                  text: 'No se puedieron guardar los datos',
+                })
+          }
+      }
+  })
+} 
+//funcion para obtener el id del cliente para actualizarlo
+function ObtenerEstadoCreditoPorId(idEstadoCredito, Acciones){
+  $.ajax({
+      data: { "idEstadoCredito": idEstadoCredito },
+      url:'../controller/TablasController.php?operador=obtener_estado_credito_por_id', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+         // console.log(response);  //para probar que traiga datos en consola
+          data = $.parseJSON(response);
+          if(data.length > 0){
+
+            if(Acciones == "editar"){
+              $('#id_edit').val(data[0]['ID']);
+              $('#descripcion_estadocredito_edit').val(data[0]['ESTADOCREDITO']);  //modal de actualizar estado civil
+              
+
+            }else if(Acciones == "eliminar"){
+              AlertaEliminarEstadoCredito(data[0]['ID'], data[0]['ESTADOCREDITO']);
+            }
+          }
+         
+      }
+
+  });
+}
+//funcion para actualizar el estado civil
+function ActualizarEstadoCredito(){
+  idEstadoCredito = $('#id_edit').val();  //id de los input del modal de actualizar
+  descripcion = $('#descripcion_estadocredito_edit').val();
+ 
+  
+ 
+  parametros = {
+      "idEstadoCredito":idEstadoCredito, "Descripcion":descripcion //parametros que se mandan al controlador: actualizar_estado_civil
+  }
+
+  console.log("NOMBRE:"+descripcion);
+  console.log("ID:"+idEstadoCredito);
+  $.ajax({
+    data:parametros,
+    url:'../controller/TablasController.php?operador=actualizar_estadocredito', //url del controlador 
+    type:'POST',
+    beforeSend:function(){},
+    success:function(response){
+        if(response == "success"){  //si inserto correctamente
+          tablaEstadocredito.ajax.reload();  //actualiza la tabla
+           $('#actualizar_Estadocredito').modal('hide'); //cierra el modal id del modal
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Actualización Exitosa',
+            text: 'Se han actualizado correctamente los datos',
+          })
+
+        }else if(response == "requerid"){
+            Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'Complete todos los datos por favor',
+            })     
+
+       }else{
+            Swal.fire({
+              icon: 'error',
+              title: '¡Atención!',
+              text: 'error al actualizar en la base de datos',
+            })
+        }
+    }
+})
+
+}
+//funcion paraEliminar Categoria
+function EliminarEstadoCredito(idEstadoCredito){
+  $.ajax({
+      data: { "idEstadoCredito": idEstadoCredito },
+      url:'../controller/TablasController.php?operador=eliminar_Estadocredito', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+          
+          if(response == "success"){
+               //actualizar tabla
+               tablaEstadocredito.ajax.reload();
+               swal.fire({
+                  icon: "success",
+                  title: "Eliminado",
+                  text: "El registro se elimino"   
+              })
+            
+          }else if(response == "llave_uso"){
+              swal.fire({
+                  icon: "warning",
+                  title: "Atención",
+                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+              })
+          }else{
+              swal.fire({
+                  icon: "error",
+                  title: "Atención",
+                  text: "No se a podido eliminar"
+                  
+              })
+          }
+         
+      }
+
+  });
+
+}
+function AlertaEliminarEstadoCredito(idEstadoCredito, descripcion){
+  Swal.fire({
+    title: '¿Esta seguro que desea eliminar?',
+    text: "Estado Credito: "+descripcion,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      
+      EliminarEstadoCredito(idEstadoCredito); //funcion que eliminar el estado
+
+    }
+  })
+}
+/***************************FUNCIONES DE Analisis Crediticio***************************************************************************************************** */
+
+//FUNCION PARA LLENAR LA TABLA DE TPO PAGO AJAX
+function LlenarTablaAnalisis(){
+  tablaAnalisis= $('#tabla_analisis').DataTable({
+      pageLength:10,
+      responsive: true,
+      processign: true,
+      "language": {   //para cambiar de idiomas a la tabla
+          "lengthMenu": "Mostrar _MENU_ Registro por páginas",
+          "zeroRecords": "El registro no existe",
+          "info": "Mostrando la página _PAGE_ de _PAGES_",
+          "infoEmpty": "No records available",
+          "infoFiltered": "(Filtrado de _MAX_ Registros Totales)",
+          "search": 'Buscar Registro:',
+          "paginate": {
+              'next': 'Siguiente',
+              'previous': 'Anterior'
+          }
+      },
+      
+      ajax: "../controller/TablasController.php?operador=listar_Analisis",
+      columns : [
+          { data : 'Acciones'},
+          { data : 'NO'},  //se ponen los datos del Controller
+          { data : 'ANALISIS'}, //se ponen los datos del Controller
+          
+          
+      ]
+  });
+}
+ //FUNCION PARA REGISTRA UN estado civil AJAX
+function RegistrarAnalisis(){
+  descripcion = $('#descripcion_Analisis').val(); //id del modal
+
+  parametros = {
+      "descripcion":descripcion
+  }
+
+  $.ajax({
+      data:parametros,
+      url:"../controller/TablasController.php?operador=registrar_Analisis",
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+
+          if(response == "success"){  //si inserto correctamente
+             tablaAnalisis.ajax.reload();  //actualiza la tablaSSSS
+             LimpiarControles();
+             $('#registral_tipopago').modal('hide'); //cierra el modal
+             Swal.fire({
+              icon: 'success',
+              title: 'Registro exitoso',
+              text: 'Se ha guardado correctamente los datos',
+            })
+          }else if(response == "requerid"){
+              Swal.fire({
+                  icon: 'warning',
+                  title: '¡Atención!',
+                  text: 'Complete todos los campos',
+                })
+          }else{
+              Swal.fire({
+                  icon: 'error',
+                  title: '¡Atención!',
+                  text: 'No se puedieron guardar los datos',
+                })
+          }
+      }
+  })
+} 
+//funcion para obtener el id del cliente para actualizarlo
+function ObtenerAnalisisPorId(idestadoAnalisisCrediticio, Acciones){
+  $.ajax({
+      data: { "idestadoAnalisisCrediticio": idestadoAnalisisCrediticio },
+      url:'../controller/TablasController.php?operador=obtener_analisis_por_id', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+         // console.log(response);  //para probar que traiga datos en consola
+          data = $.parseJSON(response);
+          if(data.length > 0){
+
+            if(Acciones == "editar"){
+              $('#id_edit').val(data[0]['ID']);
+              $('#descripcion_analisis_edit').val(data[0]['ANALISIS']);  //modal de actualizar estado civil
+              
+
+            }else if(Acciones == "eliminar"){
+              AlertaEliminarAnalisis(data[0]['ID'], data[0]['ANALISIS']);
+            }
+          }
+         
+      }
+
+  });
+}
+//funcion para actualizar el estado civil
+function ActualizarAnalisis(){
+  idestadoAnalisisCrediticio = $('#id_edit').val();  //id de los input del modal de actualizar
+  descripcion = $('#descripcion_analisis_edit').val();
+ 
+  
+ 
+  parametros = {
+      "idestadoAnalisisCrediticio":idestadoAnalisisCrediticio, "descripcion":descripcion //parametros que se mandan al controlador: actualizar_estado_civil
+  }
+
+  console.log("NOMBRE:"+descripcion);
+  console.log("ID:"+idestadoAnalisisCrediticio);
+  $.ajax({
+    data:parametros,
+    url:'../controller/TablasController.php?operador=actualizar_analisis', //url del controlador 
+    type:'POST',
+    beforeSend:function(){},
+    success:function(response){
+        if(response == "success"){  //si inserto correctamente
+          tablaAnalisis.ajax.reload();  //actualiza la tabla
+           $('#actualizar_Analisis').modal('hide'); //cierra el modal id del modal
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Actualización Exitosa',
+            text: 'Se han actualizado correctamente los datos',
+          })
+
+        }else if(response == "requerid"){
+            Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'Complete todos los datos por favor',
+            })     
+
+       }else{
+            Swal.fire({
+              icon: 'error',
+              title: '¡Atención!',
+              text: 'error al actualizar en la base de datos',
+            })
+        }
+    }
+})
+
+}
+//funcion paraEliminar Categoria
+function EliminarAnalisis(idestadoAnalisisCrediticio){
+  $.ajax({
+      data: { "idestadoAnalisisCrediticio": idestadoAnalisisCrediticio },
+      url:'../controller/TablasController.php?operador=eliminar_Analisis', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+          
+          if(response == "success"){
+               //actualizar tabla
+               tablaAnalisis.ajax.reload();
+               swal.fire({
+                  icon: "success",
+                  title: "Eliminado",
+                  text: "El registro se elimino"   
+              })
+            
+          }else if(response == "llave_uso"){
+              swal.fire({
+                  icon: "warning",
+                  title: "Atención",
+                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+              })
+          }else{
+              swal.fire({
+                  icon: "error",
+                  title: "Atención",
+                  text: "No se a podido eliminar"
+                  
+              })
+          }
+         
+      }
+
+  });
+
+}
+function AlertaEliminarAnalisis(idestadoAnalisisCrediticio, descripcion){
+  Swal.fire({
+    title: '¿Esta seguro que desea eliminar?',
+    text: "Analisis Crediticio: "+descripcion,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      
+      EliminarAnalisis(idestadoAnalisisCrediticio); //funcion que eliminar el estado
+
+    }
+  })
+}
 
 
 //funcion para limpiar los inputs de los modals nuevos de todas las tablas
