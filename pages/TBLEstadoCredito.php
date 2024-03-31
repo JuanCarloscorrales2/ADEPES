@@ -42,7 +42,7 @@ if (isset($_SESSION["user"])) {
 								<div class="card-header">
 									<h4 class="card-title" id="basic-layout-form">
 										<h4>
-											<center>Estado Credito</center>
+											<center>Estado Crédito</center>
 										</h4>
 										<?php
 										if ($tiene_permiso && $tiene_permiso["insertar"] >= 1) {
@@ -68,7 +68,7 @@ if (isset($_SESSION["user"])) {
 													<tr>
 														<th>Acciones</th>
 														<th>No.</th>
-														<th>Estado Credito</th>
+														<th>Estado Crédito</th>
 
 													</tr>
 												</thead>
@@ -78,7 +78,7 @@ if (isset($_SESSION["user"])) {
 													<tr>
 														<th>Acciones</th>
 														<th>No.</th>
-														<th>Estado Credito</th>
+														<th>Estado Crédito</th>
 
 													</tr>
 												</tfoot>
