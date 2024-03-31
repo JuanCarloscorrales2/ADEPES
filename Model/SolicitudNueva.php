@@ -1,6 +1,6 @@
 <?php
 
-require "../config/Conexion.php";
+require_once("../config/Conexion.php");
 
 class Solicitud {
 
@@ -350,11 +350,11 @@ class Solicitud {
 //FUNCION PARA REGISTRAr UN solicitante
 
 function RegistrarCliente($idTipoPersona, $idNacionalidad, $idGenero, $idEstadoCivil, $idProfesion, $bienes, $idTipoClientes, $idcategoriaCasa, $idtiempoVivir, $municipio,
-                           $idTiempoLaboral, $nombres, $apellidos, $identidad, $fechaNacimiento, $PagaAlquiler, $patrono, $actividadDesempenia, $ObservacionesSolicitud, $esAval, $avalMora, $estadoCredito) {
+                           $idTiempoLaboral, $nombres, $apellidos, $identidad, $fechaNacimiento, $PagaAlquiler, $patrono, $actividadDesempenia, $ObservacionesSolicitud, $esAval, $avalMora, $estadoCredito, $CreadoPor) {
     $query = "INSERT INTO tbl_mn_personas(idTipoPersona, idNacionalidad, idGenero, idEstadoCivil, idProfesion, idPersonaBienes, idTipoClientes, idcategoriaCasa,
                                           idtiempoVivir, idMunicipio, idTiempoLaboral, nombres, apellidos, identidad, fechaNacimiento, PagaAlquiler, PratronoNegocio,
-                                          cargoDesempena, ObservacionesSolicitud, esAval, avalMora, estadoCredito)
-     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";                                                                                                       
+                                          cargoDesempena, ObservacionesSolicitud, esAval, avalMora, estadoCredito, CreadoPor)
+     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";                                                                                                       
     $result = $this->cnx->prepare($query);
 
     $result->bindParam(1, $idTipoPersona);
@@ -379,6 +379,7 @@ function RegistrarCliente($idTipoPersona, $idNacionalidad, $idGenero, $idEstadoC
     $result->bindParam(20, $esAval);
     $result->bindParam(21, $avalMora);
     $result->bindParam(22, $estadoCredito);
+    $result->bindParam(23, $CreadoPor);
 
     if ($result->execute()) {
         $lastInsertId = $this->cnx->lastInsertId(); // Obtiene el ID del último registro insertado
@@ -388,13 +389,14 @@ function RegistrarCliente($idTipoPersona, $idNacionalidad, $idGenero, $idEstadoC
     return false;
 }
 
-function RegistrarAval($idSolicitud, $idPersona) {
-    $query = "INSERT INTO tbl_mn_avales(idSolicitud, idPersona)
-     VALUES(?, ?)";                                                                                                       
+function RegistrarAval($idSolicitud, $idPersona, $CreadoPor) {
+    $query = "INSERT INTO tbl_mn_avales(idSolicitud, idPersona, CreadoPor)
+     VALUES(?, ?, ?)";                                                                                                       
     $result = $this->cnx->prepare($query);
 
     $result->bindParam(1, $idSolicitud);
     $result->bindParam(2, $idPersona);
+    $result->bindParam(3, $CreadoPor);
     
     if ($result->execute()) {
     
@@ -442,7 +444,7 @@ function RegistrarCuenta($idPersona, $tipoCuenta, $cuenta){
 
 
 
-function Registrar_contactos_referencias($contactos, $referencias) {
+function Registrar_contactos_referencias($contactos, $referencias, $CreadoPor) {
     $sqlContactos = "INSERT INTO tbl_mn_personas_contacto (idPersona, idTipoContacto, valor) VALUES (?, ?, ?)";
     $resultContactos = $this->cnx->prepare($sqlContactos);
 
@@ -458,8 +460,8 @@ function Registrar_contactos_referencias($contactos, $referencias) {
         $resultContactos->execute();
     }
 
-    $sqlReferencias = "INSERT INTO tbl_mn_referencias_familiares (idPersona, idParentesco, nombre, celular, direccion) 
-                      VALUES (?, ?, ?, ?, ?)";
+    $sqlReferencias = "INSERT INTO tbl_mn_referencias_familiares (idPersona, idParentesco, nombre, celular, direccion, CreadoPor) 
+                      VALUES (?, ?, ?, ?, ?, ?)";
     $resultReferencias = $this->cnx->prepare($sqlReferencias);
 
     foreach ($referencias as $referencia) {
@@ -474,6 +476,7 @@ function Registrar_contactos_referencias($contactos, $referencias) {
         $resultReferencias->bindParam(3, $nombre);
         $resultReferencias->bindParam(4, $celular);
         $resultReferencias->bindParam(5, $direccion);
+        $resultReferencias->bindParam(6, $CreadoPor);
 
         $resultReferencias->execute();
     }
@@ -488,11 +491,11 @@ function Registrar_contactos_referencias($contactos, $referencias) {
     }
 }
 
-function RegistrarReferenciasComerciales($comerciales) {
+function RegistrarReferenciasComerciales($comerciales, $CreadoPor) {
     try {
         $this->cnx->beginTransaction();
 
-        $sqlReferencia = "INSERT INTO tbl_mn_referencias_comerciales (idPersona, nombre, direccion) VALUES (?, ?, ?)";
+        $sqlReferencia = "INSERT INTO tbl_mn_referencias_comerciales (idPersona, nombre, direccion, CreadoPor) VALUES (?, ?, ?, ?)";
         $resultReferencia = $this->cnx->prepare($sqlReferencia);
 
         foreach ($comerciales as $referencia) {
@@ -503,6 +506,7 @@ function RegistrarReferenciasComerciales($comerciales) {
             $resultReferencia->bindParam(1, $idPersona);
             $resultReferencia->bindParam(2, $nombre);
             $resultReferencia->bindParam(3, $direccion);
+            $resultReferencia->bindParam(4, $CreadoPor);
 
             $resultReferencia->execute();
         }
@@ -534,9 +538,9 @@ function RegistrarDependientes($idPersona, $idParentesco, $nombre) {
 }
 
 //FUNCION PARA REGISTRAr la solicitd
-function RegistrarSolicitud($idPersona, $idTipoPrestamo, $idRubro, $idEstadoSolicitud, $idUsuario, $Monto, $tasa, $Plazo, $fechaDesembolso, $invierteEn, $prestamoAprobados){
-    $query = "INSERT INTO tbl_mn_solicitudes_creditos(idPersona, idTipoPrestamo, idRubro, idEstadoSolicitud, idUsuario, Monto, tasa, Plazo, fechaDesembolso, invierteEn, prestamoAprobados )
-     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+function RegistrarSolicitud($idPersona, $idTipoPrestamo, $idRubro, $idEstadoSolicitud, $idUsuario, $Monto, $tasa, $Plazo, $fechaDesembolso, $invierteEn, $prestamoAprobados, $CreadoPor){
+    $query = "INSERT INTO tbl_mn_solicitudes_creditos(idPersona, idTipoPrestamo, idRubro, idEstadoSolicitud, idUsuario, Monto, tasa, Plazo, fechaDesembolso, invierteEn, prestamoAprobados, CreadoPor )
+     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $result = $this->cnx->prepare($query); //preparacion de la sentencia
     $result->bindParam(1,$idPersona);
     $result->bindParam(2,$idTipoPrestamo);
@@ -549,6 +553,7 @@ function RegistrarSolicitud($idPersona, $idTipoPrestamo, $idRubro, $idEstadoSoli
     $result->bindParam(9,$fechaDesembolso);
     $result->bindParam(10,$invierteEn);
     $result->bindParam(11,$prestamoAprobados);
+    $result->bindParam(12,$CreadoPor);
 
     if($result->execute()){ //validacion de la ejecucion
         return true;
@@ -811,7 +816,7 @@ function DictamenAsesor($idPersona){ //funcion que trae el id de la solicitud
 function PrestamosAprobadosPorPersona($identidad){ //funcion que cuenta los prestamo por persona
     $query = "SELECT COUNT(persona.idPersona ) AS aprobados FROM tbl_mn_personas persona
     INNER JOIN tbl_mn_solicitudes_creditos soli ON persona.idPersona = soli.idPersona
-    WHERE persona.identidad = ? AND soli.idEstadoSolicitud = 1"; 
+    WHERE persona.identidad = ? AND soli.idEstadoSolicitud = 4"; 
     $result = $this->cnx->prepare($query);
     $result->bindParam(1,$identidad);
     if($result->execute())
@@ -820,6 +825,23 @@ function PrestamosAprobadosPorPersona($identidad){ //funcion que cuenta los pres
         return (int)$fila['aprobados'];
     }
     return false;
+}
+
+ //FUNCION PARA REGISTRAR  EN LA BITACORA
+ function RegistrarBitacora($idUsuario, $idObjetos, $Accion, $Descripcion){
+    $query = "INSERT INTO tbl_ms_bitacora(idUsuario, idObjetos, Accion, Descripcion) VALUES(?, ?, ?, ?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$idUsuario);
+    $result->bindParam(2,$idObjetos);
+    $result->bindParam(3,$Accion);
+    $result->bindParam(4,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
 }
 
 

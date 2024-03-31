@@ -2,6 +2,7 @@
 <?php
 session_start();
 require "../model/Permisos.php";
+require "../model/BitacoraModel.php";
 $permiso = new Permisos();
 $rol = $_SESSION["user"]["idRol"];
 $tiene_permiso = $permiso->ListarPermisosRol(6, $rol);
@@ -9,6 +10,10 @@ $_SESSION["actualizar"] = $tiene_permiso ? $tiene_permiso["actualizar"] : 0;
 $_SESSION["eliminar"] = $tiene_permiso ? $tiene_permiso["eliminar"] : 0;
 $_SESSION["consultar"] = $tiene_permiso ? $tiene_permiso["consultar"] : 0;
 $_SESSION["reportes"] = $tiene_permiso ? $tiene_permiso["reportes"] : 0;
+
+//bitacora
+$bita = new Bitacora();
+$bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 6, "Ingreso", "Ingreso a la pantalla de solicitudes");
 if (isset($_SESSION["user"])) {
 	include "layouts/head.php";  ?>
 
@@ -90,6 +95,7 @@ if (isset($_SESSION["user"])) {
 																<option>Aprobado</option>
 																<option>Pendiente</option>
 																<option>No aprobado</option>
+																<option>Contrato Aprobado</option>
 															</select>
 														</td>
 													</tr>
@@ -153,13 +159,29 @@ if (isset($_SESSION["user"])) {
 	<!--Solicitudes jS -->
 	<!--Solicitudes jS -->
 	<script src="../assets/js/listadoSolicitudes.js"></script>
+	<script>
+		window.addEventListener('beforeunload', function (event) {
+			// Parámetros que deseas enviar al script PHP
+			var usuarioId = <?php echo $_SESSION["user"]["idUsuario"]; ?>;
+			var pantallaId = 6; // ID de la pantalla en la cual se esta registrado el evento
+			var accion = "Salio"; // Acción del evento
+			var descripcion = "Salió de la pantalla de solicitudes"; // Descripción de la acción
+			
+			// Realiza una solicitud AJAX para registrar la salida del usuario
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '../pages/registrar_salida.php', true);
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.send('usuarioId=' + usuarioId + '&pantallaId=' + pantallaId + '&accion=' + accion + '&descripcion=' + descripcion);
+		});
+  </script>
+
 
 	<!--==========================================-->
 
 	<!-- ============= | footer | ================-->
 <?php
 	include "layouts/footer.php";
-}
+
 
 if ($_SESSION["consultar"] < 1) { ?>
 	<script>
@@ -173,6 +195,7 @@ if ($_SESSION["consultar"] < 1) { ?>
 		});
 	</script>
 <?php
+}
 } else {
 	header("location:../");
 }
