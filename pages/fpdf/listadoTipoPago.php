@@ -176,7 +176,7 @@ $pdf->setWidths(array(10, 60)); //tamano de las celdas segun el encabezado de la
 
     //construir el contenido del PDF DE LOS DATOS OBTENIDOS DEL DATATABLESS
     foreach ($datosFiltradosOrdenados as $fila) {
-        $pdf->Row(array($fila['NO'], $fila['TIPOPAGO']), 0 );
+        $pdf->Row(array($fila['NO'], utf8_decode($fila['TIPOPAGO'])), 0 );
     }
     // Enviar el PDF al navegador para su descarga 
     $pdf->Output('listado_de_Tipo_Pago.pdf', 'I'); //nombre de descarga
