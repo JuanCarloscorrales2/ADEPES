@@ -523,12 +523,12 @@ class EditarSolicitud {
     /****************************** FUNCIONES DE ACTUALIZACION DE SOLICITUD ****************************** */
     function ActualizarPersona($idPersona, $idNacionalidad, $idGenero, $idEstadoCivil, $idProfesion, $idPersonaBienes, $idTipoClientes, $idcategoriaCasa,
      $idtiempoVivir, $idTiempoLaboral, $PagaAlquiler, $estadoCredito, $esAval, $avalMora, $idMunicipio, $nombres, $apellidos, $identidad,
-      $fechaNacimiento, $PratronoNegocio, $cargoDesempena, $ObservacionesSolicitud){
+      $fechaNacimiento, $PratronoNegocio, $cargoDesempena, $ObservacionesSolicitud, $ModificadoPor){
         
         $query = "UPDATE tbl_mn_personas SET  idNacionalidad = ?, idGenero = ?, idEstadoCivil = ?, idProfesion = ?,
         idPersonaBienes = ?, idTipoClientes = ?, idcategoriaCasa = ?, idtiempoVivir = ?, idTiempoLaboral = ?, PagaAlquiler = ?,
         estadoCredito = ?, esAval = ?, avalMora = ?, idMunicipio = ?, nombres = ?, apellidos = ?, identidad = ?, fechaNacimiento = ?,
-        PratronoNegocio = ?, cargoDesempena = ?, ObservacionesSolicitud = ?
+        PratronoNegocio = ?, cargoDesempena = ?, ObservacionesSolicitud = ?, ModificadoPor = ?, FechaModificacion = CURRENT_TIMESTAMP
         WHERE idPersona = ?";
         $result = $this->cnx->prepare($query); //preparacion de la sentencia
         $result->bindParam(1,$idNacionalidad);
@@ -552,7 +552,8 @@ class EditarSolicitud {
         $result->bindParam(19,$PratronoNegocio);
         $result->bindParam(20,$cargoDesempena);
         $result->bindParam(21,$ObservacionesSolicitud);
-        $result->bindParam(22,$idPersona);
+        $result->bindParam(22,$ModificadoPor);
+        $result->bindParam(23,$idPersona);
 
 
         if($result->execute()){ //validacion de la ejecucion
@@ -796,8 +797,38 @@ class EditarSolicitud {
             return false;
         }
     }
-    
 
+    //funciion para ver si la solicitud esta aprobada o no
+    function ConsultarEstadoSolicitud($idSolicitud)
+    {
+        $query = "SELECT idEstadoSolicitud FROM tbl_mn_solicitudes_creditos WHERE idSolicitud =? ";
+        $result = $this->cnx->prepare($query);
+        $result->bindParam(1,$idSolicitud);
+        if($result->execute())
+        {
+            return $result->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
+
+        
+    }
+
+    //FUNCION PARA REGISTRAR  EN LA BITACORA
+    function RegistrarBitacora($idUsuario, $idObjetos, $Accion, $Descripcion){
+        $query = "INSERT INTO tbl_ms_bitacora(idUsuario, idObjetos, Accion, Descripcion) VALUES(?, ?, ?, ?)";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$idUsuario);
+        $result->bindParam(2,$idObjetos);
+        $result->bindParam(3,$Accion);
+        $result->bindParam(4,$Descripcion);
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
 } //fin de la clase
 
 

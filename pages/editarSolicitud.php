@@ -155,9 +155,11 @@ include "layouts/head.php";
                     <div class="step" onclick="showStep(6)">Dictamen</div>
                     <div class="step" onclick="showStep(7)">Central</div>
                     <div class="step" onclick="showStep(8)">Comité</div>
-					<button type="button" class="btn btn-info" style="float: right;"  onclick="ActualizarCliente();">Guardar</button>
+					<button type="button" id="botonActualizar" class="btn btn-info" style="float: right;"  onclick="ActualizarCliente();">Guardar</button>
                 </div>
+
 				<form id="form">
+				<div id="mensaje" class="alert alert-info" role="alert" style="display: none;"> </div> <!-- para mostrar infromacion del prestamo -->
                     <div class="form-step active" id="step1">
                         <!-- *********************************  FORMULARIO CLIENTE ***************************************** -->
                       
