@@ -79,7 +79,8 @@ switch ($_REQUEST["operador"]) {
                "PLAZO" => $datos[$i]['Plazo'],
                "ESTADO" => ($datos[$i]['idEstadoSolicitud'] == 1) ? '<span class="tag tag-info">Aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 2) ? '<span class="tag tag-danger">No aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 4) ?
                 '<span class="tag tag-success">Contrato Aprobado</span>' : '<span class="tag tag-warning">Pendiente</span>')),
-               "FECHA_DESEMBOLSO" => $datos[$i]['fechaDesembolso'],
+                "ESTADON" => ($datos[$i]['Estado']),
+                "FECHA_DESEMBOLSO" => $datos[$i]['fechaDesembolso'],
 
 
 

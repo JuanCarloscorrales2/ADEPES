@@ -511,29 +511,36 @@ function ListarMunicipioSelect(){
 
 
 
+  //funcion para controlar el evento click fuera del modal
+  function eventoCerrarModal(){
 
+    if($('#descripcionProfesion').val() != ""){ //validad que los input hayan datos
+        
+      Swal.fire({
+          title: '¿Estás seguro?',
+          text: "La información ingresada se perderá.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, salir',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          // Si el usuario confirma, cierra el modal 
+          if (result.isConfirmed) {
+            //limpia los inputs
+            $('#descripcionProfesion').val('');
+      
+          } else {
+            // Si el usuario cancela, vuelve a abrir el modal
+            $('#RegistarProfesionSolicitud').modal('show');
+          }
+        });
+    }
+  }
 
-/*
-//funcion para validar el input de indentidad cliente
-// Obtener el elemento del input
-function formatoIdentidad(event) {
-    // Obtener el valor actual del input
-    var identidad = event.target.value;
-  
-    // Eliminar guiones existentes para que no afecten la validación
-    identidad = identidad.replace(/-/g, '');
-  
-    // Aplicar formato a los dos primeros grupos de 4 números
-    if (identidad.length > 8) {
-      identidad = identidad.slice(0, 4) + '-' + identidad.slice(4, 8) + '-' + identidad.slice(8);
-    } else if (identidad.length > 4) {
-      identidad = identidad.slice(0, 4) + '-' + identidad.slice(4);
-    }
-  
-    // Actualizar el valor del input con el formato aplicado
-    event.target.value = identidad;
-}
- */
+ 
+
 function formatoIdentidad(event) {
     // Obtener el valor actual del input y eliminar caracteres no numéricos
     var identidad = event.target.value.replace(/\D/g, '');
