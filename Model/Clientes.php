@@ -48,7 +48,7 @@ class Cliente {
                     INNER JOIN tbl_mn_tipos_prestamos prestamos on prestamos.idTipoPrestamo=solicitudes.idTipoPrestamo
                     INNER JOIN tbl_mn_plan_pagos_cuota_nivelada  pl
                     INNER JOIN tbl_mn_estadoplanpagos ep ON ep.idEstadoPlanPagos=pl.idEstadoPlanPagos
-                    where solicitudes.idEstadoSolicitud=1
+                    where solicitudes.idEstadoSolicitud=4
                     GROUP BY concat(personas.nombres, ' ',personas.apellidos);"; 
         $result = $this->cnx->prepare($query);
         if($result->execute()){
