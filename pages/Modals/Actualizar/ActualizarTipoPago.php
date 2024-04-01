@@ -13,7 +13,7 @@
            <input type="hidden"  class="form-control" id="id_edit" >
           <div class="form-group">
             <label for="descripcion_rol" class="col-form-label">Descripción:</label>
-            <input type="text"  id="descripcion_tipopago_edit" placeholder="Ingrese un nombre deTipo de Pago" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20">
+            <input type="text"  id="descripcion_tipopago_edit" placeholder="Ingrese un nombre de Tipo de Pago" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20">
           </div>
         </form>
       </div>

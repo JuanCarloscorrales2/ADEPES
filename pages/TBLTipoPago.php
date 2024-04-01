@@ -49,7 +49,7 @@ if (isset($_SESSION["user"])) {
 											echo '<button class="btn btn-success" data-toggle="modal" data-target="#registral_Tipopago"><span class="icon-plus"></span> Nuevo</button>';
 										}
 										if ($tiene_permiso &&  $tiene_permiso["reportes"] >= 1) {
-											echo '<button id="btn_descargar_rCategCasa_pdf" class="btn btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
+											echo '<button id="btn_descargar_rTipoPago_pdf" class="btn btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
 										} ?>
 									</h4>
 									<a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
@@ -133,7 +133,7 @@ if (isset($_SESSION["user"])) {
 	<!--TABLAS jS -->
 	<script src="../assets/js/Tablas.js"></script>
 
-	<!-- Agg. el reporte de Categoria de Casa -->
+	<!-- Agg. el reporte de Tipo de Pago -->
 	<script src="../assets/js/listadoTipoPago.js"></script>
 
 
