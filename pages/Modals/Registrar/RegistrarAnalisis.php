@@ -2,7 +2,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">   <strong> <center>Agregar Categoria Casa</center> </strong>   </h5>
+        <h5 class="modal-title" id="exampleModalLabel">   <strong> <center>Agregar un estado de análisis crediticio</center> </strong>   </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick ="eventoCerrarModal();">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -11,7 +11,7 @@
         <form>
           <div class="form-group">
             <label for="descripcion_rol" class="col-form-label">Descripción:</label>
-            <input type="text"  id="descripcion_Analisis" placeholder="Ingrese un nueva Categoria-Casa" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20">
+            <input type="text"  id="descripcion_Analisis" placeholder="Ingrese un nuevo estado de análisis crediticio" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20">
           </div>
         </form>
       </div>
