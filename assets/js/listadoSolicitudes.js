@@ -106,9 +106,10 @@ function ObtenerSolicitudPor_Id(persona, Acciones){
     idSoli = $('#idSoli').val();
     numeroActa = $('#numeroActa').val();
     estadoSoli = $('#estado').val();
+    nombre = $('#nombreComite').val();
 
     $.ajax({
-        data: { "idSoli": idSoli, "numeroActa": numeroActa, "estadoSoli": estadoSoli  },
+        data: { "idSoli": idSoli, "numeroActa": numeroActa, "estadoSoli": estadoSoli, "nombre":nombre  },
         url:'../controller/SolicitudNuevaController.php?operador=aprobar_Solicitud', //url del controlador Conttroller
         type:'POST',
         beforeSend:function(){},
@@ -268,31 +269,31 @@ function ReporteSolicitud(idSolicitud, idPersona) {
      elemento.value = texto.toUpperCase();
  }
 
-   //funcion para controlar el evento click fuera del modal
-   function eventoCerrarModalComite(){
+ //funcion para controlar el evento click fuera del modal
+ function eventoCerrarModalComite(){
 
-    if($('#numeroActa').val() != "" || $('#estado').val() != ""){ //validad que los input hayan datos
-        
-      Swal.fire({
-          title: '¿Estás seguro?',
-          text: "La información ingresada se perderá.",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Sí, salir',
-          cancelButtonText: 'Cancelar'
-        }).then((result) => {
-          // Si el usuario confirma, cierra el modal 
-          if (result.isConfirmed) {
-            //limpia los inputs
-            $('#numeroActa').val('');
-            $('#estado').val('');
+  if($('#numeroActa').val() != "" || $('#estado').val() != ""){ //validad que los input hayan datos
       
-          } else {
-            // Si el usuario cancela, vuelve a abrir el modal
-            $('#comiteCredito').modal('show');
-          }
-        });
-    }
-  }
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "La información ingresada se perderá.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, salir',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        // Si el usuario confirma, cierra el modal 
+        if (result.isConfirmed) {
+          //limpia los inputs
+          $('#numeroActa').val('');
+          $('#estado').val('');
+    
+        } else {
+          // Si el usuario cancela, vuelve a abrir el modal
+          $('#comiteCredito').modal('show');
+        }
+      });
+  }
+}

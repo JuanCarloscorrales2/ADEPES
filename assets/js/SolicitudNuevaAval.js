@@ -295,7 +295,7 @@ let currentStep = 0;
 
 function RegistrarAval(){
     //datos del cliente
-    
+    nombreSolicitante =$('#nombreSolicitante').val();
     idEstadoCivil =$('#estadoCivil').val();
     idGenero = $('#idGeneroCliente').val();  
     idcategoriaCasa = $('#casa').val();
@@ -388,7 +388,7 @@ function RegistrarAval(){
  
    
    parametros = {
-    "idNacionalidad":idNacionalidad, "idGenero":idGenero, "idEstadoCivil":idEstadoCivil, "idProfesion":idProfesion,
+    "idNacionalidad":idNacionalidad, "idGenero":idGenero, "idEstadoCivil":idEstadoCivil, "idProfesion":idProfesion, "nombreSolicitante":nombreSolicitante,
     "idTipoClientes":idTipoClientes, "idcategoriaCasa":idcategoriaCasa , "idtiempoVivir":idtiempoVivir, "pagaAlquiler":pagaAlquiler, "idTiempoLaboral":idTiempoLaboral,
     "nombres":nombres, "apellidos":apellidos, "identidad":identidad, "fechaNacimiento":fechaNacimiento, "actividadDesempenia":actividadDesempenia, "patrono":patrono,
     "direccionCliente":direccionCliente, "celularCliente":celularCliente, "telefonoCliente":telefonoCliente, "direccionTrabajoCliente":direccionTrabajoCliente,

@@ -77,10 +77,11 @@ switch ($_REQUEST["operador"]) {
                "MONTO" => $datos[$i]['Monto'],
                "TASA" => $datos[$i]['tasa'],
                "PLAZO" => $datos[$i]['Plazo'],
-               "ESTADO" => ($datos[$i]['idEstadoSolicitud'] == 1) ? '<span class="tag tag-info">Aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 2) ? '<span class="tag tag-danger">No aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 4) ?
-                '<span class="tag tag-success">Contrato Aprobado</span>' : '<span class="tag tag-warning">Pendiente</span>')),
-                "ESTADON" => ($datos[$i]['Estado']),
-                "FECHA_DESEMBOLSO" => $datos[$i]['fechaDesembolso'],
+               //"ESTADO" => ($datos[$i]['idEstadoSolicitud'] == 1 || $datos[$i]['idEstadoSolicitud'] == 4) ? '<span class="tag tag-success">Aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 2) ? '<span class="tag tag-danger">No aprobado</span>' :
+               //      '<span class="tag tag-warning">Pendiente</span>'),
+               "ESTADO" => ($datos[$i]['idEstadoSolicitud'] == 1) ? '<span class="tag tag-info">Aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 2) ? '<span class="tag tag-danger">No aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 4) ? '<span class="tag tag-success">Contrato Aprobado</span>' : '<span class="tag tag-warning">Pendiente</span>')),
+               "ESTADON" => ($datos[$i]['Estado']),
+               "FECHA_DESEMBOLSO" => $datos[$i]['fechaDesembolso'],
 
 
 
@@ -224,8 +225,17 @@ switch ($_REQUEST["operador"]) {
       //$idUsuarioDictamen =  $_SESSION["user"]["idUsuario"];
       if (isset($_POST["idSoli"], $_POST["estadoSoli"]) && !empty($_POST["idSoli"])) {
 
-
-         if ($solicitud->AprobarSolicitud($_POST["numeroActa"], $_POST["estadoSoli"], $_POST["idSoli"])) {
+         $idUsuario =  $_SESSION["user"]["idUsuario"];
+         $nombre = $_POST["nombre"];
+         if($_POST["estadoSoli"] == 1){
+           
+            $descripcionB= "Aprobó la solicitud del cliente: ".$nombre;
+         }else{
+            $descripcionB= "No aprobó la solicitud del cliente: ".$nombre;
+         }
+         
+         if ($solicitud->AprobarSolicitud($_POST["numeroActa"], $_POST["estadoSoli"], $_POST["idSoli"]) 
+            && $solicitud->RegistrarBitacora($idUsuario, 6, "Modifico", $descripcionB) ) {
             $response = "success";
          } else {
             $response = "error";
@@ -867,6 +877,7 @@ switch ($_REQUEST["operador"]) {
    case "registrar_aval":
 
       $hoy = date('Y-m-d');
+      $nombreSolicitante =  $_POST["nombreSolicitante"];
       $idTipoPersona =  3; //AVAL
       $nombres =  $_POST["nombres"];
       $apellidos =  $_POST["apellidos"];
@@ -1090,7 +1101,10 @@ switch ($_REQUEST["operador"]) {
                $solicitud->Registrar_contactos_referencias($contactos, $referencias, $CreadoPor);
                //referencias comerciales del aval
                $solicitud->RegistrarReferenciasComerciales($comerciales, $CreadoPor);
+               $descripcionBitacora = "Se agrego el aval: ".$nombres." ".$apellidos.", a la solicitud del cliente: ".$nombreSolicitante;
+               $solicitud->RegistrarBitacora($idUsuario, 6, "Inserto", $descripcionBitacora);
             }
+
 
             $response = "registrarPareja";  //si se inserto en la BD manda mensaje de exito
          } else {
@@ -1181,7 +1195,8 @@ switch ($_REQUEST["operador"]) {
             $solicitud->Registrar_contactos_referencias($contactos, $referencias, $CreadoPor);
             //referencia comercial
             $solicitud->RegistrarReferenciasComerciales($comerciales, $CreadoPor);
-
+            $descripcionBitacora = "Se agrego el aval: ".$nombres." ".$apellidos.", a la solicitud del cliente: ".$nombreSolicitante;
+            $solicitud->RegistrarBitacora($idUsuario, 6, "Inserto", $descripcionBitacora);
 
 
             $response = "success";  //si se inserto en la BD manda mensaje de exito
