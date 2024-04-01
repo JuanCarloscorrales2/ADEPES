@@ -97,7 +97,7 @@ include "layouts/head.php";
 				
 				<input type="hidden" id="tipogarantia" class="form-control" value="<?php echo $_SESSION["Solicitud"]["idTipoPrestamo"]; ?>">
 		
-
+				<input type="hidden" id="nombreSolicitante" class="form-control" value="<?php echo $_SESSION["Solicitud"]["nombres"]." ". $_SESSION["Solicitud"]["apellidos"]; ?>">
 			
 				<input type="hidden" id="monto" name="monto" class="form-control" value="<?php echo $_SESSION["Solicitud"]["Monto"]; ?>" >	
 			

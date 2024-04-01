@@ -671,7 +671,7 @@ function ObtenerDatosPrestamo($idTipoPrestamo){ //funcion que trae el id de la s
 
 //funcion para  aprobar solicitud
 function AprobarSolicitud($numeroActa, $idEstadoSolicitud, $idSolicitud){
-    $query = "UPDATE tbl_mn_solicitudes_creditos SET fechaAprob= CURDATE(), numeroActa = ?, idEstadoSolicitud = ? WHERE idSolicitud = ?"; 
+    $query = "UPDATE tbl_mn_solicitudes_creditos SET fechaDesembolso= CURDATE(), numeroActa = ?, idEstadoSolicitud = ? WHERE idSolicitud = ?"; 
     $result = $this->cnx->prepare($query);
     $result->bindParam(1,$numeroActa);
     $result->bindParam(2,$idEstadoSolicitud);
