@@ -20,7 +20,7 @@
 							
 					<input type="hidden" id="fechaEmisionR" name="fechaEmisionR">
 					
-					<button type="submit" id="generatePdfBtn" class="btn btn-danger"><span class="icon-file-pdf" aria-hidden="true"></span></button>
+					<button type="submit" id="generatePdfBtn" class="btn btn-danger"><span class="icon-file-pdf" aria-hidden="true"> PDF</span></button>
                     
                         
                     </from>

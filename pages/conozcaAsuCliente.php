@@ -1,5 +1,5 @@
 <div class="container">
-<button type="button" class="btn  btn-danger" style="float: right;" onclick="FormatoConozcaClientePDF();"> <i class="fas icon-file-pdf"></i></button>
+<button type="button" class="btn  btn-danger" style="float: right;" onclick="FormatoConozcaClientePDF();"> <i class="fas icon-file-pdf"> PDF</i></button>
 	<div class="header">
 		<h2>FORMATO CONOZCA A SU CLIENTE</h2>
 	</div>

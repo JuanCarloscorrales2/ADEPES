@@ -513,7 +513,7 @@ include "layouts/head.php";
 					</div>
            
 					<div class="col-md-4">
-						<b>Nombre de los pedendientes:</b> <br>
+						<b>Nombre de los dependientes:</b> <br>
 						<textarea id="dependientes" cols="55" rows="2" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);"  onkeyup="espacios(this);" maxlength="120"></textarea>
 					</div>
 					<div class="col-md-8">

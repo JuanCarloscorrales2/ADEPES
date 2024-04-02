@@ -6,7 +6,7 @@
 					<div class="section">
 						<h2>PROYECTO FONDO ROTATORIO</h2>
 						<div class="row">
-						<button type="button" class="btn  btn-danger" style="float: right;" onclick="comiteCreeditoGenerarPDF();"> <i class="fas icon-file-pdf"></i></button>
+						<button type="button" class="btn  btn-danger" style="float: right;" onclick="comiteCreeditoGenerarPDF();"> <i class="fas icon-file-pdf"> PDF</i></button>
 							<div class="col-md-12 mb-1">
 								<div class="col-md-5"> </div>	
 

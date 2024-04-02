@@ -1,7 +1,7 @@
 <center>
 <div class="container">
 <br><div class="rz-card" style="width: 80%" >
-<button type="button" class="btn  btn-danger" style="float: right;" onclick="CentrarRiesgoGenerarPDF();"> <i class="fas icon-file-pdf"></i></button>
+<button type="button" class="btn  btn-danger" style="float: right;" onclick="CentrarRiesgoGenerarPDF();"> <i class="fas icon-file-pdf"> PDF</i></button>
     <div class="row">
 
     <h4 class="content-central"><center>ASOCIACIÓN DE DESARROLLO PESPIRENSE "ADEPES" </center></h4><br>
