@@ -57,6 +57,7 @@ class PDF extends FPDF
 $pdf = new PDF();
 /********************************** FORMATO CONOZCA A SU CLIENTE ************************************************************/
 $pdf->AddPage("portrait", "letter");
+$pdf->AliasNbPages(); //muestra la pagina / y total de paginas
 //encabezado
 $pdf->Image('logo.png', 175, 10, 25); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
 $pdf->SetFont('Arial', 'B', 14); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
@@ -111,15 +112,15 @@ $pdf->ln(2);
 $pdf->MultiCell(30, 8, utf8_decode('PRÉSTAMO'), 0, 1, 'L', 0);
 $pdf->SetFillColor(255,255,255); //colorFondo verde
 $pdf->SetFont('Arial', '', 10); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
-$pdf->MultiCell(195, 5, utf8_decode('La Asociacion de Desarrollo Pespirense ADEPES cuenta y aplica políticas y código de etica para el reguardo de la informacion de sus clientes, así como para el impedimento de la utilización de sus datos por parte de terceros ajenos a la Asociación.'), 0, 1, 'L', 0);
+$pdf->MultiCell(195, 5, utf8_decode('La Asociacion de Desarrollo Pespirense ADEPES cuenta y aplica políticas y código de ética para el reguardo de la información de sus clientes, así como para el impedimento de la utilización de sus datos por parte de terceros ajenos a la Asociación.'), 0, 'J', 0);
 $pdf->ln(4);
-$pdf->MultiCell(195, 5, utf8_decode('Declaro que este formulario contiene información que he sumunistrado y que es fiel y verdadera, por lo tanto acepto que cualquier falsedad por acción u omisión de mi parte dara derecho a ADEPES a cancelar la relacion crediticia.'), 0, 1, 'L', 0);
+$pdf->MultiCell(195, 5, utf8_decode('Declaro que este formulario contiene información que he sumunistrado y que es fiel y verdadera, por lo tanto acepto que cualquier falsedad por acción u omisión de mi parte dara derecho a ADEPES a cancelar la relacion crediticia.'), 0, 'J', 0);
 $pdf->ln(10);
 $pdf->SetFont('Arial', 'B', 11); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
 $pdf->Cell(195, 10, utf8_decode('__________________________________________'), 0, 1, 'C', 1); 
 $pdf->Cell(195, 10, utf8_decode('Firma y Huella del Cliente'), 0, 1, 'C', 1); 
 $pdf->ln(5);
-$pdf->Cell(195, 10, utf8_decode('Fecha '.$FechaEmisionFormato), 0, 1, 'R', 1);
+$pdf->Cell(195, 10, utf8_decode('Fecha Emisón '.$FechaEmisionFormato), 0, 1, 'R', 1);
 
 
 
