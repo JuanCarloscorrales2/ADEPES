@@ -120,7 +120,7 @@ $pdf->SetFont('Arial', 'B', 11); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
 $pdf->Cell(195, 10, utf8_decode('__________________________________________'), 0, 1, 'C', 1); 
 $pdf->Cell(195, 10, utf8_decode('Firma y Huella del Cliente'), 0, 1, 'C', 1); 
 $pdf->ln(5);
-$pdf->Cell(195, 10, utf8_decode('Fecha Emisón '.$FechaEmisionFormato), 0, 1, 'R', 1);
+$pdf->Cell(195, 10, utf8_decode('Fecha Emisión: '.$FechaEmisionFormato), 0, 1, 'R', 1);
 
 
 
