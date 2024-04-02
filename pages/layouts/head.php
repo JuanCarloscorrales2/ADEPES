@@ -38,6 +38,8 @@
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <!-- advertenciaas toastr-->
     <link rel="stylesheet" href="../app-assets/plugins/toastr/toastr.min.css">
+    <!-- Editor de texto para el contrato TinyMCE-->
+    <script src="../app-assets/plugins/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
   </head>
   <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns  fixed-navbar">
   
