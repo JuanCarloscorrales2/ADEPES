@@ -583,7 +583,7 @@ class EditarSolicitud {
         return false;
     }
 
-    function Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas) {
+    function Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor) {
         $sqlContactos = "UPDATE tbl_mn_personas_contacto SET valor = ? WHERE idPersona = ? AND idTipoContacto = ?";
         $resultContactos = $this->cnx->prepare($sqlContactos);
     
@@ -599,7 +599,7 @@ class EditarSolicitud {
             $resultContactos->execute();
         }
     
-        $sqlReferencias = "UPDATE tbl_mn_referencias_familiares SET idParentesco = ?, nombre = ?, celular = ?, direccion = ?
+        $sqlReferencias = "UPDATE tbl_mn_referencias_familiares SET idParentesco = ?, nombre = ?, celular = ?, direccion = ?, ModificadoPor = ?, FechaModificacion = CURRENT_TIMESTAMP
          WHERE idReferencia = ?";
         $resultReferencias = $this->cnx->prepare($sqlReferencias);
     
@@ -615,7 +615,8 @@ class EditarSolicitud {
             $resultReferencias->bindParam(2, $nombre);
             $resultReferencias->bindParam(3, $celular);
             $resultReferencias->bindParam(4, $direccion);
-            $resultReferencias->bindParam(5, $idReferencia);
+            $resultReferencias->bindParam(5, $ModificadoPor);
+            $resultReferencias->bindParam(6, $idReferencia);
             $resultReferencias->execute();
         }
        
@@ -677,10 +678,10 @@ class EditarSolicitud {
     }
 
     //funcion para actualizar los datos de prestamos de solicitud
-    function ActualizarSolicitud($idSolicitud, $idTipoPrestamo, $idRubro, $Monto, $tasa, $Plazo, $FechaDesembolso, $invierteEn, $dictamenAsesor){
+    function ActualizarSolicitud($idSolicitud, $idTipoPrestamo, $idRubro, $Monto, $tasa, $Plazo, $FechaDesembolso, $invierteEn, $dictamenAsesor, $ModificadoPor){
         
         $query = "UPDATE tbl_mn_solicitudes_creditos SET  idTipoPrestamo = ?, idRubro = ?, Monto = ?, tasa = ?,
-        Plazo = ?, fechaDesembolso = ?, invierteEn = ?, dictamenAsesor = ?  WHERE idSolicitud = ?";
+        Plazo = ?, fechaDesembolso = ?, invierteEn = ?, dictamenAsesor = ?, ModificadoPor = ?, FechaModificacion = CURRENT_TIMESTAMP WHERE idSolicitud = ?";
         $result = $this->cnx->prepare($query); //preparacion de la sentencia
         $result->bindParam(1,$idTipoPrestamo);
         $result->bindParam(2,$idRubro);
@@ -690,7 +691,8 @@ class EditarSolicitud {
         $result->bindParam(6,$FechaDesembolso);
         $result->bindParam(7,$invierteEn);
         $result->bindParam(8,$dictamenAsesor);
-        $result->bindParam(9,$idSolicitud);
+        $result->bindParam(9,$ModificadoPor);
+        $result->bindParam(10,$idSolicitud);
 
         if($result->execute()){ //validacion de la ejecucion
             return true;
@@ -770,8 +772,8 @@ class EditarSolicitud {
         return false;
     }
 
-    function Actualizar_referencias_comerciales($comerciales) {
-        $sqlComerciales = "UPDATE tbl_mn_referencias_comerciales SET nombre = ?, direccion = ? WHERE idReferenciaComercial = ?";
+    function Actualizar_referencias_comerciales($comerciales, $ModificadoPor) {
+        $sqlComerciales = "UPDATE tbl_mn_referencias_comerciales SET nombre = ?, direccion = ?, ModificadoPor = ?, FechaModificacion = CURRENT_TIMESTAMP  WHERE idReferenciaComercial = ?";
         
         try {
             $this->cnx->beginTransaction();
@@ -785,7 +787,8 @@ class EditarSolicitud {
                 
                 $resultComerciales->bindParam(1, $nombre);
                 $resultComerciales->bindParam(2, $direccion);
-                $resultComerciales->bindParam(3, $idPersonaReferencia);
+                $resultComerciales->bindParam(3, $ModificadoPor);
+                $resultComerciales->bindParam(4, $idPersonaReferencia);
                 $resultComerciales->execute();
             }
     
