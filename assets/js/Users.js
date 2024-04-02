@@ -218,7 +218,8 @@ function RegistrarUsuario(){
              Swal.fire({
               icon: 'success',
               title: 'Registro Exitoso',
-              text: 'Se a mandado los datos de acceso al usuario por correo',
+              text: 'Se ha mandado los datos de acceso al usuario por correo',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })//mensaje
              
 
@@ -329,7 +330,8 @@ function ActualizarUsuario( ){
           Swal.fire({
             icon: 'success',
             title: 'Actualización Exitosa',
-            text: 'Se a guardado correctamente los datos',
+            text: 'Se han guardado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -342,14 +344,14 @@ function ActualizarUsuario( ){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
-              text: 'has ingresado un correo incorrecto',
+              text: 'Has ingresado un correo incorrecto',
         })
 
         }else{
             Swal.fire({
-              icon: 'error',
+              icon: 'Error',
               title: '¡Atención!',
-              text: 'error inesperado',
+              text: 'Error inesperado',
             })
         }
     }
@@ -359,14 +361,15 @@ function ActualizarUsuario( ){
 
 function AlertaEliminarUsuario(idUsuario, Usuario){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
-    text: "al usuario: "+Usuario,
+    title: '¿Está seguro que desea eliminar?',
+    text: "El usuario: "+Usuario,
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Si, eliminar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       //metodo que mandara la solicitud para eliminar al usuario
@@ -390,7 +393,7 @@ function EliminarUsuario(idUsuario, Usuario){
            
            Swal.fire(
             'Eliminado!',
-            'El usuario '+Usuario+' a sido eliminado',
+            'El usuario '+Usuario+' ha sido eliminado',
             'success'
           )
         }else if(response == "inactivo"){

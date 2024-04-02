@@ -1,4 +1,4 @@
-<div class="modal fade" id="ActualizarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ActualizarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -32,7 +32,7 @@
             </div>
 
             <div class="form-group">
-              <label for="" class="col-form-label">Diirección:</label>
+              <label for="" class="col-form-label">Dirección:</label>
               <input type="text" placeholder="Ingrese su nueva dirección"  class="form-control" id="add_edit" style="text-transform:uppercase;" maxlength="120">
             </div>
         </form>

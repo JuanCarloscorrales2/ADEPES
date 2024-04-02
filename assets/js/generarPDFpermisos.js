@@ -21,4 +21,33 @@
   $('#boton_descargar_permisos_pdf').on('click', function() {
     generarPDF();
   });
-   
+  
+  //funcion para controlar el evento click fuera del modal
+function eventoCerrarModalP(){
+
+  if($('#tipos_roles').val() != " " || $('#tabla_modulos_ingreso').val() != " "){ //validad que los input hayan datos
+      
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "La información ingresada se perderá.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, salir',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        // Si el usuario confirma, cierra el modal 
+        if (result.isConfirmed) {
+          //limpia los inputs
+          $('#tipos_roles').val('');
+          $('#tabla_modulos_ingreso').val(''); 
+    
+        } else {
+          // Si el usuario cancela, vuelve a abrir el modal
+          $('#RegistrarPermiso').modal('show');
+        }
+      });
+  }
+ 
+}

@@ -22,3 +22,33 @@ function generarPDF() {
 $('#boton_descargar_Rpreg_pdf').on('click', function() {
     generarPDF();
 });
+
+//funcion para controlar el evento click fuera del modal
+function eventoCerrarModal(){
+
+    if($('#nueva_pregunta').val() != ""){ //validad que los input hayan datos
+        
+      Swal.fire({
+          title: '¿Estás seguro?',
+          text: "La información ingresada se perderá.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, salir',
+          cancelButtonText: 'Cancelar',
+          allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
+        }).then((result) => {
+          // Si el usuario confirma, cierra el modal 
+          if (result.isConfirmed) {
+            //limpia los inputs
+            $('#nueva_pregunta').val('');
+      
+          } else {
+            // Si el usuario cancela, vuelve a abrir el modal
+            $('#RegistrarPregunta').modal('show');
+          }
+        });
+    }
+   
+  }

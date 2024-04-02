@@ -37,11 +37,7 @@ class PDF extends FPDF
       $this->Ln(3); // Salto de línea
       $this->SetTextColor(103); //color
       $this->Ln(3); // Salto de línea
-      //fecha
-      /*$this->SetTextColor(0, 0, 0); //color
-      $this->SetFont('Arial', 'B', 12); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
-      $hoy = date('d/m/Y');
-      $this->Cell(10, 10, utf8_decode('FECHA:'.$hoy), 0, 0, 'L', 0);*/
+     
       
 
       /* TITULO DE LA TABLA */
@@ -59,13 +55,14 @@ class PDF extends FPDF
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
 
-     $this->Cell(15, 10, utf8_decode('N°'), 1, 0, 'C', 1);
+     $this->Cell(15, 10, utf8_decode('NO.'), 1, 0, 'C', 1);
      $this->Cell(50, 10, utf8_decode('ROL'), 1, 0, 'C', 1);
      $this->Cell(50, 10, utf8_decode('OBJETO'), 1, 0, 'C', 1);
-     $this->Cell(35, 10, utf8_decode('CONSULTAR'), 1, 0, 'C', 1);
-     $this->Cell(35, 10, utf8_decode('INSERTAR'), 1, 0, 'C', 1);
-     $this->Cell(35, 10, utf8_decode('ACTUALIZAR'), 1, 0, 'C', 1);
-     $this->Cell(35, 10, utf8_decode('ELIMINAR'), 1, 0, 'C', 1);
+     $this->Cell(30, 10, utf8_decode('CONSULTAR'), 1, 0, 'C', 1);
+     $this->Cell(25, 10, utf8_decode('INSERTAR'), 1, 0, 'C', 1);
+     $this->Cell(30, 10, utf8_decode('ACTUALIZAR'), 1, 0, 'C', 1);
+     $this->Cell(30, 10, utf8_decode('ELIMINAR'), 1, 0, 'C', 1);
+     $this->Cell(40, 10, utf8_decode('GENERAR REPORTE'), 1, 0, 'C', 1);
      $this->Ln();
    }
 
@@ -79,7 +76,7 @@ class PDF extends FPDF
        $this->SetY(-15); // Posición: a 1,5 cm del final
       $this->SetFont('Arial', 'I', 8); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
       $hoy = date('d/m/Y H:i:s');
-      $this->Cell(455, 10, utf8_decode('Fecha y Hora de impresión:'.$hoy), 0, 0, 'C');
+      $this->Cell(470, 10, utf8_decode('Fecha y Hora de impresión: '.$hoy), 0, 0, 'C');
       
    }
 
@@ -191,17 +188,17 @@ class PDF extends FPDF
 
    
 $pdf = new PDF();
-$pdf->AddPage("landscape","letter"); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
+$pdf->AddPage("landscape","A4"); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
 $pdf->AliasNbPages(); //muestra la pagina / y total de paginas
 
 $i = 0;
 $pdf->SetFont('Arial', '', 10);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
-$pdf->SetWidths(array(15, 50, 50, 35, 35, 35, 35));    
+$pdf->SetWidths(array(15, 50, 50, 30, 25, 30, 30, 40));    
 //construir el contenido del PDF DE LOS DATOS OBTENIDOS DEL DATATABLESS
 foreach ($datosFiltradosOrdenados as $fila) {
     
-    $pdf->Row(array( $fila['Id'],$fila['Rol'],$fila['Objeto'],strip_tags(utf8_decode($fila['Consultar'])), strip_tags(utf8_decode($fila['Insertar'])), strip_tags(utf8_decode($fila['Actualizar'])), strip_tags(utf8_decode($fila['Eliminar']))), 0 );
+    $pdf->Row(array( $fila['Id'],$fila['Rol'],$fila['Objeto'],strip_tags(utf8_decode($fila['Consultar'])), strip_tags(utf8_decode($fila['Insertar'])), strip_tags(utf8_decode($fila['Actualizar'])), strip_tags(utf8_decode($fila['Eliminar'])), strip_tags(utf8_decode($fila['Reportes']))), 0 );
     
 }
 
