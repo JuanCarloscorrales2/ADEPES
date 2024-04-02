@@ -353,8 +353,8 @@ function RegistrarCliente($idTipoPersona, $idNacionalidad, $idGenero, $idEstadoC
                            $idTiempoLaboral, $nombres, $apellidos, $identidad, $fechaNacimiento, $PagaAlquiler, $patrono, $actividadDesempenia, $ObservacionesSolicitud, $esAval, $avalMora, $estadoCredito, $CreadoPor) {
     $query = "INSERT INTO tbl_mn_personas(idTipoPersona, idNacionalidad, idGenero, idEstadoCivil, idProfesion, idPersonaBienes, idTipoClientes, idcategoriaCasa,
                                           idtiempoVivir, idMunicipio, idTiempoLaboral, nombres, apellidos, identidad, fechaNacimiento, PagaAlquiler, PratronoNegocio,
-                                          cargoDesempena, ObservacionesSolicitud, esAval, avalMora, estadoCredito, CreadoPor)
-     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";                                                                                                       
+                                          cargoDesempena, ObservacionesSolicitud, esAval, avalMora, estadoCredito, CreadoPor, FechaCreacion)
+     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";                                                                                                       
     $result = $this->cnx->prepare($query);
 
     $result->bindParam(1, $idTipoPersona);
@@ -390,8 +390,8 @@ function RegistrarCliente($idTipoPersona, $idNacionalidad, $idGenero, $idEstadoC
 }
 
 function RegistrarAval($idSolicitud, $idPersona, $CreadoPor) {
-    $query = "INSERT INTO tbl_mn_avales(idSolicitud, idPersona, CreadoPor)
-     VALUES(?, ?, ?)";                                                                                                       
+    $query = "INSERT INTO tbl_mn_avales(idSolicitud, idPersona, CreadoPor, FechaCreacion)
+     VALUES(?, ?, ?, CURRENT_TIMESTAMP)";                                                                                                       
     $result = $this->cnx->prepare($query);
 
     $result->bindParam(1, $idSolicitud);
@@ -460,8 +460,8 @@ function Registrar_contactos_referencias($contactos, $referencias, $CreadoPor) {
         $resultContactos->execute();
     }
 
-    $sqlReferencias = "INSERT INTO tbl_mn_referencias_familiares (idPersona, idParentesco, nombre, celular, direccion, CreadoPor) 
-                      VALUES (?, ?, ?, ?, ?, ?)";
+    $sqlReferencias = "INSERT INTO tbl_mn_referencias_familiares (idPersona, idParentesco, nombre, celular, direccion, CreadoPor, FechaCreacion) 
+                      VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
     $resultReferencias = $this->cnx->prepare($sqlReferencias);
 
     foreach ($referencias as $referencia) {
@@ -495,7 +495,7 @@ function RegistrarReferenciasComerciales($comerciales, $CreadoPor) {
     try {
         $this->cnx->beginTransaction();
 
-        $sqlReferencia = "INSERT INTO tbl_mn_referencias_comerciales (idPersona, nombre, direccion, CreadoPor) VALUES (?, ?, ?, ?)";
+        $sqlReferencia = "INSERT INTO tbl_mn_referencias_comerciales (idPersona, nombre, direccion, CreadoPor, FechaCreacion) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";
         $resultReferencia = $this->cnx->prepare($sqlReferencia);
 
         foreach ($comerciales as $referencia) {
@@ -539,8 +539,8 @@ function RegistrarDependientes($idPersona, $idParentesco, $nombre) {
 
 //FUNCION PARA REGISTRAr la solicitd
 function RegistrarSolicitud($idPersona, $idTipoPrestamo, $idRubro, $idEstadoSolicitud, $idUsuario, $Monto, $tasa, $Plazo, $fechaDesembolso, $invierteEn, $prestamoAprobados, $CreadoPor){
-    $query = "INSERT INTO tbl_mn_solicitudes_creditos(idPersona, idTipoPrestamo, idRubro, idEstadoSolicitud, idUsuario, Monto, tasa, Plazo, fechaDesembolso, invierteEn, prestamoAprobados, CreadoPor )
-     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO tbl_mn_solicitudes_creditos(idPersona, idTipoPrestamo, idRubro, idEstadoSolicitud, idUsuario, Monto, tasa, Plazo, fechaDesembolso, invierteEn, prestamoAprobados, CreadoPor, FechaCreacion )
+     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
     $result = $this->cnx->prepare($query); //preparacion de la sentencia
     $result->bindParam(1,$idPersona);
     $result->bindParam(2,$idTipoPrestamo);
