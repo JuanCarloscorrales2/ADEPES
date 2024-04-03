@@ -15,6 +15,7 @@ function generarPDF() {
 
     // Agregar el formulario a la página y enviarlo
     form.appendTo('body').submit();
+    EventoBitacora(1)//bitacora reporte
 }
 
 // Agregar un botón en la página para generar y descargar el PDF
@@ -51,4 +52,32 @@ function eventoCerrarModal(){
         });
     }
    
+  }
+
+
+  function EventoBitacora(evento){ //registra el evento de pdf
+  
+    $.ajax({
+        data: { "evento": evento },
+        url:'../controller/RolController.php?operador=registrarEventoBitacora', //url del controlador Conttroller
+        type:'POST',
+        beforeSend:function(){},
+        success:function(response){
+            
+            if(response == "success"){
+                 //actualizar tabla
+            
+            }else{
+                swal.fire({
+                    icon: "error",
+                    title: "Atención",
+                    text: "No se pudo registrar el evento en bitacora de pdf"
+                    
+                })
+            }
+           
+        }
+  
+    });
+  
   }
