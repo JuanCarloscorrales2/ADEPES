@@ -1,9 +1,12 @@
 <?php
 require "../model/parametros.php";
+require "../model/BitacoraModel.php";
 date_default_timezone_set('America/Tegucigalpa');
 session_start();
 //instancia de la clase rol
 $parametros = new Parametro();
+//bitacora
+$bita = new Bitacora();
 
 switch ($_REQUEST["operador"]) {
 
@@ -94,6 +97,7 @@ switch ($_REQUEST["operador"]) {
     
                     if($idParametro == 10 ){  //valida que el parametro de correo acepte numero
                         if( $parametros->ActualizarParametro($idParametro, $Valor, $FechaModificacion ) ){
+                            $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 28, "Modifico", "Modificó el parámetro con id: ".$idParametro." con valor: ".$Valor);
                             $response = "success";  //si se inserto en la BD manda mensaje de exito
                        
                         }else{
@@ -113,6 +117,7 @@ switch ($_REQUEST["operador"]) {
                     }else{
                         
                         if( $parametros->ActualizarParametro($idParametro, $Valor, $FechaModificacion ) ){
+                            $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 28, "Modifico", "Modificó el parámetro con id: ".$idParametro." con valor: ".$Valor);
                             $response = "success";  //si se inserto en la BD manda mensaje de exito
                        
                         }else{
@@ -131,5 +136,34 @@ switch ($_REQUEST["operador"]) {
             echo $response;
     
         break;
+
+        case "registrarEventoBitacora":
+            if( isset($_POST["evento"]) && !empty($_POST["evento"]) ){
+      
+               if($_POST["evento"] == 1){  //evento reporte
+                    if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 28, "Reporte", "Imprimió el reporte de LISTADO DE PARÁMETRO")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+      
+               }else if($_POST["evento"] == 2){ //evento filtro
+                    if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 28, "Filtrar", "Realizo consulta de filtros en LISTADO DE PARÁMETRO")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+               }
+                
+               
+      
+            }else{
+               $response = "error";
+            }
+            echo $response;
+         
+         break;
     
 } //fin switch
