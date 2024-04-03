@@ -1,8 +1,11 @@
 <?php
 require "../model/ListaPreguntas.php";
+require "../model/BitacoraModel.php";
 session_start();
 //instancia de la clase rol
 $pregunta = new Preguntas();
+//bitacora
+$bita = new Bitacora();
 
 switch ($_REQUEST["operador"]) {
 
@@ -54,6 +57,7 @@ switch ($_REQUEST["operador"]) {
             $preguntas = $_POST["Pregunta"];
 
             if ($pregunta->RegistrarPregunta($preguntas)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 29, "Inserto", "Inserto la pregunta: ".$preguntas);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -94,6 +98,7 @@ switch ($_REQUEST["operador"]) {
             $Pregunta = $_POST["Pregunta"];
 
             if ($pregunta->ActualizarPregunta($idPregunta, $Pregunta)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 29, "Modifico", "Modificó la pregunta con id: ".$idPregunta." nuevo valor: ".$Pregunta);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -113,9 +118,11 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $pregunta->EliminarPregunta($_POST["idPregunta"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 29, "Elimino", "Elimino una pregunta de seguridad");
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 29, "Elimino", "Intento eliminar la pregunta con id: ".$_POST["idPregunta"]);
                 $response = "llave_uso";
             } else {
                 $response = "error";  //cualquier otro tipo de error
@@ -126,4 +133,33 @@ switch ($_REQUEST["operador"]) {
         echo $response;
 
         break;
+
+        case "registrarEventoBitacora":
+            if( isset($_POST["evento"]) && !empty($_POST["evento"]) ){
+        
+               if($_POST["evento"] == 1){  //evento reporte
+                    if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 29, "Reporte", "Imprimió el reporte de LISTADO DE PREGUNTAS DE SEGURIDAD")){
+                        $response ="success";  
+        
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+        
+               }else if($_POST["evento"] == 2){ //evento filtro
+                    if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 29, "Filtrar", "Realizo consulta de filtros en LISTADO DE PREGUNTAS DE SEGURIDAD")){
+                        $response ="success";  
+        
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+               }
+                
+               
+        
+            }else{
+               $response = "error";
+            }
+            echo $response;
+         
+         break;
 } //fin switch
