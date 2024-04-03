@@ -15,19 +15,19 @@
           </div>
           <div class="form-group">
             <label  class="col-form-label">Tasa:</label>
-            <input type="number"  id="tasa" placeholder="ingrese la tasa en porcentaje %" class="form-control">
+            <input type="number"  id="tasa" placeholder="ingrese la tasa en porcentaje %" class="form-control" oninput="validarNumeroNegativo(this);">
           </div>
           <div class="form-group">
             <label  class="col-form-label">Plazo máximo:</label>
-            <input type="number"  id="plazoMaximo" placeholder="Ingrese un nombre del rol" class="form-control">
+            <input type="number"  id="plazoMaximo" placeholder="Ingrese un nombre del rol" class="form-control" oninput="validarNumeroNegativo(this);">
           </div>
           <div class="form-group">
             <label class="col-form-label">Monto mínimo:</label>
-            <input type="number"  id="montoMinimo"  class="form-control">
+            <input type="number"  id="montoMinimo"  class="form-control" oninput="validarNumeroNegativo(this);">
           </div>
           <div class="form-group">
             <label class="col-form-label">Monto máximo:</label>
-            <input type="number"  id="montoMaximo"  class="form-control">
+            <input type="number"  id="montoMaximo"  class="form-control" oninput="validarNumeroNegativo(this);">
           </div>
         </form>
       </div>

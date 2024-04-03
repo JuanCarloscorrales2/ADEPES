@@ -82,9 +82,8 @@ switch ($_REQUEST["operador"]) {
             $montoMaximo = $_POST["montoMaximo"];
             $montoMinimo = $_POST["montoMinimo"];
 
-            if ($montoMinimo == 0 || $montoMaximo == 0) {
-                $response = "cero";
-            } else if ($montoMinimo >= $montoMaximo) {
+    
+            if ($montoMinimo >= $montoMaximo) {
                 $response = "minimo";
             } else if ($tablas->RegistrarTipoPrestamo($nombre, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo)) {
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
@@ -98,7 +97,7 @@ switch ($_REQUEST["operador"]) {
         echo $response;
 
 
-        break;
+    break;
 
     case "obtener_tipo_prestamo_por_id":
         if (isset($_POST["idTipoPrestamo"]) && !empty($_POST["idTipoPrestamo"])) {
@@ -152,9 +151,8 @@ switch ($_REQUEST["operador"]) {
             $PlazoMaximo = $_POST["PlazoMaximo"];
             $montoMaximo = $_POST["montoMaximo"];
             $montoMinimo = $_POST["montoMinimo"];
-            if ($montoMinimo == 0 || $montoMaximo == 0) {
-                $response = "cero";
-            } else if ($montoMinimo >= $montoMaximo) {
+        
+            if ($montoMinimo >= $montoMaximo) {
                 $response = "minimo";
             } else if ($tablas->ActualizarTipoPrestamo($idTipoPrestamo, $idEstadoTipoPrestamo, $Descripcion, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo)) {
                 $response = "success";  //si se inserto en la BD manda mensaje de exito

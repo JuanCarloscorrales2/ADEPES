@@ -96,62 +96,83 @@ function LlenarTablaTipoPrestamos(){
 
     
 }
-//FUNCION PARA REGISTRA UN estado civil AJAX
+//FUNCION PARA REGISTRA UN tipo de prestamo AJAX
 function RegistrarTipoPrestamo(){
-    nombre = $('#nombre').val();  //id del modal
-    tasa = $('#tasa').val();
-    plazoMaximo = $('#plazoMaximo').val();
-    montoMinimo = $('#montoMinimo').val();
-    montoMaximo = $('#montoMaximo').val();
-   
+  nombre = $('#nombre').val();  //id del modal
+  tasa = $('#tasa').val();
+  plazoMaximo = $('#plazoMaximo').val();
+  montoMinimo = $('#montoMinimo').val();
+  montoMaximo = $('#montoMaximo').val();
+  if( tasa == 0){
+    Swal.fire({
+      icon: 'warning',
+      title: '¡Atención!',
+      text: 'La tasa  debe ser mayor que 0',
+   })
 
-    parametros = {
-        "nombre":nombre, "tasa":tasa, "plazoMaximo":plazoMaximo, "montoMinimo":montoMinimo, "montoMaximo":montoMaximo
-    }
+    return
+  } 
+  if( plazoMaximo == 0){
+    Swal.fire({
+      icon: 'warning',
+      title: '¡Atención!',
+      text: 'El plazo  debe ser mayor que 0',
+  })
 
-    $.ajax({
-        data:parametros,
-        url:"../controller/TablasController.php?operador=registrar_tipo_prestamo",
-        type:'POST',
-        beforeSend:function(){},
-        success:function(response){
+      return
+  } 
+  if( montoMinimo == 0 || montoMaximo == 0 ){
+    Swal.fire({
+      icon: 'warning',
+      title: '¡Atención!',
+      text: 'Los montos deben ser mayor que 0',
+  })
 
-            if(response == "success"){  //si inserto correctamente
-                tablaPrestamo.ajax.reload();  //actualiza la tablaSSSS
-               LimpiarControles();
-               $('#registral_tipo_prestamo').modal('hide'); //cierra el modal
-               Swal.fire({
-                icon: 'success',
-                title: 'Registro exitoso',
-                text: 'Se ha guardado correctamente los datos',
-              })
-            }else if(response == "requerid"){
-                Swal.fire({
-                    icon: 'warning',
-                    title: '¡Atención!',
-                    text: 'Complete todos los campos',
-                  })
-            }else if(response == "cero"){
-                Swal.fire({
+    return
+  } 
+
+  parametros = {
+      "nombre":nombre, "tasa":tasa, "plazoMaximo":plazoMaximo, "montoMinimo":montoMinimo, "montoMaximo":montoMaximo
+  }
+
+  $.ajax({
+      data:parametros,
+      url:"../controller/TablasController.php?operador=registrar_tipo_prestamo",
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+
+          if(response == "success"){  //si inserto correctamente
+              tablaPrestamo.ajax.reload();  //actualiza la tablaSSSS
+             LimpiarControles();
+             $('#registral_tipo_prestamo').modal('hide'); //cierra el modal
+             Swal.fire({
+              icon: 'success',
+              title: 'Registro exitoso',
+              text: 'Se ha guardado correctamente los datos',
+            })
+          }else if(response == "requerid"){
+              Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
-                  text: 'los montos deben ser mayor que 0',
-               })
-            }else if(response == "minimo"){
-                Swal.fire({
-                   icon: 'warning',
-                   title: '¡Atención!',
-                   text: 'El monto minimo debe ser menor que el máximo',
-               })   
-            }else{
-                Swal.fire({
-                    icon: 'error',
-                    title: '¡Atención!',
-                    text: 'No se puedieron guardar los datos',
-                  })
-            }
-        }
-    })
+                  text: 'Complete todos los campos',
+                })
+
+          }else if(response == "minimo"){
+              Swal.fire({
+                 icon: 'warning',
+                 title: '¡Atención!',
+                 text: 'El monto minimo debe ser menor que el máximo',
+             })   
+          }else{
+              Swal.fire({
+                  icon: 'error',
+                  title: '¡Atención!',
+                  text: 'No se puedieron guardar los datos',
+                })
+          }
+      }
+  })
 }
 
 //funcion para obtener el id del cliente para actualizarlo
@@ -218,8 +239,8 @@ function ListarEstadoPrestamoSelect(idTipoPrestamo){
   
   }
 
-  //funcion para actualizar un usuario
-function ActualizarTipoPrestamo(){
+  //funcion para actualizar un tipo de prestamo
+  function ActualizarTipoPrestamo(){
     idTipoPrestamo = $('#id_edit').val();  //id de los input del modal de actualizar
     idEstadoTipoPrestamo = $('#estado_prestamo_edit').val();
     Descripcion = $('#nombre_edit').val();
@@ -228,7 +249,33 @@ function ActualizarTipoPrestamo(){
     montoMaximo = $('#montoMaximo_edit').val();
     montoMinimo = $('#montoMinimo_edit').val();
     
-   
+    if( tasa == 0){
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Atención!',
+        text: 'La tasa  debe ser mayor que 0',
+     })
+
+      return
+    } 
+    if( PlazoMaximo == 0){
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Atención!',
+        text: 'El plazo  debe ser mayor que 0',
+    })
+
+        return
+    } 
+    if( montoMinimo == 0 || montoMaximo == 0 ){
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Atención!',
+        text: 'Los montos deben ser mayor que 0',
+    })
+
+      return
+    } 
     parametros = {
         "idTipoPrestamo":idTipoPrestamo, "idEstadoTipoPrestamo":idEstadoTipoPrestamo, "Descripcion":Descripcion, "tasa":tasa,
         "PlazoMaximo":PlazoMaximo, "montoMaximo":montoMaximo, "montoMinimo":montoMinimo
@@ -255,12 +302,7 @@ function ActualizarTipoPrestamo(){
                 title: '¡Atención!',
                 text: 'Complete todos los datos por favor',
               })
-        }else if(response == "cero"){
-            Swal.fire({
-              icon: 'warning',
-              title: '¡Atención!',
-              text: 'los montos deben ser mayor que 0',
-            })
+
         }else if(response == "minimo"){
             Swal.fire({
               icon: 'warning',

@@ -139,7 +139,26 @@ include "Modals/Actualizar/ActualizarTipoPrestamo.php";
 <script src="../assets/js/Tablas.js"></script>
 <!-- Agg. reporte de Tipo de Prestamo. -->
 <script src="../assets/js/listadoTipoPrestamos.js"></script>
-
+<!-- Advertencias Toastr -->
+<script src="../app-assets/plugins/toastr/toastr.min.js">  </script> 
+<script>
+	function validarNumeroNegativo(input) {
+		if (input.value < 0) {
+			input.value = ""; // Establecer el valor a 0 si se ingresa un número negativo
+			toastr.warning('No estan permitidos los números negativos');
+		}
+	}
+	//valida que no se ingresen más de 3 letras seguidas
+	function validar3letras(input) {
+		var texto = input.value;
+		var regex = /([a-zA-Z])\1{3,}/g; // La expresión regular coincide con 3 letras iguales o más seguidas
+		
+		if (regex.test(texto)) {
+			// Elimina el último caracter ingresado si es parte de una secuencia de 3 letras iguales o más
+			input.value = texto.substring(0, texto.length - 1);
+	    }
+	}
+</script>
 
 
 <!--==========================================-->

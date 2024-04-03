@@ -17,11 +17,11 @@
           </div>
           <div class="form-group">
             <label  class="col-form-label">Tasa:</label>
-            <input type="number"  id="tasa_edit" placeholder="ingrese la tasa en porcentaje %" class="form-control">
+            <input type="number"  id="tasa_edit" placeholder="ingrese la tasa en porcentaje %" class="form-control" oninput="validarNumeroNegativo(this);">
           </div>
           <div class="form-group">
             <label  class="col-form-label">Plazo máximo:</label>
-            <input type="number"  id="plazoMaximo_edit" class="form-control">
+            <input type="number"  id="plazoMaximo_edit" class="form-control" oninput="validarNumeroNegativo(this);">
           </div>
 
           <div class="form-group">
@@ -30,11 +30,11 @@
           </div>
           <div class="form-group">
             <label class="col-form-label">Monto mínimo:</label>
-            <input type="number"  id="montoMinimo_edit"  class="form-control">
+            <input type="number"  id="montoMinimo_edit"  class="form-control" oninput="validarNumeroNegativo(this);">
           </div>
           <div class="form-group">
             <label class="col-form-label">Monto máximo:</label>
-            <input type="number"  id="montoMaximo_edit"  class="form-control">
+            <input type="number"  id="montoMaximo_edit"  class="form-control" oninput="validarNumeroNegativo(this);">
           </div>
         </form>
       </div>
