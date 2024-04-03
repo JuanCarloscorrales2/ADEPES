@@ -890,7 +890,7 @@ function RegistrarCategoria(){
           if(response == "success"){  //si inserto correctamente
              tablaCategoria.ajax.reload();  //actualiza la tablaSSSS
              LimpiarControles();
-             $('#registral_categoria').modal('hide'); //cierra el modal
+             $('#registral_Categoria').modal('hide'); //cierra el modal
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
