@@ -1,9 +1,11 @@
 <?php
 require "../model/Permisos.php";
-
+require "../model/BitacoraModel.php";
+session_start();
 //instancia de la clase rol
 $permiso = new Permisos();
-
+ //bitacora
+ $bita = new Bitacora();
 switch ($_REQUEST["operador"]) {
 
     case "listar_permisos":
@@ -153,6 +155,7 @@ switch ($_REQUEST["operador"]) {
             $actualizar = $_POST["actualizar"];
             $reportes = $_POST["reportes"];
             if ($permiso->RegistrarPermiso($rol, $objeto, $insertar, $eliminar, $consultar, $actualizar,$reportes )) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 27, "Inserto", "Inserto nuevo permiso al rol con id: ".$rol);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -176,6 +179,7 @@ switch ($_REQUEST["operador"]) {
             $actualizar = $_POST["actualizar"];
             $reportes = $_POST["reportes"];
             if ($permiso->ActualizarPermiso($_POST["id"], $rol, $objeto, $insertar, $eliminar, $consultar, $actualizar,$reportes)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 27, "Modifico", "Modificó el permiso del rol: ".$rol);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -213,6 +217,7 @@ switch ($_REQUEST["operador"]) {
     case "eliminar_permiso":
         if (isset($_POST["id"]) && !empty($_POST["id"])) {
             if ($permiso->EliminarPermiso($_POST["id"])) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 27, "Elimino", "Elimino un permiso");
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -243,6 +248,36 @@ switch ($_REQUEST["operador"]) {
 
 
         break;
+
+
+        case "registrarEventoBitacora":
+            if( isset($_POST["evento"]) && !empty($_POST["evento"]) ){
+      
+               if($_POST["evento"] == 1){  //evento reporte
+                    if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 27, "Reporte", "Imprimió el reporte de LISTADO DE PERMISOS")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+      
+               }else if($_POST["evento"] == 2){ //evento filtro
+                    if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 27, "Filtrar", "Realizo consulta de filtros en LISTADO DE PERMISOS")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+               }
+                
+               
+      
+            }else{
+               $response = "error";
+            }
+            echo $response;
+         
+         break;
 
         //fin switch
 
