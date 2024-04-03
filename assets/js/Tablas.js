@@ -2097,7 +2097,7 @@ function RegistrarEstadoplanpago(){
           if(response == "success"){  //si inserto correctamente
              tablaEstadoplanpago.ajax.reload();  //actualiza la tablaSSSS
              LimpiarControles();
-             $('#registral_Estadoplanpago').modal('hide'); //cierra el modal
+             $('#registral_estadoplanpago').modal('hide'); //cierra el modal
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
