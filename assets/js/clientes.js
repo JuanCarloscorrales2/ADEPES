@@ -41,6 +41,24 @@ function LlenarTablaClientes(){
         ]
 
     });
+
+    let timeout = null;
+
+    // Agregar controlador de eventos para detectar la búsqueda
+    $('#tabla_clientes').on('search.dt', function(event) {
+        // Limpiar el timeout anterior, si existe
+        clearTimeout(timeout);
+        
+        // Iniciar un nuevo timeout
+        timeout = setTimeout(function(){
+            // Verificar si la búsqueda actual no está vacía
+            if (table.search() !== '') {
+                // Realizar acciones solo si hay una búsqueda activa
+                EventoBitacora(2);
+            }
+        }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+    });
+    
 }
 
 
@@ -161,6 +179,7 @@ function ActualizarClientes(){
 
   // Agregar el formulario a la página y enviarlo
   form.appendTo('body').submit();
+  EventoBitacora(1); //evento de pdf
 }
 
 //botón en la página para generar y descargar el PDF
@@ -226,4 +245,32 @@ function AlertaEliminarCliente(idPersona, nombres){
   })
 }
 
+ 
+
+function EventoBitacora(evento){ //registra el evento de pdf
+  
+  $.ajax({
+      data: { "evento": evento },
+      url:'../controller/ClienteController.php?op=registrarPDF', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+          
+          if(response == "success"){
+               //actualizar tabla
+          
+          }else{
+              swal.fire({
+                  icon: "error",
+                  title: "Atención",
+                  text: "No se pudo registrar el evento en bitacora de pdf"
+                  
+              })
+          }
+         
+      }
+
+  });
+
+}
  

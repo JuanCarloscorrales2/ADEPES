@@ -102,6 +102,8 @@ if (isset($_SESSION["user"])) {
 																<option>Elimino</option>
 																<option>Recuperación</option>
 																<option>Ingreso</option>
+																<option>Reporte</option>
+																<option>Filtrar</option>
 																<option>Salio</option>
 															</select>
 														</td>

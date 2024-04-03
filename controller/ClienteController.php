@@ -1,8 +1,11 @@
 <?php
 session_start(); //fuarda la sesion del usuario
 require "../model/Clientes.php";
+require "../model/BitacoraModel.php";
 //instancia de la clase clientes modelo
 $cli = new Cliente();
+//bitacora
+$bita = new Bitacora();
 
 switch($_REQUEST["op"]){
 
@@ -91,7 +94,10 @@ switch($_REQUEST["op"]){
                 $contacto = $_POST["contacto"];
                 $direccion = $_POST["direccion"];
                 if( $cli->ActualizarCliente($idPersona, $nombres, $apellidos, $contacto, $direccion) ){
+                    
+                    $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 7, "Modifico", "Modificó el cliente: ".$nombres." ".$apellidos);
                     $response = "success";  //si se inserto en la BD manda mensaje de exito
+                    
                
                 }else{
                     $response = "error";  //error al insertar en BD
@@ -164,10 +170,43 @@ switch($_REQUEST["op"]){
                 $response ="success";  //si elimino correctamente
 
            }else if($eliminar == "Llave en uso"){  //si la llave ya esta en uso en otras tablas
+           
+             $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 7, "Elimino", "Intento eliminar el cliente con id: ".$_POST["idPersona"]);
+            
               $response = "llave_uso";
            }else{
               $response = "error";  //cualquier otro tipo de error
            }
+
+        }else{
+           $response = "error";
+        }
+        echo $response;
+     
+     break;
+
+
+     case "registrarPDF":
+        if( isset($_POST["evento"]) && !empty($_POST["evento"]) ){
+
+           if($_POST["evento"] == 1){  //evento reporte
+                if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 7, "Reporte", "Imprimió el reporte de LISTADO DE CLIENTES")){
+                    $response ="success";  
+
+                }else{
+                    $response = "error";  //cualquier otro tipo de error
+                }
+
+           }else if($_POST["evento"] == 2){ //evento filtro
+                if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 7, "Filtrar", "Realizo consulta de filtros en LISTADO DE CLIENTES")){
+                    $response ="success";  
+
+                }else{
+                    $response = "error";  //cualquier otro tipo de error
+                }
+           }
+            
+           
 
         }else{
            $response = "error";
