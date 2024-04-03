@@ -314,10 +314,11 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $usu->EliminarUsuario($_POST["idUsuario"]);
             if ($eliminar == "elimino") {
-
+                $usu->RegistrarBitacora($_SESSION["user"]["idUsuario"], 3, "Elimino", "Elimino un usuario con id: ".$_POST["idUsuario"]);
                 $response = "success";
             } else if ($eliminar = "23000") {
                 $usu->ActualizarUsuarioInactivo($_POST["idUsuario"]);
+                $usu->RegistrarBitacora($_SESSION["user"]["idUsuario"], 3, "Elimino", "Inactivo el usuario con id: ".$_POST["idUsuario"]);
                 $response = "inactivo";
             } else {
                 $response = "error";
@@ -329,6 +330,36 @@ switch ($_REQUEST["operador"]) {
 
 
         break;
+
+
+        case "registrarEventoBitacora":
+            if( isset($_POST["evento"]) && !empty($_POST["evento"]) ){
+      
+               if($_POST["evento"] == 1){  //evento reporte
+                    if( $usu->RegistrarBitacora($_SESSION["user"]["idUsuario"], 3, "Reporte", "Imprimió el reporte de LISTADO DE LISTADO DE USUARIOS")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+      
+               }else if($_POST["evento"] == 2){ //evento filtro
+                    if(   $usu->RegistrarBitacora($_SESSION["user"]["idUsuario"], 3, "Filtrar", "Realizo consulta de filtros en LISTADO DE USUARIOS")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+               }
+                
+               
+      
+            }else{
+               $response = "error";
+            }
+            echo $response;
+         
+         break;
 }
 
 
