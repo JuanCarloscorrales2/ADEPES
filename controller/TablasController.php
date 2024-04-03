@@ -2626,4 +2626,609 @@ case "eliminar_Analisis":
 
     break;
 
+     /**************  VALIDACIONES AVALA APERSONA *****************************************************************************/
+ case "listar_Avala":
+    $resultados = array(
+        "sEcho" => 0,
+        "iTotalRecords" => 0,
+        "iTotalDisplayRecords" => 0,
+        "aaData" => []
+    );
+    $datos = $_SESSION["consultar"] >= 1 ? $tablas->ListarAvala() : []; //obtiene los datos del metodo
+    if ($datos) {
+
+        for ($i = 0; $i < count($datos); $i++) {
+            $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" data-toggle="modal" data-target="#actualizar_Avala" 
+        onclick="ObtenerAvalaPorId(' . $datos[$i]['idEsAval'] . ",'editar'" . ');">
+        <i class="icon-edit"></i> Editar </a>' : '<span class="tag tag-warning">No puede editar</span>';
+            $boton_eliminar = $_SESSION["eliminar"] >= 1 ? '<a class="dropdown-item" onclick="ObtenerAvalaPorId(' . $datos[$i]['idEsAval'] . ",'eliminar'" . ');">
+        <i class="icon-trash"></i> Eliminar </a>' : '<span class="tag tag-danger">No puede eliminar</span>';
+
+            $list[] = array(
+                "Acciones" => '<div class="btn-group"> 
+            <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
+            </button>
+            <div class="dropdown-menu">
+            ' . $boton_editar . $boton_eliminar . '
+                    
+                </div>
+            </div>',
+                "NO" => $datos[$i]['idEsAval'], //nombre de la tablas en la base de datos
+                "AVALA" => $datos[$i]['Descripcion'],
+
+
+            );
+        }
+
+        $resultados = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($list),
+            "iTotalDisplayRecords" => count($list),
+            "aaData" => $list
+        );
+    }
+    echo json_encode($resultados); //datos en formato json para la datatable
+
+    break;
+case "obtener_avala_por_id": //sirve para obtener el id para poder actualizar o eliminar
+    if (isset($_POST["idEsAval"]) && !empty($_POST["idEsAval"])) {
+        $data = $tablas->ObtenerAvalaPorId($_POST["idEsAval"]);
+        if ($data) {
+            $list[] = array(
+                "ID" => $data['idEsAval'],  //nombres de la base de datos
+                "AVALA" => $data['Descripcion'], //nombres de la base de datos
+
+
+            );
+            echo json_encode($list);
+        }
+    }
+
+    break;
+
+case "registrar_Avala":
+    if (isset($_POST["Descripcion"]) && !empty($_POST["Descripcion"])) {
+
+        $descripcion = $_POST["Descripcion"];
+
+        if ($tablas->RegistrarAvala($descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+        } else {
+            $response = "error";
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+
+    break;
+
+case "actualizar_avala":
+    if (isset($_POST["idEsAval"], $_POST["Descripcion"])  && !empty($_POST["idEsAval"]) && !empty($_POST["Descripcion"])) {
+
+        $idEsAval = $_POST["idEsAval"];
+        $descripcion = $_POST["Descripcion"];
+
+
+        if ($tablas->ActualizarAvala($idEsAval, $descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+
+        } else {
+            $response = "error";  //error al insertar en BD
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+    break;
+
+case "eliminar_Avala":
+    if (isset($_POST["idEsAval"]) && !empty($_POST["idEsAval"])) {
+
+        $eliminar = $tablas->EliminarAvala($_POST["idEsAval"]);
+        if ($eliminar == "elimino") {
+            $response = "success";  //si elimino correctamente
+
+        } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+            $response = "llave_uso";
+        } else {
+            $response = "error";  //cualquier otro tipo de error
+        }
+    } else {
+        $response = "error";
+    }
+    echo $response;
+
+    break;
+    /**************  VALIDACIONES TABLA TIPO PERSONA *****************************************************************************/
+ case "listar_Tipo_Persona":
+    $resultados = array(
+        "sEcho" => 0,
+        "iTotalRecords" => 0,
+        "iTotalDisplayRecords" => 0,
+        "aaData" => []
+    );
+    $datos = $_SESSION["consultar"] >= 1 ? $tablas->ListarTipoPersona() : []; //obtiene los datos del metodo
+    if ($datos) {
+
+        for ($i = 0; $i < count($datos); $i++) {
+            $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" data-toggle="modal" data-target="#actualizar_Tipopersona" 
+        onclick="ObtenerTipoPersonaPorId(' . $datos[$i]['idTipoPersona'] . ",'editar'" . ');">
+        <i class="icon-edit"></i> Editar </a>' : '<span class="tag tag-warning">No puede editar</span>';
+            $boton_eliminar = $_SESSION["eliminar"] >= 1 ? '<a class="dropdown-item" onclick="ObtenerTipoPersonaPorId(' . $datos[$i]['idTipoPersona'] . ",'eliminar'" . ');">
+        <i class="icon-trash"></i> Eliminar </a>' : '<span class="tag tag-danger">No puede eliminar</span>';
+
+            $list[] = array(
+                "Acciones" => '<div class="btn-group"> 
+            <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
+            </button>
+            <div class="dropdown-menu">
+            ' . $boton_editar . $boton_eliminar . '
+                    
+                </div>
+            </div>',
+                "NO" => $datos[$i]['idTipoPersona'], //nombre de la tablas en la base de datos
+                "TIPOPERSONA" => $datos[$i]['Descripcion'],
+
+
+            );
+        }
+
+        $resultados = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($list),
+            "iTotalDisplayRecords" => count($list),
+            "aaData" => $list
+        );
+    }
+    echo json_encode($resultados); //datos en formato json para la datatable
+
+    break;
+case "obtener_tipo_persona_por_id": //sirve para obtener el id para poder actualizar o eliminar
+    if (isset($_POST["idTipoPersona"]) && !empty($_POST["idTipoPersona"])) {
+        $data = $tablas->ObtenerTipoPersonaPorId($_POST["idTipoPersona"]);
+        if ($data) {
+            $list[] = array(
+                "ID" => $data['idTipoPersona'],  //nombres de la base de datos
+                "TIPOPERSONA" => $data['Descripcion'], //nombres de la base de datos
+
+
+            );
+            echo json_encode($list);
+        }
+    }
+
+    break;
+
+case "registrar_Tipopersona":
+    if (isset($_POST["Descripcion"]) && !empty($_POST["Descripcion"])) {
+
+        $descripcion = $_POST["Descripcion"];
+
+        if ($tablas->RegistrarTipoPersona($descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+        } else {
+            $response = "error";
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+
+    break;
+
+case "actualizar_tipopersona":
+    if (isset($_POST["idTipoPersona"], $_POST["Descripcion"])  && !empty($_POST["idTipoPersona"]) && !empty($_POST["Descripcion"])) {
+
+        $idTipoPersona = $_POST["idTipoPersona"];
+        $descripcion = $_POST["Descripcion"];
+
+
+        if ($tablas->ActualizarTipoPersona($idTipoPersona, $descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+
+        } else {
+            $response = "error";  //error al insertar en BD
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+    break;
+
+case "eliminar_Tipopersona":
+    if (isset($_POST["idTipoPersona"]) && !empty($_POST["idTipoPersona"])) {
+
+        $eliminar = $tablas->EliminarTipoPersona($_POST["idTipoPersona"]);
+        if ($eliminar == "elimino") {
+            $response = "success";  //si elimino correctamente
+
+        } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+            $response = "llave_uso";
+        } else {
+            $response = "error";  //cualquier otro tipo de error
+        }
+    } else {
+        $response = "error";
+    }
+    echo $response;
+
+    break;
+     /**************  VALIDACIONES TABLA TIPO CUENTA *****************************************************************************/
+ case "listar_Tipo_Cuenta":
+    $resultados = array(
+        "sEcho" => 0,
+        "iTotalRecords" => 0,
+        "iTotalDisplayRecords" => 0,
+        "aaData" => []
+    );
+    $datos = $_SESSION["consultar"] >= 1 ? $tablas->ListarTipoCuenta() : []; //obtiene los datos del metodo
+    if ($datos) {
+
+        for ($i = 0; $i < count($datos); $i++) {
+            $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" data-toggle="modal" data-target="#actualizar_Tipocuenta" 
+        onclick="ObtenerTipoCuentaPorId(' . $datos[$i]['idTipoCuenta'] . ",'editar'" . ');">
+        <i class="icon-edit"></i> Editar </a>' : '<span class="tag tag-warning">No puede editar</span>';
+            $boton_eliminar = $_SESSION["eliminar"] >= 1 ? '<a class="dropdown-item" onclick="ObtenerTipoCuentaPorId(' . $datos[$i]['idTipoCuenta'] . ",'eliminar'" . ');">
+        <i class="icon-trash"></i> Eliminar </a>' : '<span class="tag tag-danger">No puede eliminar</span>';
+
+            $list[] = array(
+                "Acciones" => '<div class="btn-group"> 
+            <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
+            </button>
+            <div class="dropdown-menu">
+            ' . $boton_editar . $boton_eliminar . '
+                    
+                </div>
+            </div>',
+                "NO" => $datos[$i]['idTipoCuenta'], //nombre de la tablas en la base de datos
+                "TIPOCUENTA" => $datos[$i]['Descripcion'],
+
+
+            );
+        }
+
+        $resultados = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($list),
+            "iTotalDisplayRecords" => count($list),
+            "aaData" => $list
+        );
+    }
+    echo json_encode($resultados); //datos en formato json para la datatable
+
+    break;
+case "obtener_tipo_cuenta_por_id": //sirve para obtener el id para poder actualizar o eliminar
+    if (isset($_POST["idTipoCuenta"]) && !empty($_POST["idTipoCuenta"])) {
+        $data = $tablas->ObtenerTipoCuentaPorId($_POST["idTipoCuenta"]);
+        if ($data) {
+            $list[] = array(
+                "ID" => $data['idTipoCuenta'],  //nombres de la base de datos
+                "TIPOCUENTA" => $data['Descripcion'], //nombres de la base de datos
+
+
+            );
+            echo json_encode($list);
+        }
+    }
+
+    break;
+
+case "registrar_Tipocuenta":
+    if (isset($_POST["Descripcion"]) && !empty($_POST["Descripcion"])) {
+
+        $descripcion = $_POST["Descripcion"];
+
+        if ($tablas->RegistrarTipoCuenta($descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+        } else {
+            $response = "error";
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+
+    break;
+
+case "actualizar_tipocuenta":
+    if (isset($_POST["idTipoCuenta"], $_POST["Descripcion"])  && !empty($_POST["idTipoCuenta"]) && !empty($_POST["Descripcion"])) {
+
+        $idTipoCuenta = $_POST["idTipoCuenta"];
+        $descripcion = $_POST["Descripcion"];
+
+
+        if ($tablas->ActualizarTipoCuenta($idTipoCuenta, $descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+
+        } else {
+            $response = "error";  //error al insertar en BD
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+    break;
+
+case "eliminar_Tipocuenta":
+    if (isset($_POST["idTipoCuenta"]) && !empty($_POST["idTipoCuenta"])) {
+
+        $eliminar = $tablas->EliminarTipoCuenta($_POST["idTipoCuenta"]);
+        if ($eliminar == "elimino") {
+            $response = "success";  //si elimino correctamente
+
+        } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+            $response = "llave_uso";
+        } else {
+            $response = "error";  //cualquier otro tipo de error
+        }
+    } else {
+        $response = "error";
+    }
+    echo $response;
+
+    break;
+    
+/*************  VALIDACIONES DE CREDITO AVAL ************************************************************************************/
+case "listar_creditoaval":
+    $resultados = array(
+        "sEcho" => 0,
+        "iTotalRecords" => 0,
+        "iTotalDisplayRecords" => 0,
+        "aaData" => []
+    );
+    $datos = $_SESSION["consultar"] >= 1 ? $tablas->ListarCreditoAval() : [];  //obtiene los datos del metodo
+    if ($datos) {
+        for ($i = 0; $i < count($datos); $i++) {
+            $boton_editar = $_SESSION["actualizar"] >= 1 ? '   <a class="dropdown-item" data-toggle="modal" data-target="#actualizar_creditoaval" 
+            onclick="ObtenerCreditoAvalPorId(' . $datos[$i]['idCreditoAval'] . ",'editar'" . ');">
+            <i class="icon-edit"></i> Editar </a>' : '<span class="tag tag-warning">No puede editar</span>';
+            $boton_eliminar = $_SESSION["eliminar"] >= 1 ? '<a class="dropdown-item" onclick="ObtenerCreditoAvalPorId(' . $datos[$i]['idCreditoAval'] . ",'eliminar'" . ');">
+            <i class="icon-trash"></i> Eliminar </a>' : '<span class="tag tag-danger">No puede eliminar</span>';
+
+            $list[] = array(
+                "Acciones" => '<div class="btn-group"> 
+                    <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
+                    </button>
+                    <div class="dropdown-menu">
+                     
+                    ' . $boton_editar . $boton_eliminar . '
+                  
+                    
+                        
+                    </div>
+                </div>',
+                "NO" => $datos[$i]['idCreditoAval'], //nombre de la tablas en la base de datos
+                "CREDITOAVAL" => $datos[$i]['Descripcion'],
+
+
+            );
+        }
+
+        $resultados = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($list),
+            "iTotalDisplayRecords" => count($list),
+            "aaData" => $list
+        );
+    }
+    echo json_encode($resultados); //datos en formato json para la datatable
+
+    break;
+
+case "obtener_credito_aval_por_id": //sirve para obtener el id para poder actualizar o eliminar
+    if (isset($_POST["idCreditoAval"]) && !empty($_POST["idCreditoAval"])) {
+        $data = $tablas->ObtenerCreditoAvalPorId($_POST["idCreditoAval"]);
+        if ($data) {
+            $list[] = array(
+                "ID" => $data['idCreditoAval'],  //nombres de la base de datos
+                "CREDITOAVAL" => $data['Descripcion'], //nombres de la base de datos
+
+
+            );
+            echo json_encode($list);
+        }
+    }
+
+    break;
+
+case "registrar_credito_aval":
+    if (isset($_POST["Descripcion"]) && !empty($_POST["Descripcion"])) {
+
+        $descripcion = $_POST["Descripcion"];
+
+        if ($tablas->RegistrarCreditoAval($descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+        } else {
+            $response = "error";
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+
+    break;
+
+case "actualizar_credito_aval":
+    if (isset($_POST["idCreditoAval"], $_POST["Descripcion"])  && !empty($_POST["idCreditoAval"]) && !empty($_POST["Descripcion"])) {
+
+        $idCreditoAval = $_POST["idCreditoAval"];
+        $Descripcion = $_POST["Descripcion"];
+
+
+        if ($tablas->ActualizarCreditoAval($idCreditoAval, $Descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+
+        } else {
+            $response = "error";  //error al insertar en BD
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+    break;
+
+
+case "eliminar_credito_aval":
+    if (isset($_POST["idCreditoAval"]) && !empty($_POST["idCreditoAval"])) {
+
+        $eliminar = $tablas->EliminarCreditoAval($_POST["idCreditoAval"]);
+        if ($eliminar == "elimino") {
+            $response = "success";  //si elimino correctamente
+
+        } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+            $response = "llave_uso";
+        } else {
+            $response = "error";  //cualquier otro tipo de error
+        }
+    } else {
+        $response = "error";
+    }
+    echo $response;
+
+    break;
+    /*************  VALIDACIONES DE OBJETOS************************************************************************************/
+case "listar_objeto":
+    $resultados = array(
+        "sEcho" => 0,
+        "iTotalRecords" => 0,
+        "iTotalDisplayRecords" => 0,
+        "aaData" => []
+    );
+    $datos = $_SESSION["consultar"] >= 1 ? $tablas->ListarObjeto() : [];  //obtiene los datos del metodo
+    if ($datos) {
+        for ($i = 0; $i < count($datos); $i++) {
+            $boton_editar = $_SESSION["actualizar"] >= 1 ? '   <a class="dropdown-item" data-toggle="modal" data-target="#actualizar_objetos" 
+            onclick="ObtenerObjetosPorId(' . $datos[$i]['idObjetos'] . ",'editar'" . ');">
+            <i class="icon-edit"></i> Editar </a>' : '<span class="tag tag-warning">No puede editar</span>';
+            $boton_eliminar = $_SESSION["eliminar"] >= 1 ? '<a class="dropdown-item" onclick="ObtenerObjetosPorId(' . $datos[$i]['idObjetos'] . ",'eliminar'" . ');">
+            <i class="icon-trash"></i> Eliminar </a>' : '<span class="tag tag-danger">No puede eliminar</span>';
+
+            $list[] = array(
+                "Acciones" => '<div class="btn-group"> 
+                    <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
+                    </button>
+                    <div class="dropdown-menu">
+                     
+                    ' . $boton_editar . $boton_eliminar . '
+                  
+                    
+                        
+                    </div>
+                </div>',
+                "NO" => $datos[$i]['idObjetos'], //nombre de la tablas en la base de datos
+                "OBJETO" => $datos[$i]['Descripcion'],
+
+
+            );
+        }
+
+        $resultados = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($list),
+            "iTotalDisplayRecords" => count($list),
+            "aaData" => $list
+        );
+    }
+    echo json_encode($resultados); //datos en formato json para la datatable
+
+    break;
+
+case "obtener_objeto_por_id": //sirve para obtener el id para poder actualizar o eliminar
+    if (isset($_POST["idObjetos"]) && !empty($_POST["idObjetos"])) {
+        $data = $tablas->ObtenerObjetosPorId($_POST["idObjetos"]);
+        if ($data) {
+            $list[] = array(
+                "ID" => $data['idObjetos'],  //nombres de la base de datos
+                "OBJETO" => $data['Descripcion'], //nombres de la base de datos
+
+
+            );
+            echo json_encode($list);
+        }
+    }
+
+    break;
+
+case "registrar_objeto":
+    if (isset($_POST["Descripcion"]) && !empty($_POST["Descripcion"])) {
+
+        $descripcion = $_POST["Descripcion"];
+
+        if ($tablas->RegistrarObjetos($descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+        } else {
+            $response = "error";
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+
+    break;
+
+case "actualizar_objeto":
+    if (isset($_POST["idObjetos"], $_POST["Descripcion"])  && !empty($_POST["idObjetos"]) && !empty($_POST["Descripcion"])) {
+
+        $idObjetos = $_POST["idObjetos"];
+        $Descripcion = $_POST["Descripcion"];
+
+
+        if ($tablas->ActualizarObjetos($idObjetos, $Descripcion)) {
+            $response = "success";  //si se inserto en la BD manda mensaje de exito
+
+        } else {
+            $response = "error";  //error al insertar en BD
+        }
+    } else {
+        $response = "requerid"; //validad que ingresa todo los datos requeridos
+    }
+
+    echo $response;
+
+    break;
+
+
+case "eliminar_objeto":
+    if (isset($_POST["idObjetos"]) && !empty($_POST["idObjetos"])) {
+
+        $eliminar = $tablas->EliminarObjetos($_POST["idObjetos"]);
+        if ($eliminar == "elimino") {
+            $response = "success";  //si elimino correctamente
+
+        } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+            $response = "llave_uso";
+        } else {
+            $response = "error";  //cualquier otro tipo de error
+        }
+    } else {
+        $response = "error";
+    }
+    echo $response;
+
+    break;
+
 } //fin switch

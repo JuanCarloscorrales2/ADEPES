@@ -1855,6 +1855,430 @@ function ObtenerAnalisisPorId($idestadoAnalisisCrediticio)
           }
       }
   }
+/*********************FUNCIONES DE LA TABLA Avala*******************************************************/
+//funcion para listar los datos de Avala a persona
+function ListarAvala()
+{
+    $query = "SELECT * FROM tbl_mn_avala_a_persona"; //sentencia sql
+    $result = $this->cnx->prepare($query);
+    if($result->execute())
+    {
+        if($result->rowCount() > 0){ //validacion para verificar si trae datos
+            while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                $datos[] = $fila;
+            }
+            return $datos;
+        }
+    }
+    return false;
+}
+  
+//FUNCION PARA REGISTRAR UN NUEVO AVALA
+function RegistrarAvala($Descripcion){
+  $query = "INSERT INTO tbl_mn_avala_a_persona (Descripcion) VALUES(?)";
+  $result = $this->cnx->prepare($query); //preparacion de la sentencia
+  $result->bindParam(1,$Descripcion);
 
+  if($result->execute()){ //validacion de la ejecucion
+      return true;
+  }
+
+  return false; //si fallo se devuelvo false
+
+}
+
+//funcion que trae los datos del tipo pago a actualizar
+function ObtenerAvalaPorId($idEsAval)
+{
+   $query = "SELECT * FROM tbl_mn_avala_a_persona WHERE idEsAval = ?"; 
+   $result = $this->cnx->prepare($query);
+   $result->bindParam(1,$idEsAval);
+   if($result->execute())
+   {
+      return $result->fetch(PDO::FETCH_ASSOC);
+   }
+   return false;
+}
+
+
+  //FUNCION PARA ACTUALIZR TIPO PAGO 
+  function ActualizarAvala($idEsAval, $descripcion){
+      $query = "UPDATE tbl_mn_avala_a_persona SET Descripcion = ? WHERE idEsAval = ?";
+      $result = $this->cnx->prepare($query); //preparacion de la sentencia
+      $result->bindParam(1,$descripcion);
+      $result->bindParam(2,$idEsAval);
+   
+
+      if($result->execute()){ //validacion de la ejecucion
+          return true;
+      }
+
+      return false; //si fallo se devuelvo false
+
+  }
+  //FUNCION PARA ELIMINAR UN TIPO PAGO
+  function EliminarAvala($idEsAval) {
+      try {
+          $query = "DELETE FROM tbl_mn_avala_a_persona WHERE idEsAval = ?";
+          $result = $this->cnx->prepare($query);
+          $result->bindParam(1, $idEsAval);
+  
+          if ($result->execute()) {
+              return "elimino";
+          }
+  
+      } catch (PDOException $e) {
+         
+          if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+          
+              return "Llave en uso"; // mensaje de llave ya en uso error 1451
+          } else {
+              
+              return "error";
+          }
+      }
+  }
+  /*********************FUNCIONES DE LA TABLA Tipo Persona *******************************************************/
+
+
+  //funcion para listar los datos de tipo pago
+  function ListarTipoPersona()
+  {
+      $query = "SELECT * FROM tbl_mn_tipo_persona"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+//FUNCION PARA REGISTRAR UN NUEVO TIPO PAGO
+function RegistrarTipoPersona($Descripcion){
+    $query = "INSERT INTO tbl_mn_tipo_persona (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del tipo pago a actualizar
+ function ObtenerTipoPersonaPorId($idTipoPersona)
+ {
+     $query = "SELECT * FROM tbl_mn_tipo_persona WHERE idTipoPersona = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idTipoPersona);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+
+    //FUNCION PARA ACTUALIZR TIPO PAGO 
+    function ActualizarTipoPersona($idTipoPersona, $descripcion){
+        $query = "UPDATE tbl_mn_tipo_persona SET Descripcion = ? WHERE idTipoPersona = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$descripcion);
+        $result->bindParam(2,$idTipoPersona);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+    //FUNCION PARA ELIMINAR UN TIPO PAGO
+    function EliminarTipoPersona($idTipoPersona) {
+        try {
+            $query = "DELETE FROM tbl_mn_tipo_persona WHERE idTipoPersona = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idTipoPersona);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+  /*********************FUNCIONES DE LA TABLA Tipo Persona *******************************************************/
+
+
+  //funcion para listar los datos de tipo cuenta
+  function ListarTipoCuenta()
+  {
+      $query = "SELECT * FROM tbl_mn_tipo_cuenta"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+    
+//FUNCION PARA REGISTRAR UN NUEVO TIPO CUENTA
+function RegistrarTipoCuenta($descripcion){
+    $query = "INSERT INTO tbl_mn_tipo_cuenta (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos del tipo pago a actualizar
+ function ObtenerTipoCuentaPorId($idTipoCuenta)
+ {
+     $query = "SELECT * FROM tbl_mn_tipo_cuenta WHERE idTipoCuenta = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idTipoCuenta);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+
+    //FUNCION PARA ACTUALIZR TIPO PAGO 
+    function ActualizarTipoCuenta($idTipoCuenta, $descripcion){
+        $query = "UPDATE tbl_mn_tipo_cuenta SET Descripcion = ? WHERE idTipoCuenta = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$descripcion);
+        $result->bindParam(2,$idTipoCuenta);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+    //FUNCION PARA ELIMINAR UN TIPO PAGO
+    function EliminarTipoCuenta($idTipoCuenta) {
+        try {
+            $query = "DELETE FROM tbl_mn_tipo_cuenta WHERE idTipoCuenta = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idTipoCuenta);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+    /****************************** FUNCIONES TABLA Credito Aval **************************************************************** */
+
+  //funcion para listar los datos de la tabla Credito Aval 
+  function ListarCreditoAval()
+  {
+      $query = "SELECT * FROM tbl_mn_credito_aval"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+
+  //FUNCION PARA REGISTRAR UN NUEVO Credito Aval 
+  function RegistrarCreditoAval($Descripcion){
+    $query = "INSERT INTO tbl_mn_credito_aval (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos de Credito Aval a actualizar
+ function ObtenerCreditoAvalPorId($idCreditoAval)
+ {
+     $query = "SELECT * FROM tbl_mn_credito_aval WHERE idCreditoAval = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idCreditoAval);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS ESTADO CIVILES
+    function ActualizarCreditoAval($idCreditoAval, $Descripcion){
+        $query = "UPDATE tbl_mn_credito_aval SET Descripcion = ? WHERE idCreditoAval = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idCreditoAval);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN ESTADO CIVIL
+    function EliminarCreditoAval($idCreditoAval) {
+        try {
+            $query = "DELETE FROM tbl_mn_credito_aval WHERE idCreditoAval = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idCreditoAval);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+    
+  /****************************** FUNCIONES TABLA OBJETOS **************************************************************** */
+
+  //funcion para listar los datos de la tabla objetos 
+  function ListarObjeto()
+  {
+      $query = "SELECT * FROM tbl_ms_objetos"; //sentencia sql
+      $result = $this->cnx->prepare($query);
+      if($result->execute())
+      {
+          if($result->rowCount() > 0){ //validacion para verificar si trae datos
+              while($fila = $result->fetch(PDO::FETCH_ASSOC)){  //guardar los datos en un arreglo
+                  $datos[] = $fila;
+              }
+              return $datos;
+          }
+      }
+      return false;
+  }
+
+  //FUNCION PARA REGISTRAR UN NUEVO OBJETO
+  function RegistrarObjetos($Descripcion){
+    $query = "INSERT INTO tbl_ms_objetos (Descripcion) VALUES(?)";
+    $result = $this->cnx->prepare($query); //preparacion de la sentencia
+    $result->bindParam(1,$Descripcion);
+
+    if($result->execute()){ //validacion de la ejecucion
+        return true;
+    }
+
+    return false; //si fallo se devuelvo false
+
+}
+
+ //funcion que trae los datos de Credito Aval a actualizar
+ function ObtenerObjetosPorId($idObjetos)
+ {
+     $query = "SELECT * FROM tbl_ms_objetos WHERE idObjetos = ?"; 
+     $result = $this->cnx->prepare($query);
+     $result->bindParam(1,$idObjetos);
+     if($result->execute())
+     {
+        return $result->fetch(PDO::FETCH_ASSOC);
+     }
+     return false;
+ }
+
+    //FUNCION PARA ACTUALIZR LOS OBJETOS
+    function ActualizarObjetos($idObjetos, $Descripcion){
+        $query = "UPDATE tbl_ms_objetos SET Descripcion = ? WHERE idObjetos = ?";
+        $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $result->bindParam(1,$Descripcion);
+        $result->bindParam(2,$idObjetos);
+     
+
+        if($result->execute()){ //validacion de la ejecucion
+            return true;
+        }
+
+        return false; //si fallo se devuelvo false
+
+    }
+
+    
+//FUNCION PARA ELIMINAR UN ESTADO CIVIL
+    function EliminarObjetos($idObjetos) {
+        try {
+            $query = "DELETE FROM tbl_ms_objetos WHERE idObjetos = ?";
+            $result = $this->cnx->prepare($query);
+            $result->bindParam(1, $idObjetos);
+    
+            if ($result->execute()) {
+                return "elimino";
+            }
+    
+        } catch (PDOException $e) {
+           
+            if ($e->errorInfo[1] === 1451) { // El código 1451 suele ser asociado con violaciones de claves externas
+            
+                return "Llave en uso"; // mensaje de llave ya en uso error 1451
+            } else {
+                
+                return "error";
+            }
+        }
+    }
+    
   
  }
