@@ -1284,5 +1284,34 @@ switch ($_REQUEST["operador"]) {
 
    break;
 
+   case "registrarEventoBitacora":
+      if( isset($_POST["evento"]) && !empty($_POST["evento"]) ){
+
+         if($_POST["evento"] == 1){  //evento reporte
+              if(  $solicitud->RegistrarBitacora($_SESSION["user"]["idUsuario"], 6, "Reporte", "Imprimió el reporte de LISTADO DE SOLICITUDES")){
+                  $response ="success";  
+
+              }else{
+                  $response = "error";  //cualquier otro tipo de error
+              }
+
+         }else if($_POST["evento"] == 2){ //evento filtro
+              if(  $solicitud->RegistrarBitacora($_SESSION["user"]["idUsuario"], 6, "Filtrar", "Realizo consulta de filtros en LISTADO DE SOLICITUDES")){
+                  $response ="success";  
+
+              }else{
+                  $response = "error";  //cualquier otro tipo de error
+              }
+         }
+          
+         
+
+      }else{
+         $response = "error";
+      }
+      echo $response;
+   
+   break;
+
   
 } //fin switch
