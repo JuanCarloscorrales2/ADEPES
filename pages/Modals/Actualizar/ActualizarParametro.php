@@ -18,7 +18,7 @@
 
             <div class="form-group">
               <label for="" class="col-form-label">Valor:</label>
-              <input type="text" placeholder="INGRESE EL VALOR"  class="form-control" id="valor_edit" onblur="CambiarMayuscula(this);"  onblur="limpiaUsuario()" maxlength="100" onkeyup="espacios(this);" >
+              <input type="text" placeholder="INGRESE EL VALOR"  class="form-control" id="valor_edit" onblur="CambiarMayuscula(this);"  onblur="limpiaUsuario()" maxlength="100" onkeyup="espacios(this);" oninput="validarInput(this);">
             </div>
      
         </form>
@@ -110,7 +110,16 @@ function contarLetras(input) {
   });
 
 
-  
+//validar que no se ingresen más de 3 letras seguidas
+function validarInput(input) {
+    var texto = input.value;
+    var regex = /([a-zA-Z])\1{3,}/g; // La expresión regular coincide con 3 letras iguales o más seguidas
+    
+    if (regex.test(texto)) {
+        // Elimina el último caracter ingresado si es parte de una secuencia de 3 letras iguales o más
+        input.value = texto.substring(0, texto.length - 1);
+    }
+}
 
 
   /******************************************************************************************** */

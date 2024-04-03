@@ -11,7 +11,7 @@
         <form>
           <div class="form-group">
             <label  class="col-form-label">Nombre:</label>
-            <input type="text"  id="nombre" placeholder="Ingrese el nombre del nuevo préstamo" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="15">
+            <input type="text"  id="nombre" placeholder="Ingrese el nombre del nuevo préstamo" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="15" oninput="validarInput(this);">
           </div>
           <div class="form-group">
             <label  class="col-form-label">Tasa:</label>
@@ -38,3 +38,16 @@
     </div>
   </div>
 </div>
+
+<script>
+//validar que no se ingresen más de 3 letras seguidas
+function validarInput(input) {
+    var texto = input.value;
+    var regex = /([a-zA-Z])\1{3,}/g; // La expresión regular coincide con 3 letras iguales o más seguidas
+    
+    if (regex.test(texto)) {
+        // Elimina el último caracter ingresado si es parte de una secuencia de 3 letras iguales o más
+        input.value = texto.substring(0, texto.length - 1);
+    }
+}
+</script>
