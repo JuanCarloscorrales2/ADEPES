@@ -12,7 +12,7 @@
         
           <div class="form-group">
             <label for="descripcion_rol" class="col-form-label">Ingrese una nueva pregunta:</label>
-            <input class="form-control" placeholder="INGRESE UNA NUEVA PREGUNTA" id="nueva_pregunta" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onblur="limpiaNombre()"  onkeyup="espacios(this);" maxlength="100" ></input>
+            <input class="form-control" placeholder="INGRESE UNA NUEVA PREGUNTA" id="nueva_pregunta" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onblur="limpiaNombre()"  onkeyup="espacios(this);" maxlength="100" oninput="validarInput(this);"></input>
           </div>
         </form>
       </div>
@@ -111,6 +111,16 @@ function contarLetras(input) {
 	}
   });
 
+//valida que no se ingresen más de 3 letras seguidas
+function validarInput(input) {
+    var texto = input.value;
+    var regex = /([a-zA-Z])\1{3,}/g; // La expresión regular coincide con 3 letras iguales o más seguidas
+    
+    if (regex.test(texto)) {
+        // Elimina el último caracter ingresado si es parte de una secuencia de 3 letras iguales o más
+        input.value = texto.substring(0, texto.length - 1);
+    }
+}
 
   
 

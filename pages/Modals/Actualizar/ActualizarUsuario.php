@@ -13,7 +13,7 @@
 
             <div class="form-group">
               <label for="" class="col-form-label">Nombre completo:</label>
-              <input type="text" placeholder="Ingrese un nombre del rol" class="form-control" id="nombre_edit" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onblur="limpiaNombre()" onkeyup="espacios(this);"  >
+              <input type="text" placeholder="Ingrese un nombre del rol" class="form-control" id="nombre_edit" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onblur="limpiaNombre()" onkeyup="espacios(this);" oninput="validarInput(this);">
             </div>
 
             <div class="form-group">
@@ -50,4 +50,16 @@
   </div>
 </div>
 
+<script>
+//valida que no se ingresen más de 3 letras seguidas
+function validarInput(input) {
+    var texto = input.value;
+    var regex = /([a-zA-Z])\1{3,}/g; // La expresión regular coincide con 3 letras iguales o más seguidas
+    
+    if (regex.test(texto)) {
+        // Elimina el último caracter ingresado si es parte de una secuencia de 3 letras iguales o más
+        input.value = texto.substring(0, texto.length - 1);
+    }
+}
+</script>
 

@@ -61,7 +61,7 @@ function RegistrarRol(){
                table.ajax.reload();  //actualiza la tabla
                LimpiarControles();
                $('#RegistrarRol').modal('hide'); //cierra el modal
-               swal('Registro Exitoso','Se guardado correctamente los datos','success'); //mensaje
+               swal('Registro Exitoso','Se han guardado correctamente los datos','success'); //mensaje
             }else if(response == "requerid"){
                 swal('¡Atención!','Complete todos los datos por favor','error'); //mensaje
             }else{
@@ -170,7 +170,7 @@ function EliminarRol(idRol){
                  swal.fire({
                     icon: "success",
                     title: "Eliminado",
-                    text: "El registro se elimino"   
+                    text: "El registro se eliminó"   
                 })
               
             }else if(response == "llave_uso"){
@@ -195,7 +195,7 @@ function EliminarRol(idRol){
   }
   function AlertaEliminarRol(idRol, Descripcion){
     Swal.fire({
-      title: '¿Esta seguro que desea eliminar?',
+      title: '¿Está seguro que desea eliminar?',
       text: "Rol: "+Descripcion,
       icon: 'warning',
       showCancelButton: true,
@@ -225,3 +225,13 @@ function CambiarMayuscula(elemento){
     elemento.value = texto.toUpperCase();
 }
 
+//valida que no se ingresen más de 3 letras seguidas
+function validarInput(input) {
+    var texto = input.value;
+    var regex = /([a-zA-Z])\1{3,}/g; // La expresión regular coincide con 3 letras iguales o más seguidas
+    
+    if (regex.test(texto)) {
+        // Elimina el último caracter ingresado si es parte de una secuencia de 3 letras iguales o más
+        input.value = texto.substring(0, texto.length - 1);
+    }
+}

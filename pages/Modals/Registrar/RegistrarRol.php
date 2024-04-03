@@ -11,11 +11,11 @@
         <form>
           <div class="form-group">
             <label for="nombre_rol" class="col-form-label">Nombre del rol:</label>
-            <input type="text" placeholder="Ingrese un nombre del rol" class="form-control" id="nombre_rol"  style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);">
+            <input type="text" placeholder="Ingrese un nombre del rol" class="form-control" id="nombre_rol"  style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" oninput="validarInput(this);">
           </div>
           <div class="form-group">
             <label for="descripcion_rol" class="col-form-label">Descripción:</label>
-            <textarea class="form-control" placeholder="Ingrese una breve descrición" id="descripcion_rol"  style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);"></textarea>
+            <textarea class="form-control" placeholder="Ingrese una breve descrición" id="descripcion_rol"  style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" oninput="validarInput(this);"></textarea>
           </div>
         </form>
       </div>

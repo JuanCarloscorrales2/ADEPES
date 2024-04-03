@@ -16,7 +16,7 @@
               <input type="text" id="vencimiento" class="form-control" value="<?php  echo date("Y-m-d",strtotime($fecha_actual."+" .$DIASPARAMETRO["valores"]["Valor"]." days"));  ?>"  readonly> 
               <br>
               <label for="" class="col-form-label">Nombre completo:</label>
-              <input type="text" placeholder="Ingrese el nombre completo" class="form-control" id="nombre" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onblur="limpiaNombre()" onkeyup="espacios(this);" maxlength="100" autocomplete="off">
+              <input type="text" placeholder="Ingrese el nombre completo" class="form-control" id="nombre" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onblur="limpiaNombre()" onkeyup="espacios(this);" maxlength="100" autocomplete="off" oninput="validarInput(this);">
             </div>
 
             <div class="form-group">
@@ -64,4 +64,16 @@
   </div>
 </div>
 
+<script>
+//valida que no se ingresen más de 3 letras seguidas
+function validarInput(input) {
+    var texto = input.value;
+    var regex = /([a-zA-Z])\1{3,}/g; // La expresión regular coincide con 3 letras iguales o más seguidas
+    
+    if (regex.test(texto)) {
+        // Elimina el último caracter ingresado si es parte de una secuencia de 3 letras iguales o más
+        input.value = texto.substring(0, texto.length - 1);
+    }
+}
+</script>
 
