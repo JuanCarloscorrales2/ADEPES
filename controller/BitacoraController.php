@@ -64,17 +64,48 @@
                 );
 
             }
-
+          
             $resultados = array(
                 "sEcho" =>1,
                 "iTotalRecords" => count($list),
                 "iTotalDisplayRecords" => count($list),
                 "aaData" =>$list
             );
+            $bitacora->RegistrarBitacora($_SESSION["user"]["idUsuario"], 31, "Filtrar", "Realizo consulta por rango de fechas");
         }
+
         echo json_encode($resultados); //datos en formato json para la datatable
     
         break;
+
+        case "registrarEventoBitacora":
+            if( isset($_POST["evento"]) && !empty($_POST["evento"]) ){
+      
+               if($_POST["evento"] == 1){  //evento reporte
+                    if(  $bitacora->RegistrarBitacora($_SESSION["user"]["idUsuario"], 31, "Reporte", "Imprimió el reporte de LISTADO DE REGISTROS DE BITÁCORA DEL SISTEMA")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+      
+               }else if($_POST["evento"] == 2){ //evento filtro
+                    if(  $bitacora->RegistrarBitacora($_SESSION["user"]["idUsuario"], 31, "Filtrar", "Realizo consulta en el filtro general")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+               }
+                
+               
+      
+            }else{
+               $response = "error";
+            }
+            echo $response;
+         
+         break;
     
 
   } //fin switch
