@@ -693,12 +693,12 @@ date_default_timezone_set('America/Tegucigalpa');
             
             ); 
             //actualiza los contactos y referencias
-            $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+            $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
             //actualiza las personas dependientes
             $editarSoli->ActualizarPersonaDependiente($dependientes, $idPersonaEdit);
             //actualiza la solicitud
             
-            $editarSoli->ActualizarSolicitud($idSolicitudEdit, $idTipoPrestamo, $rubro, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $dictamenAsesor);
+            $editarSoli->ActualizarSolicitud($idSolicitudEdit, $idTipoPrestamo, $rubro, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $dictamenAsesor, $ModificadoPor);
             
            
             //Actualizar analisis crediticio
@@ -748,12 +748,12 @@ date_default_timezone_set('America/Tegucigalpa');
                 array('cuenta'=>$cuentaCliente, 'idPersona' =>$idPersonaEdit),
             ); 
             //actualiza los contactos y referencias
-            $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+            $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
             //actualiza las personas dependientes
             $editarSoli->ActualizarPersonaDependiente($dependientes, $idPersonaEdit);
             //actualiza la solicitud
             
-            $editarSoli->ActualizarSolicitud($idSolicitudEdit, $idTipoPrestamo, $rubro, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $dictamenAsesor);
+            $editarSoli->ActualizarSolicitud($idSolicitudEdit, $idTipoPrestamo, $rubro, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $dictamenAsesor, $ModificadoPor);
             
             
             //Actualizar analisis crediticio
@@ -931,7 +931,7 @@ date_default_timezone_set('America/Tegucigalpa');
                 
                 ); 
                 //actualiza los contactos y referencias
-                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
                 //trae el id para actualizar las referencias comerciales
                 $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAvalEdit);
@@ -942,7 +942,7 @@ date_default_timezone_set('America/Tegucigalpa');
                     array('nombre' => $nombreComercial2AVAL1, 'direccion' => $direccionComercial2AVAL1,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
                 ); 
                 //actualiza las referencias comerciales
-                $editarSoli->Actualizar_referencias_comerciales($comerciales);
+                $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
             
                 //Actualizar analisis crediticio
                 $editarSoli->ActualizarAnalisisCrediticio($idPersonaAvalEdit, $sueldoBase_analisisAval1, $ingresosNegocioAval1, $rentaAval1, $remesasAval1, $aporteConyugeAval1, $sociedadAval1,
@@ -987,7 +987,7 @@ date_default_timezone_set('America/Tegucigalpa');
                   array('cuenta'=>$cuentaAval1, 'idPersona' =>$idPersonaAvalEdit),
               ); 
               //actualiza los contactos y referencias
-              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
               //trae el id para actualizar las referencias comerciales
               $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAvalEdit);
@@ -998,7 +998,7 @@ date_default_timezone_set('America/Tegucigalpa');
                 array('nombre' => $nombreComercial2AVAL1, 'direccion' => $direccionComercial2AVAL1,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
              ); 
              //actualiza las referencias comerciales
-             $editarSoli->Actualizar_referencias_comerciales($comerciales);
+             $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
    
               //Actualizar analisis crediticio
               $editarSoli->ActualizarAnalisisCrediticio($idPersonaAvalEdit, $sueldoBase_analisisAval1, $ingresosNegocioAval1, $rentaAval1, $remesasAval1, $aporteConyugeAval1, $sociedadAval1,
@@ -1174,7 +1174,7 @@ date_default_timezone_set('America/Tegucigalpa');
                 
                 ); 
                 //actualiza los contactos y referencias
-                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
                 //trae el id para actualizar las referencias comerciales
                 $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAval2);
@@ -1185,7 +1185,7 @@ date_default_timezone_set('America/Tegucigalpa');
                     array('nombre' => $nombreComercial2AVAL2, 'direccion' => $direccionComercial2AVAL2,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
                 );
                 //actualiza las referencias comerciales
-                $editarSoli->Actualizar_referencias_comerciales($comerciales);
+                $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
             
                 //Actualizar analisis crediticio
                 $editarSoli->ActualizarAnalisisCrediticio($idPersonaAval2, $sueldoBase_analisisAval2, $ingresosNegocioAval2, $rentaAval2, $remesasAval2, $aporteConyugeAval2, $sociedadAval2,
@@ -1229,7 +1229,7 @@ date_default_timezone_set('America/Tegucigalpa');
                   array('cuenta'=>$cuentaAval2, 'idPersona' =>$idPersonaAval2),
               ); 
               //actualiza los contactos y referencias
-              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
               //trae el id para actualizar las referencias comerciales
               $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAval2);
@@ -1240,7 +1240,7 @@ date_default_timezone_set('America/Tegucigalpa');
                 array('nombre' => $nombreComercial2AVAL2, 'direccion' => $direccionComercial2AVAL2,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
              ); 
              //actualiza las referencias comerciales
-             $editarSoli->Actualizar_referencias_comerciales($comerciales);
+             $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
    
               //Actualizar analisis crediticio
               $editarSoli->ActualizarAnalisisCrediticio($idPersonaAval2, $sueldoBase_analisisAval2, $ingresosNegocioAval2, $rentaAval2, $remesasAval2, $aporteConyugeAval2, $sociedadAval2,
@@ -1418,7 +1418,7 @@ date_default_timezone_set('America/Tegucigalpa');
                 
                 ); 
                 //actualiza los contactos y referencias
-                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
                 //trae el id para actualizar las referencias comerciales
                 $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAval3);
@@ -1429,7 +1429,7 @@ date_default_timezone_set('America/Tegucigalpa');
                     array('nombre' => $nombreComercial2AVAL3, 'direccion' => $direccionComercial2AVAL3,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
                 );
                 //actualiza las referencias comerciales
-                $editarSoli->Actualizar_referencias_comerciales($comerciales);
+                $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
             
                 //Actualizar analisis crediticio
                 $editarSoli->ActualizarAnalisisCrediticio($idPersonaAval3, $sueldoBase_analisisAval3, $ingresosNegocioAval3, $rentaAval3, $remesasAval3, $aporteConyugeAval3, $sociedadAval3,
@@ -1473,7 +1473,7 @@ date_default_timezone_set('America/Tegucigalpa');
                   array('cuenta'=>$cuentaAval3, 'idPersona' =>$idPersonaAval3),
               ); 
               //actualiza los contactos y referencias
-              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
               //trae el id para actualizar las referencias comerciales
               $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAval3);
@@ -1484,7 +1484,7 @@ date_default_timezone_set('America/Tegucigalpa');
                 array('nombre' => $nombreComercial2AVAL3, 'direccion' => $direccionComercial2AVAL3,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
             );
             //actualiza las referencias comerciales
-             $editarSoli->Actualizar_referencias_comerciales($comerciales);
+             $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
    
               //Actualizar analisis crediticio
               $editarSoli->ActualizarAnalisisCrediticio($idPersonaAval3, $sueldoBase_analisisAval3, $ingresosNegocioAval3, $rentaAval3, $remesasAval3, $aporteConyugeAval3, $sociedadAval3,
