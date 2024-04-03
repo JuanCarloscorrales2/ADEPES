@@ -11,7 +11,7 @@
         <form>
           <div class="form-group">
             <label for="descripcion_rol" class="col-form-label">Descripción:</label>
-            <input type="text"  id="descripcion_objeto" placeholder="Ingrese un nombre del estado civil" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20">
+            <input type="text"  id="descripcion_objeto" placeholder="Ingrese un nombre de un objeto" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20">
           </div>
         </form>
       </div>

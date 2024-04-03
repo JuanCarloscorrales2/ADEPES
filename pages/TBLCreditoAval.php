@@ -43,7 +43,7 @@ if (isset($_SESSION["user"])) {
 								<div class="card-header">
 									<h4 class="card-title" id="basic-layout-form">
 										<h4>
-											<center>Creditoa Aval</center>
+											<center>Crédito Aval</center>
 										</h4>
 										<?php
 										if ($tiene_permiso && $tiene_permiso["insertar"] >= 1) {
@@ -51,7 +51,7 @@ if (isset($_SESSION["user"])) {
 										} ?>
 										<?php
 										if ($tiene_permiso &&  $tiene_permiso["reportes"] >= 1) {
-											echo '<button id="btn_rEstCivil_pdf" class="btn btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
+											echo '<button id="btn_descargar_rCredAval_pdf" class="btn btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
 										} ?>
 									</h4>
 									<a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
@@ -70,7 +70,7 @@ if (isset($_SESSION["user"])) {
 													<tr>
 														<th>Acciones</th>
 														<th>No.</th>
-														<th>Credito Aval</th>
+														<th>Crédito Aval</th>
 
 													</tr>
 												</thead>
@@ -80,7 +80,7 @@ if (isset($_SESSION["user"])) {
 													<tr>
 														<th>Acciones</th>
 														<th>No.</th>
-														<th>Credito Aval</th>
+														<th>Crédito Aval</th>
 
 													</tr>
 												</tfoot>
@@ -137,7 +137,7 @@ if (isset($_SESSION["user"])) {
 	<script src="../assets/js/Tablas.js"></script>
 
 	<!--Agg. los reportes de Estado Civil -->
-	<script src="../assets/js/listadoEstadoCivil.js"></script>
+	<script src="../assets/js/listadoCreditoAval.js"></script>
 
 
 	<!--==========================================-->

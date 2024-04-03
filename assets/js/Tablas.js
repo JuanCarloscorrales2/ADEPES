@@ -5052,7 +5052,7 @@ function LlenarTablaObjetos(){
       columns : [
           { data : 'Acciones'},
           { data : 'NO'},  //se ponen los datos del Controller
-          { data : ' OBJETO'}, //se ponen los datos del Controller
+          { data : 'OBJETO'}, //se ponen los datos del Controller
           
           
       ]

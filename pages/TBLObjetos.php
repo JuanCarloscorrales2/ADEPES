@@ -51,7 +51,7 @@ if (isset($_SESSION["user"])) {
 										} ?>
 										<?php
 										if ($tiene_permiso &&  $tiene_permiso["reportes"] >= 1) {
-											echo '<button id="btn_rEstCivil_pdf" class="btn btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
+											echo '<button id="btn_descargar_rObj_pdf" class="btn btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
 										} ?>
 									</h4>
 									<a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
@@ -137,7 +137,7 @@ if (isset($_SESSION["user"])) {
 	<script src="../assets/js/Tablas.js"></script>
 
 	<!--Agg. los reportes de Estado Civil -->
-	<script src="../assets/js/listadoEstadoCivil.js"></script>
+	<script src="../assets/js/listadoObjetos.js"></script>
 
 
 	<!--==========================================-->

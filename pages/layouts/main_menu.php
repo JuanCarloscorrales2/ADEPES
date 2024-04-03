@@ -90,7 +90,7 @@
               <li><a href="../pages/TBLAnalisisCrediticio.php" class="icon-table"> Estado de Análisis Crediticio</a></li>
               <li><a href="../pages/TBLAvalaPersona.php" class="icon-table"> Avala a Personas</a></li>
               <li><a href="../pages/TBLTipoPersona.php" class="icon-table"> Tipo Persona</a></li>
-              <li><a href="../pages/TBLCreditoAval.php" class="icon-table"> Credito Aval</a></li>
+              <li><a href="../pages/TBLCreditoAval.php" class="icon-table"> Crédito Aval</a></li>
               <li><a href="../pages/TBLTipoCuenta.php" class="icon-table"> Tipo Cuenta</a></li>
               <li><a href="../pages/TBLObjetos.php" class="icon-table"> Objetos</a></li>
             </ul>
