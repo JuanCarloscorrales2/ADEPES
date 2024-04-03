@@ -54,7 +54,7 @@ function AutoregistroUsuario(){
 			  Swal.fire({
 				icon: 'warning',
 				title: '¡Atención!',
-				text: 'Has ingresado un correo incorrecto',
+				text: 'Correo incorrecto, dominios permitidos (gmail, yahoo, icloud)',
 			  })
 			}else if(response == "ClaveDistinta"){
 			  Swal.fire({
@@ -93,7 +93,7 @@ function AutoregistroUsuario(){
 				Swal.fire({
 					icon: 'error',
 					title: '¡Atención!',
-					text: 'Error al registrar en la base de datos',
+					text: 'Error al registrar sus datos, verifique su correo',
 				  })
 			}
 		}

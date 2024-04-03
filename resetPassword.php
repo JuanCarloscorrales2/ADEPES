@@ -61,22 +61,38 @@
   <br>
   <div class="d-flex justify-content-center">
   <!-- Botón para enviar el formulario -->
-  <input style="width:390px; height:50px;" class="btn btn-info btn-lg"  type="submit" value="Recuperar via Pregunta Secreta">
+  <input style="width:390px; height:50px;" class="btn btn-info btn-lg"  type="submit" value="Recuperar vía Pregunta Secreta">
   <br>
   <input type="hidden" name="action" value="procesarFormularioRecuperacion">
- 
- 
+  </div> 
+  <br>
+
+ <!-- BOTON AGREGADO DE VOLVER AL ATRAS... -->
+ <div class="p-2">
+    <center>
+    <a class="text-decoration-none text-info fw-semibold" href="index.php">Volver a iniciar sesión</a>
+    </center>
+                
+  </div>
 </form> 
 </div>
 
 
 <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
-  <div id="mensaje" class="alert alert-danger">Datos ingresados no correctos. Por favor, verifique sus respuestas.</div>
+  <!--div id="mensaje" class="alert alert-danger">Datos ingresados no correctos. Por favor, verifique sus respuestas.</div>
        
     <a href="index.php" class="text-decoration-none text-info fw-semibold"> <-- Iniciar sessión</a>
-  </div>
+  </div --> 
 
-  
+  <script>  // SCRIPT DE AVISO...
+        Swal.fire({
+        icon: "warning",
+        title: "Atención...",
+        text: "Ingrese un usuario válido",
+        showConfirmButton: true,
+        confirmButtonText: "Aceptar"
+        })
+        </script>
 
   <script>
     setTimeout(function() {

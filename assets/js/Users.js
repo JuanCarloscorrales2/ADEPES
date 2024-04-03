@@ -245,7 +245,7 @@ function RegistrarUsuario(){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
-              text: 'has ingresado un correo incorrecto',
+              text: 'has ingresado un correo incorrecto, Dominios permitidos (gmail, yahoo, icloud)',
             })
           }else if(response == "ClaveDistinta"){
             Swal.fire({
@@ -342,7 +342,7 @@ function ActualizarUsuario( ){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
-              text: 'has ingresado un correo incorrecto',
+              text: 'has ingresado un correo incorrecto, Dominios permitidos (gmail, yahoo, icloud)',
         })
 
         }else{

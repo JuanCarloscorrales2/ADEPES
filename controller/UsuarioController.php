@@ -62,7 +62,8 @@ switch ($_REQUEST["operador"]) {
                     session_destroy();
                 }
             } else {
-                $response = "notfound";
+                // VALOR DE INGRESO DE USUARIO...
+                $response = "requerid";
             }
         } else {
             $response = "requerid";

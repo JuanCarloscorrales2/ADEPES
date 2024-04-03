@@ -33,9 +33,11 @@ class preguntasModel {
     function RegistrarPregunta($idPregunta, $idUsuario, $Respuesta, $CreadoPor){
         $query = "INSERT INTO tbl_ms_preguntas_usuario(idPregunta, idUsuario, Respuesta, CreadoPor) VALUES(?, ?, ?, ?)";
         $result = $this->cnx->prepare($query); //preparacion de la sentencia
+        $clave_hash = password_hash($Respuesta,PASSWORD_DEFAULT); //encripta la clave
         $result->bindParam(1,$idPregunta);
         $result->bindParam(2,$idUsuario);
-        $result->bindParam(3,$Respuesta);
+        //  $result->bindParam(3,$Respuesta);
+        $result->bindValue(3,$clave_hash); //AGREGADO DE CLAVE HASH
         $result->bindParam(4,$CreadoPor);
     
 

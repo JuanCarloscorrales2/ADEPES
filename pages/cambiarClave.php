@@ -54,73 +54,79 @@ include "layouts/head.php"; ?>
 							<div class="card-body collapse in">
 								<div class="card-block">
                                 <form class="col-md-6" autocomplete="off" method="POST" name="restablecer" action="">
-								<?php
-                                    $recuperacion = new Conexion();
-                                    $cnx = $recuperacion->ConectarDB();
-                                    if(isset($_POST["btnmodificar"])){
-                                        $passActual=$_POST["txtContrasena"];
-                                        $passNew=$_POST["txtContrasenaNueva"];
-                                        $passConf=$_POST["txtConfirmar"];
+    <?php
+    $recuperacion = new Conexion();
+    $cnx = $recuperacion->ConectarDB();
 
-                                        $passActual = password_hash($passActual,PASSWORD_DEFAULT);
-                                        $passNew = password_hash($passNew,PASSWORD_DEFAULT);
-                                        $passConf = password_hash($passConf,PASSWORD_DEFAULT);
+    if(isset($_POST["btnmodificar"])){
+        $passActual = $_POST["txtContrasena"];
+        $passNew = $_POST["txtContrasenaNueva"];
+        $passConf = $_POST["txtConfirmar"];
 
-                                        $sqlM = "SELECT Clave FROM tbl_ms_usuario WHERE idUsuario='".$_SESSION["user"]["idUsuario"]."' "; 
-                                        $query =$cnx->prepare($sqlM);
-                                        $query->fetch(PDO::FETCH_ASSOC);
-                                        $row= $query->fetch(PDO::FETCH_ASSOC);
-                                        //$query=$cnx->fetch_array();
-                                        //$query->execute();
-                                    
-                                            if($passNew=$passConf){
+        // No encriptar la contraseña actual para compararla
+        $sqlM = "SELECT Clave FROM tbl_ms_usuario WHERE idUsuario=:idUsuario";
+        $query = $cnx->prepare($sqlM);
+        $query->execute(array(":idUsuario" => $_SESSION["user"]["idUsuario"]));
+        $row = $query->fetch(PDO::FETCH_ASSOC);
 
-                                                $update="UPDATE tbl_ms_usuario SET Clave='$passNew' WHERE idUsuario='".$_SESSION["user"]["idUsuario"]."' ";
-                                                $queryU =$cnx->query($update);
-                                                if($queryU==true){
-                                                    $queryU->execute();
-                                                    echo "Contraseña Actualizada!";
-                                                }
-                                        
-                                            }else {
-                                                echo "Las Contraseñas no coinciden.";
-                                            }
+        if($query->rowCount() > 0){
+            // Verificar si la contraseña actual es correcta
+            if(password_verify($passActual, $row['Clave'])){
+                // Verificar que la nueva contraseña no sea igual a la actual
+                if($passActual !== $passNew){
+                    // Encriptar las contraseñas nuevas
+                    $passNewHash = password_hash($passNew, PASSWORD_DEFAULT);
+                    $passConfHash = password_hash($passConf, PASSWORD_DEFAULT);
 
-                                    }
+                    // Verificar si las contraseñas nuevas coinciden
+                    if(password_verify($passConf, $passNewHash)){
+                        $update = "UPDATE tbl_ms_usuario SET Clave=:clave WHERE idUsuario=:idUsuario";
+                        $queryU = $cnx->prepare($update);
+                        $queryU->execute(array(":clave" => $passNewHash, ":idUsuario" => $_SESSION["user"]["idUsuario"]));
 
-                                ?>
+                        if($queryU){
+                            echo "Contraseña Actualizada!";
+                        } else {
+                            echo "Error al actualizar la contraseña.";
+                        }
+                    } else {
+                        echo "Las Contraseñas nuevas no coinciden.";
+                    }
+                } else {
+                    echo "La nueva contraseña no puede ser igual a la actual.";
+                }
+            } else {
+                echo "La contraseña actual es incorrecta.";
+            }
+        } else {
+            echo "Usuario no encontrado.";
+        }
+    }
+    ?>
 
-                                    <input type="hidden"  class="form-control" id="id_editar" name="id_editar" value=<?php echo $_SESSION["user"]["idUsuario"]; ?>>
-                                    <div class="input-group mt-2">
-                                        <label for="nombre_rol" class="col-form-label"><strong>Contraseña Actual:</strong></label>  
-                                        <input class="form-control bg-light" type="password" id="txtContrasena" name="txtContrasena" placeholder="Contraseña Actual"
-										pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[_#@$&%]).{4,}"
-										title="Debe ingresar por los menos un número, una letra Mayúscula, una minúscula y caracteres especiales"
-										maxlength="30" required>
-									
-									</div>
-									
-                                    <div class="input-group mt-2">
-                                    <label for="nombre_rol" class="col-form-label"><strong>Contraseña Nueva:</strong></label>
-                                    <input class="form-control bg-light" type="password" id="txtContrasenaNueva" name="txtContrasenaNueva" placeholder="Contraseña Nueva" 
-									pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[_#@$&%]).{4,}"
-									title="Debe ingresar por los menos un número, una letra Mayúscula, una minúscula y caracteres especiales"
-									maxlength="30" required>
-                                    </div>
+    <input type="hidden" class="form-control" id="id_editar" name="id_editar" value="<?php echo $_SESSION["user"]["idUsuario"]; ?>">
 
-                                    <div class="input-group mt-2">
-                                    <label for="nombre_rol" class="col-form-label"><strong>Confirmar Contraseña:</strong></label>
-                                    <input class="form-control bg-light" type="password" id="txtConfirmar" name="txtConfirmar" placeholder="Confirmar Contraseña" 
-									pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[_#@$&%]).{4,}"
-									title="Debe ingresar por los menos un número, una letra Mayúscula, una minúscula y caracteres especiales"
-									maxlength="30" required>
-                                    </div>
-									<input type="checkbox" onclick="togglePassword()"> Mostrar Contraseña
-<br>
-                                   <center>
-                                    <button type="submit" class="btn btn-xl btn-primary" value="ok" name="btnmodificar">Cambiar</button>
-                                    </center>
-                                </form>
+    <div class="input-group mt-2">
+        <label for="nombre_rol" class="col-form-label"><strong>Contraseña Actual:</strong></label>  
+        <input class="form-control bg-light" type="password" id="txtContrasena" name="txtContrasena" placeholder="Contraseña Actual" maxlength="30" required>
+    </div>
+    
+    <div class="input-group mt-2">
+        <label for="nombre_rol" class="col-form-label"><strong>Contraseña Nueva:</strong></label>
+        <input class="form-control bg-light" type="password" id="txtContrasenaNueva" name="txtContrasenaNueva" placeholder="Contraseña Nueva" maxlength="30" required>
+    </div>
+
+    <div class="input-group mt-2">
+        <label for="nombre_rol" class="col-form-label"><strong>Confirmar Contraseña:</strong></label>
+        <input class="form-control bg-light" type="password" id="txtConfirmar" name="txtConfirmar" placeholder="Confirmar Contraseña" maxlength="30" required>
+    </div>
+
+    <input type="checkbox" onclick="togglePassword()"> Mostrar Contraseña
+    <br>
+    <center>
+        <button type="submit" class="btn btn-xl btn-primary" value="ok" name="btnmodificar">Cambiar</button>
+    </center>
+</form>
                                          
     
                                 </div>
