@@ -86,8 +86,8 @@
               <li><a href="../pages/TBLMunicipio.php" class="icon-table">  Municipio</a></li>
               <li><a href="../pages/TBLTipoPago.php" class="icon-table"> Tipos de Pagos</a></li>
               <li><a href="../pages/TBLTipoCliente.php" class="icon-table"> Tipo Cliente</a></li>
-              <li><a href="../pages/TBLEstadoCredito.php" class="icon-table"> Estado de Credito</a></li>
-              <li><a href="../pages/TBLAnalisisCrediticio.php" class="icon-table"> Analisis Crediticio</a></li>
+              <li><a href="../pages/TBLEstadoCredito.php" class="icon-table"> Estado de Crédito</a></li>
+              <li><a href="../pages/TBLAnalisisCrediticio.php" class="icon-table"> Estado de Análisis Crediticio</a></li>
             </ul>
           </li>
 

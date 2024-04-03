@@ -954,23 +954,23 @@ function CentrarRiesgoGenerarPDF() {
     var identidadAval2 = $('#identidadAval2Central').val();
     var nombreAval3 = $('#nombreAval3Central').val();
     var identidadAval3 = $('#identidadAval3Central').val();
-// Verifica campos requeridos
-if (!idSolicitante || !nombreCliente || !identidadCliente || !estadoCivilCliente || !direccionCliente) {
-    alert('Por favor, complete todos los campos requeridos.');
-    return;
-}
-// Codifica todos los parámetros antes de agregarlos a la URL
-idSolicitante = encodeURIComponent(idSolicitante);
-nombreCliente = encodeURIComponent(nombreCliente);
-identidadCliente = encodeURIComponent(identidadCliente);
-estadoCivilCliente = encodeURIComponent(estadoCivilCliente);
-direccionCliente = encodeURIComponent(direccionCliente);
-nombreAval1 = encodeURIComponent(nombreAval1);
-identidadAval1 = encodeURIComponent(identidadAval1);
-nombreAval2 = encodeURIComponent(nombreAval2);
-identidadAval2 = encodeURIComponent(identidadAval2);
-nombreAval3 = encodeURIComponent(nombreAval3);
-identidadAval3 = encodeURIComponent(identidadAval3);
+    // Verifica campos requeridos
+    if (!idSolicitante || !nombreCliente || !identidadCliente || !estadoCivilCliente || !direccionCliente) {
+        alert('Por favor, complete todos los campos requeridos.');
+        return;
+    }
+    // Codifica todos los parámetros antes de agregarlos a la URL
+    idSolicitante = encodeURIComponent(idSolicitante);
+    nombreCliente = encodeURIComponent(nombreCliente);
+    identidadCliente = encodeURIComponent(identidadCliente);
+    estadoCivilCliente = encodeURIComponent(estadoCivilCliente);
+    direccionCliente = encodeURIComponent(direccionCliente);
+    nombreAval1 = encodeURIComponent(nombreAval1);
+    identidadAval1 = encodeURIComponent(identidadAval1);
+    nombreAval2 = encodeURIComponent(nombreAval2);
+    identidadAval2 = encodeURIComponent(identidadAval2);
+    nombreAval3 = encodeURIComponent(nombreAval3);
+    identidadAval3 = encodeURIComponent(identidadAval3);
     // Construye la URL con todas las variables
     var url = '../pages/fpdf/CentralRiesgo.php?' +
         'idSolicitante=' + idSolicitante +
@@ -986,7 +986,7 @@ identidadAval3 = encodeURIComponent(identidadAval3);
         '&identidadAval3=' + identidadAval3;
 
     // Redirige el navegador a la URL construida
-    window.location.href = url;
+    window.open(url, '_blank');
 }
 
 
@@ -1044,7 +1044,7 @@ function FormatoConozcaClientePDF() {
          '&TotalIngresosFormato=' + TotalIngresosFormato;
  
      // Redirige el navegador a la URL construida
-     window.location.href = url;
+     window.open(url, '_blank');
  }
   
   
@@ -1057,7 +1057,8 @@ function comiteCreeditoGenerarPDF(){
         return;
     }
     // Envía el idSoli al script PHP que genera el PDF
-      window.location.href = '../pages/fpdf/ComiteCredito.php?idSoli=' + idSoli;
+    window.open('../pages/fpdf/ComiteCredito.php?idSoli=' + idSoli, '_blank');
+
 }
 
   //validaciones de formato de telefonos y celulares
@@ -1070,4 +1071,5 @@ function comiteCreeditoGenerarPDF(){
           inputElement.value = valorFormateado;
       }
   }
+  
   

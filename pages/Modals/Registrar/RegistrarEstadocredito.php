@@ -2,7 +2,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">   <strong> <center>Agregar Estado Credito</center> </strong>   </h5>
+        <h5 class="modal-title" id="exampleModalLabel">   <strong> <center>Agregar Estado Crédito</center> </strong>   </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick ="eventoCerrarModal();">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -11,7 +11,7 @@
         <form>
           <div class="form-group">
             <label for="descripcion_rol" class="col-form-label">Descripción:</label>
-            <input type="text"  id="descripcion_Estadocredito" placeholder="Ingrese un nueva Estado Credito" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20">
+            <input type="text"  id="descripcion_Estadocredito" placeholder="Ingrese un nuevo estado de crédito" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20">
           </div>
         </form>
       </div>

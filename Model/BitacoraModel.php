@@ -1,6 +1,6 @@
 <?php
 
-require "../config/Conexion.php";
+require_once("../config/Conexion.php");
 
 class Bitacora {
 
@@ -16,7 +16,7 @@ class Bitacora {
     function ListarBitacora()
     {
         $query = "SELECT usu.Usuario, obj.Objeto, bita.Accion, bita.Descripcion, 
-        DATE_FORMAT(bita.Fecha, '%m-%d-%Y %h:%i:%s') AS Fecha FROM tbl_ms_bitacora bita 
+        DATE_FORMAT(bita.Fecha, '%d-%m-%Y %h:%i:%s') AS Fecha FROM tbl_ms_bitacora bita 
             INNER JOIN tbl_ms_objetos obj ON obj.idObjetos = bita.idObjetos 
             INNER JOIN tbl_ms_usuario usu ON bita.idUsuario = usu.idUsuario"; //sentencia sql
         $result = $this->cnx->prepare($query);
@@ -54,7 +54,7 @@ class Bitacora {
      function FiltrarPorFecha($fechaInicio, $fechaFinal)
      {
         $query = "SELECT usu.Usuario, obj.Objeto, bita.Accion, bita.Descripcion, 
-            DATE_FORMAT(bita.Fecha, '%m-%d-%Y %h:%i:%s') AS Fecha FROM tbl_ms_bitacora bita 
+            DATE_FORMAT(bita.Fecha, '%d-%m-%Y %h:%i:%s') AS Fecha FROM tbl_ms_bitacora bita 
             INNER JOIN tbl_ms_objetos obj ON obj.idObjetos = bita.idObjetos 
             INNER JOIN tbl_ms_usuario usu ON bita.idUsuario = usu.idUsuario
             WHERE DATE(bita.Fecha) >= ? AND DATE(bita.Fecha) <= ?;"; //sentencia sql

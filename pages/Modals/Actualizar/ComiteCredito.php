@@ -1,9 +1,9 @@
-<div class="modal fade" id="comiteCredito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="comiteCredito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">   <strong> <center><h4>COMITÉ DE CRÉDITO</h4></center></strong>   </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" onclick="eventoCerrarModalComite();" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -67,7 +67,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" onclick="eventoCerrarModalComite();" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-success" onclick="AlertaAprobarSolicitud()" >Guardar</button>
       </div>
     </div>

@@ -37,6 +37,7 @@ function init(){
   AnalisisCrediticio(data[0]['idPerso']);
   ReferenciasFamiliares(data[0]['idPerso'], 1);
   PersonaDependientes(data[0]['idPerso']);
+  ConsultarEstadoSolicitud(data[0]['idSoli']);
   //
 
   
@@ -941,7 +942,7 @@ function ReferenciasFamiliares(idPersona, tipoPersona){
         }
     });
   
-  }
+}
 
   function ParentescoReferencias(idReferencia, numero){
 
@@ -1785,6 +1786,45 @@ function ObtenerDatosPrestamo(){
          
       }
 
+  });
+
+}
+
+function ConsultarEstadoSolicitud(idSolicitud){
+
+  $.ajax({
+     data : { "idSolicitud" : idSolicitud},
+      url:'../controller/EditarSolicitudController.php?operador=Consultar_estado_solicitud',
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+      //console.log(response); 
+      data = $.parseJSON(response);
+          if(data.length > 0){ //valida que existan datos
+
+            const mensajeDiv = document.getElementById("mensaje");
+  
+
+            if(data[0]['ESTADO'] == 1 || data[0]['ESTADO'] == 4){
+              
+            
+              var boton = document.getElementById("botonActualizar");
+              mensajeDiv.style.display = "block";
+            //  mensajeDiv.textContent = "Informacion adicional:";
+              const mensajeHTML = "<center><strong>No puedes editar porque la solicitud ya está aprobada.</strong> </center>";
+              
+              //actualiza el contenido de la advertencia
+                document.querySelector(".alert.alert-info").innerHTML = mensajeHTML;
+              // Oculta el botón guardar
+              boton.style.display = "none";
+            }
+
+            
+
+           
+                   
+          }
+      }
   });
 
 }

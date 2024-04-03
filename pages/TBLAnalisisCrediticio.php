@@ -6,7 +6,7 @@ if (isset($_SESSION["user"])) {
 	require "../model/Permisos.php";
 	$permiso = new Permisos();
 	$rol = $_SESSION["user"]["idRol"];
-	$tiene_permiso = $permiso->ListarPermisosRol(12, $rol);
+	$tiene_permiso = $permiso->ListarPermisosRol(33, $rol);
 	$_SESSION["actualizar"] = $tiene_permiso ? $tiene_permiso["actualizar"] : 0;
 	$_SESSION["eliminar"] = $tiene_permiso ? $tiene_permiso["eliminar"] : 0;
 	$_SESSION["consultar"] = $tiene_permiso ? $tiene_permiso["consultar"] : 0;
@@ -42,14 +42,14 @@ if (isset($_SESSION["user"])) {
 								<div class="card-header">
 									<h4 class="card-title" id="basic-layout-form">
 										<h4>
-											<center>Analisis Crediticio</center>
+											<center>Estado de Análisis Crediticio</center>
 										</h4>
 										<?php
 										if ($tiene_permiso && $tiene_permiso["insertar"] >= 1) {
 											echo '<button class="btn btn-success" data-toggle="modal" data-target="#registral_Analisis"><span class="icon-plus"></span> Nuevo</button>';
 										}
 										if ($tiene_permiso &&  $tiene_permiso["reportes"] >= 1) {
-											echo '<button id="btn_descargar_rCategCasa_pdf" class="btn btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
+											echo '<button id="btn_descargar_rEstAnCredit_pdf" class="btn btn-danger"> <i class="fas icon-file-pdf"></i> Descargar Listado</button>';
 										} ?>
 									</h4>
 									<a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
@@ -68,7 +68,7 @@ if (isset($_SESSION["user"])) {
 													<tr>
 														<th>Acciones</th>
 														<th>No.</th>
-														<th>Analisis Crediticio</th>
+														<th>Estado de análisis crediticio</th>
 
 													</tr>
 												</thead>
@@ -78,7 +78,7 @@ if (isset($_SESSION["user"])) {
 													<tr>
 														<th>Acciones</th>
 														<th>No.</th>
-														<th>Analisis Crediticio</th>
+														<th>Estado de análisis crediticio</th>
 
 													</tr>
 												</tfoot>
@@ -134,7 +134,7 @@ if (isset($_SESSION["user"])) {
 	<script src="../assets/js/Tablas.js"></script>
 
 	<!-- Agg. el reporte de Categoria de Casa -->
-	<script src="../assets/js/listadoCategCasa.js"></script>
+	<script src="../assets/js/listadoEstadoAnCredit.js"></script>
 
 
 	<!--==========================================-->

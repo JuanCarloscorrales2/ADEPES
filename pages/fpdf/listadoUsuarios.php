@@ -72,7 +72,7 @@
                 $this->SetY(-15); // Posición: a 1,5 cm del final
                 $this->SetFont('Arial', 'I', 8); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
                 $hoy = date('d/m/Y H:i:s');
-                $this->Cell(470, 10, utf8_decode('Fecha y Hora de impresión:'.$hoy), 0, 0, 'C');
+                $this->Cell(470, 10, utf8_decode('Fecha y Hora de impresión: '.$hoy), 0, 0, 'C');
             } // Fin de pie de pagina.
         } //Fin de libreria de reporte.
         //Ahora instanciar para la pagina y el formato y su contenido.

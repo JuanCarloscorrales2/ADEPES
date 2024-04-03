@@ -90,6 +90,7 @@ function ObtenerParametroPorId(idParametro, Acciones){
                 icon: 'success',
                 title: 'Actualización Exitosa',
                 text: 'Se han actualizado correctamente los datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
     
             }else if(response == "requerid"){
@@ -97,6 +98,7 @@ function ObtenerParametroPorId(idParametro, Acciones){
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los datos por favor',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })     
             }else if(response == "soloNumero"){
               Swal.fire({

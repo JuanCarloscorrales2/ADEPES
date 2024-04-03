@@ -130,21 +130,24 @@ function ActualizarRoles(){
             Swal.fire({
               icon: 'success',
               title: 'Actualización Exitosa',
-              text: 'Se a guardado correctamente los datos del cliente',
+              text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
   
           }else if(response == "requerid"){
               Swal.fire({
-                icon: 'error',
+                icon: 'Error',
                 title: '¡Atención!',
                 text: 'Complete todos los datos por favor',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
   
           }else{
               Swal.fire({
-                icon: 'error',
+                icon: 'Error',
                 title: '¡Atención!',
-                text: 'error al actaulizar en la base de datos',
+                text: 'Error al actaulizar en la base de datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }
       }
@@ -180,7 +183,7 @@ function EliminarRol(idRol){
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se a podido eliminar"
+                    text: "No se ha podido eliminar"
                     
                 })
             }
@@ -200,6 +203,7 @@ function EliminarRol(idRol){
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     }).then((result) => {
       if (result.isConfirmed) {
         

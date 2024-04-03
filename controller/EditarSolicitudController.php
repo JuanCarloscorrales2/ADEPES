@@ -1,5 +1,8 @@
 <?php 
+session_start();
   require_once "../model/EditarSolicitud.php";
+  // Establecer la zona horaria de Honduras
+date_default_timezone_set('America/Tegucigalpa');
 
   //instancia de la clase 
   $editarSoli = new EditarSolicitud();
@@ -513,7 +516,12 @@
 
 
     case "Actualizar_Persona":
-        
+
+      $hoy = date('Y-m-d H:i:s');
+      //$FechaModificacion = strtotime($hoy);
+      $ModificadoPor =  $_SESSION["user"]["Usuario"];
+      $idUsuario =  $_SESSION["user"]["idUsuario"];
+
       $idTipoPersona = 1; //cliente
       $idPersonaEdit = $_POST["idPersonaEdit"];
       $idSolicitudEdit =  $_POST["idSolicitudEdit"];
@@ -642,12 +650,12 @@
          //casado o en union libre
          }else if($editarSoli->ActualizarPersona($idPersonaEdit, $idNacionalidad, $idGenero, $idEstadoCivil, $idProfesion, $idBienes, 
             $idTipoClientes, $idcategoriaCasa, $idtiempoVivir, $idTiempoLaboral, $pagaAlquiler, $estadoCredito, $esAval, $avalMora, $idMunicipio,
-            $nombreCliente, $apellidoCliente, $identidadCliente, $fechaNacimiento, $patrono, $actividadDesempenia, $ObservacionesSolicitud)){
+            $nombreCliente, $apellidoCliente, $identidadCliente, $fechaNacimiento, $patrono, $actividadDesempenia, $ObservacionesSolicitud, $ModificadoPor)){
             
             //actualizacion de los datos de la pareja;
             $editarSoli->ActualizarPersona($idPareja, 1, $idGeneroPareja, $idEstadoCivil, $idProfesionPareja, null, 
             $idTipoClientesPareja, $idcategoriaCasa, $idtiempoVivir, $idTiempoLaboralPareja, $pagaAlquiler, $estadoCreditoPareja, $esAvalPareja, $avalMoraPareja, $idMunicipioPareja,
-            $nombresPareja, $apellidosPareja, $identidadPareja, $fechaNacimientoPareja, $patronoPareja, $actividadDesempeniaPareja, null);
+            $nombresPareja, $apellidosPareja, $identidadPareja, $fechaNacimientoPareja, $patronoPareja, $actividadDesempeniaPareja, null, $ModificadoPor);
 
             //actualiza los ingresos de la persona
             $editarSoli->ActualizarIngresosConyugue($idPareja, $ingresoNegocioPareja, $sueldoBasePareja, $gastoAlimentacionPareja);
@@ -685,16 +693,22 @@
             
             ); 
             //actualiza los contactos y referencias
-            $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+            $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
             //actualiza las personas dependientes
             $editarSoli->ActualizarPersonaDependiente($dependientes, $idPersonaEdit);
             //actualiza la solicitud
-            $editarSoli->ActualizarSolicitud($idSolicitudEdit, $idTipoPrestamo, $rubro, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $dictamenAsesor);
+            
+            $editarSoli->ActualizarSolicitud($idSolicitudEdit, $idTipoPrestamo, $rubro, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $dictamenAsesor, $ModificadoPor);
+            
+           
             //Actualizar analisis crediticio
             $editarSoli->ActualizarAnalisisCrediticio($idPersonaEdit, $sueldoBase, $ingresosNegocio, $RentaPropiedad, $remesas, $aporteConyuge, $IngresosSociedad,
             $cuotaPrestamoAdepes, $cuotaVivienda, $alimentacion, $deduccionesCentral, $otrosEgresos, $liquidezCliente, $evaluacionAnalisis);
 
-            
+            //registro de modificacion en bitacora
+            $descripcionB = "Modifico las solicitud del cliente: ".$nombreCliente." ".$apellidoCliente;
+            $editarSoli->RegistrarBitacora($idUsuario, 6, "Modifico", $descripcionB);
+
             $response ="success";
 
         
@@ -706,7 +720,7 @@
       }else if($idEstadoCivil == 1 || $idEstadoCivil == 4){ //soltero o no definido
         if($prueba =$editarSoli->ActualizarPersona($idPersonaEdit, $idNacionalidad, $idGenero, $idEstadoCivil, $idProfesion, $idBienes, 
             $idTipoClientes, $idcategoriaCasa, $idtiempoVivir, $idTiempoLaboral, $pagaAlquiler, $estadoCredito, $esAval, $avalMora, $idMunicipio,
-            $nombreCliente, $apellidoCliente, $identidadCliente, $fechaNacimiento, $patrono, $actividadDesempenia, $ObservacionesSolicitud)){
+            $nombreCliente, $apellidoCliente, $identidadCliente, $fechaNacimiento, $patrono, $actividadDesempenia, $ObservacionesSolicitud, $ModificadoPor)){
             
 
             //CONTACTOS
@@ -734,15 +748,20 @@
                 array('cuenta'=>$cuentaCliente, 'idPersona' =>$idPersonaEdit),
             ); 
             //actualiza los contactos y referencias
-            $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+            $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
             //actualiza las personas dependientes
             $editarSoli->ActualizarPersonaDependiente($dependientes, $idPersonaEdit);
             //actualiza la solicitud
-            $editarSoli->ActualizarSolicitud($idSolicitudEdit, $idTipoPrestamo, $rubro, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $dictamenAsesor);
+            
+            $editarSoli->ActualizarSolicitud($idSolicitudEdit, $idTipoPrestamo, $rubro, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $dictamenAsesor, $ModificadoPor);
+            
+            
             //Actualizar analisis crediticio
             $editarSoli->ActualizarAnalisisCrediticio($idPersonaEdit, $sueldoBase, $ingresosNegocio, $RentaPropiedad, $remesas, $aporteConyuge, $IngresosSociedad,
             $cuotaPrestamoAdepes, $cuotaVivienda, $alimentacion, $deduccionesCentral, $otrosEgresos, $liquidezCliente, $evaluacionAnalisis);
-
+            //registro de modificacion en bitacora
+            $descripcionB = "Modifico las solicitud del cliente: ".$nombreCliente." ".$apellidoCliente;
+            $editarSoli->RegistrarBitacora($idUsuario, 6, "Modifico", $descripcionB);
             
             $response ="success";
         }else{
@@ -761,7 +780,8 @@
     break;
 
     case "Actualizar_aval1":
-        
+
+        $ModificadoPor =  $_SESSION["user"]["Usuario"];
         //datos del aval
         $idPersonaAvalEdit = $_POST["idPersonaAvalEdit"];
         $nombreAval1 = $_POST["nombreAval1"];
@@ -869,12 +889,12 @@
             //casado o en union libre
             }else if($editarSoli->ActualizarPersona($idPersonaAvalEdit, $idNacionalidadAval1, $idGeneroAval1, $idEstadoCivilAval1, $idProfesionAval1, null, 
             $idTipoClientesAval1, $idcategoriaCasaAval1, $idtiempoVivirAval1, $idTiempoLaboralAval1, $pagaAlquilerAval1, $estadoCreditoAval1, $esAvalAval1, $avalMoraAval1, $idMunicipioAval1,
-            $nombreAval1, $apellidoAval1, $identidadAval1, $fechaNacimientoAval1, $patronoAval1, $actividadDesempeniaAval1, $ObservacionesSolicitudAval1) ){
+            $nombreAval1, $apellidoAval1, $identidadAval1, $fechaNacimientoAval1, $patronoAval1, $actividadDesempeniaAval1, $ObservacionesSolicitudAval1, $ModificadoPor) ){
                 
                 //actualizacion de los datos de la pareja;
                 $editarSoli->ActualizarPersona($idParejaAval1, 1, $generoParejaAval1, $idEstadoCivilAval1, $profesionParejaAval1, null, 
                 $tipoClienteParejaAval1, $idcategoriaCasaAval1, $idtiempoVivirAval1, $tiempoLaboralParejaAval1, $pagaAlquilerAval1, $estadoCreditoParejaAVAL1, $esAvalParejaAVAL1, $avalMoraParejaAVAL1, $municipioParejaAval1,
-                $nombresParejaAval1, $apellidosParejaAval1, $identidadParejaAval1, $fechaNacimientoParejaAval1, $patronoParejaAval1, $actividadParejaAval1, null);
+                $nombresParejaAval1, $apellidosParejaAval1, $identidadParejaAval1, $fechaNacimientoParejaAval1, $patronoParejaAval1, $actividadParejaAval1, null, $ModificadoPor);
     
                 //actualiza los ingresos de la persona
                 $editarSoli->ActualizarIngresosConyugue($idParejaAval1, $ingresoNegocioParejaAval1, $sueldoBaseParejaAval1, $gastoAlimentacionParejaAval1);
@@ -911,7 +931,7 @@
                 
                 ); 
                 //actualiza los contactos y referencias
-                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
                 //trae el id para actualizar las referencias comerciales
                 $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAvalEdit);
@@ -922,7 +942,7 @@
                     array('nombre' => $nombreComercial2AVAL1, 'direccion' => $direccionComercial2AVAL1,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
                 ); 
                 //actualiza las referencias comerciales
-                $editarSoli->Actualizar_referencias_comerciales($comerciales);
+                $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
             
                 //Actualizar analisis crediticio
                 $editarSoli->ActualizarAnalisisCrediticio($idPersonaAvalEdit, $sueldoBase_analisisAval1, $ingresosNegocioAval1, $rentaAval1, $remesasAval1, $aporteConyugeAval1, $sociedadAval1,
@@ -940,7 +960,7 @@
 
           if($editarSoli->ActualizarPersona($idPersonaAvalEdit, $idNacionalidadAval1, $idGeneroAval1, $idEstadoCivilAval1, $idProfesionAval1, null, 
               $idTipoClientesAval1, $idcategoriaCasaAval1, $idtiempoVivirAval1, $idTiempoLaboralAval1, $pagaAlquilerAval1, $estadoCreditoAval1, $esAvalAval1, $avalMoraAval1, $idMunicipioAval1,
-              $nombreAval1, $apellidoAval1, $identidadAval1, $fechaNacimientoAval1, $patronoAval1, $actividadDesempeniaAval1, $ObservacionesSolicitudAval1)){
+              $nombreAval1, $apellidoAval1, $identidadAval1, $fechaNacimientoAval1, $patronoAval1, $actividadDesempeniaAval1, $ObservacionesSolicitudAval1, $ModificadoPor)){
               
   
               //CONTACTOS
@@ -967,7 +987,7 @@
                   array('cuenta'=>$cuentaAval1, 'idPersona' =>$idPersonaAvalEdit),
               ); 
               //actualiza los contactos y referencias
-              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
               //trae el id para actualizar las referencias comerciales
               $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAvalEdit);
@@ -978,7 +998,7 @@
                 array('nombre' => $nombreComercial2AVAL1, 'direccion' => $direccionComercial2AVAL1,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
              ); 
              //actualiza las referencias comerciales
-             $editarSoli->Actualizar_referencias_comerciales($comerciales);
+             $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
    
               //Actualizar analisis crediticio
               $editarSoli->ActualizarAnalisisCrediticio($idPersonaAvalEdit, $sueldoBase_analisisAval1, $ingresosNegocioAval1, $rentaAval1, $remesasAval1, $aporteConyugeAval1, $sociedadAval1,
@@ -998,12 +1018,13 @@
   
         echo $response;
   
-      break;
+    break;
 
 
     
     case "Actualizar_aval2":
-        
+
+        $ModificadoPor =  $_SESSION["user"]["Usuario"];
         //datos del aval
         $idPersonaAval2 = $_POST["idPersonaAval2"];
         $nombreAval2 = $_POST["nombreAval2"];
@@ -1111,12 +1132,12 @@
             //casado o en union libre
             }else if($editarSoli->ActualizarPersona($idPersonaAval2, $idNacionalidadAval2, $idGeneroAval2, $idEstadoCivilAval2, $idProfesionAval2, null, 
             $idTipoClientesAval2, $idcategoriaCasaAval2, $idtiempoVivirAval2, $idTiempoLaboralAval2, $pagaAlquilerAval2, $estadoCreditoAval2, $esAvalAval2, $avalMoraAval2, $idMunicipioAval2,
-            $nombreAval2, $apellidoAval2, $identidadAval2, $fechaNacimientoAval2, $patronoAval2, $actividadDesempeniaAval2, $ObservacionesSolicitudAval2) ){
+            $nombreAval2, $apellidoAval2, $identidadAval2, $fechaNacimientoAval2, $patronoAval2, $actividadDesempeniaAval2, $ObservacionesSolicitudAval2, $ModificadoPor) ){
                 
                 //actualizacion de los datos de la pareja;
                $editarSoli->ActualizarPersona($idParejaAval2, 1, $generoParejaAval2, $idEstadoCivilAval2, $profesionParejaAval2, null, 
                 $tipoClienteParejaAval2, $idcategoriaCasaAval2, $idtiempoVivirAval2, $tiempoLaboralParejaAval2, $pagaAlquilerAval2, $estadoCreditoParejaAVAL2, $esAvalParejaAVAL2, $avalMoraParejaAVAL2, $municipioParejaAval2,
-                $nombresParejaAval2, $apellidosParejaAval2, $identidadParejaAval2, $fechaNacimientoParejaAval2, $patronoParejaAval2, $actividadParejaAval2, null);
+                $nombresParejaAval2, $apellidosParejaAval2, $identidadParejaAval2, $fechaNacimientoParejaAval2, $patronoParejaAval2, $actividadParejaAval2, null, $ModificadoPor);
     
                 //actualiza los ingresos de la persona
                 $editarSoli->ActualizarIngresosConyugue($idParejaAval2, $ingresoNegocioParejaAval2, $sueldoBaseParejaAval2, $gastoAlimentacionParejaAval2);
@@ -1153,7 +1174,7 @@
                 
                 ); 
                 //actualiza los contactos y referencias
-                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
                 //trae el id para actualizar las referencias comerciales
                 $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAval2);
@@ -1164,7 +1185,7 @@
                     array('nombre' => $nombreComercial2AVAL2, 'direccion' => $direccionComercial2AVAL2,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
                 );
                 //actualiza las referencias comerciales
-                $editarSoli->Actualizar_referencias_comerciales($comerciales);
+                $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
             
                 //Actualizar analisis crediticio
                 $editarSoli->ActualizarAnalisisCrediticio($idPersonaAval2, $sueldoBase_analisisAval2, $ingresosNegocioAval2, $rentaAval2, $remesasAval2, $aporteConyugeAval2, $sociedadAval2,
@@ -1181,7 +1202,7 @@
 
           if($editarSoli->ActualizarPersona($idPersonaAval2, $idNacionalidadAval2, $idGeneroAval2, $idEstadoCivilAval2, $idProfesionAval2, null, 
               $idTipoClientesAval2, $idcategoriaCasaAval2, $idtiempoVivirAval2, $idTiempoLaboralAval2, $pagaAlquilerAval2, $estadoCreditoAval2, $esAvalAval2, $avalMoraAval2, $idMunicipioAval2,
-              $nombreAval2, $apellidoAval2, $identidadAval2, $fechaNacimientoAval2, $patronoAval2, $actividadDesempeniaAval2, $ObservacionesSolicitudAval2)){
+              $nombreAval2, $apellidoAval2, $identidadAval2, $fechaNacimientoAval2, $patronoAval2, $actividadDesempeniaAval2, $ObservacionesSolicitudAval2, $ModificadoPor)){
               
   
               //CONTACTOS
@@ -1208,7 +1229,7 @@
                   array('cuenta'=>$cuentaAval2, 'idPersona' =>$idPersonaAval2),
               ); 
               //actualiza los contactos y referencias
-              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
               //trae el id para actualizar las referencias comerciales
               $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAval2);
@@ -1219,7 +1240,7 @@
                 array('nombre' => $nombreComercial2AVAL2, 'direccion' => $direccionComercial2AVAL2,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
              ); 
              //actualiza las referencias comerciales
-             $editarSoli->Actualizar_referencias_comerciales($comerciales);
+             $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
    
               //Actualizar analisis crediticio
               $editarSoli->ActualizarAnalisisCrediticio($idPersonaAval2, $sueldoBase_analisisAval2, $ingresosNegocioAval2, $rentaAval2, $remesasAval2, $aporteConyugeAval2, $sociedadAval2,
@@ -1246,7 +1267,8 @@
 
 
     case "Actualizar_aval3":
-        
+
+        $ModificadoPor =  $_SESSION["user"]["Usuario"];
         //datos del aval
         $idPersonaAval3 = $_POST["idPersonaAval3"];
         $nombreAval3 = $_POST["nombreAval3"];
@@ -1354,12 +1376,12 @@
             //casado o en union libre
             }else if($editarSoli->ActualizarPersona($idPersonaAval3, $idNacionalidadAval3, $idGeneroAval3, $idEstadoCivilAval3, $idProfesionAval3, null, 
             $idTipoClientesAval3, $idcategoriaCasaAval3, $idtiempoVivirAval3, $idTiempoLaboralAval3, $pagaAlquilerAval3, $estadoCreditoAval3, $esAvalAval3, $avalMoraAval3, $idMunicipioAval3,
-            $nombreAval3, $apellidoAval3, $identidadAval3, $fechaNacimientoAval3, $patronoAval3, $actividadDesempeniaAval3, $ObservacionesSolicitudAval3) ){
+            $nombreAval3, $apellidoAval3, $identidadAval3, $fechaNacimientoAval3, $patronoAval3, $actividadDesempeniaAval3, $ObservacionesSolicitudAval3, $ModificadoPor) ){
                 
                 //actualizacion de los datos de la pareja;
                $editarSoli->ActualizarPersona($idParejaAval3, 1, $generoParejaAval3, $idEstadoCivilAval3, $profesionParejaAval3, null, 
                 $tipoClienteParejaAval3, $idcategoriaCasaAval3, $idtiempoVivirAval3, $tiempoLaboralParejaAval3, $pagaAlquilerAval3, $estadoCreditoParejaAVAL3, $esAvalParejaAVAL3, $avalMoraParejaAVAL3, $municipioParejaAval3,
-                $nombresParejaAval3, $apellidosParejaAval3, $identidadParejaAval3, $fechaNacimientoParejaAval3, $patronoParejaAval3, $actividadParejaAval3, null);
+                $nombresParejaAval3, $apellidosParejaAval3, $identidadParejaAval3, $fechaNacimientoParejaAval3, $patronoParejaAval3, $actividadParejaAval3, null, $ModificadoPor);
     
                 //actualiza los ingresos de la persona
                 $editarSoli->ActualizarIngresosConyugue($idParejaAval3, $ingresoNegocioParejaAval3, $sueldoBaseParejaAval3, $gastoAlimentacionParejaAval3);
@@ -1396,7 +1418,7 @@
                 
                 ); 
                 //actualiza los contactos y referencias
-                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+                $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
                 //trae el id para actualizar las referencias comerciales
                 $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAval3);
@@ -1407,7 +1429,7 @@
                     array('nombre' => $nombreComercial2AVAL3, 'direccion' => $direccionComercial2AVAL3,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
                 );
                 //actualiza las referencias comerciales
-                $editarSoli->Actualizar_referencias_comerciales($comerciales);
+                $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
             
                 //Actualizar analisis crediticio
                 $editarSoli->ActualizarAnalisisCrediticio($idPersonaAval3, $sueldoBase_analisisAval3, $ingresosNegocioAval3, $rentaAval3, $remesasAval3, $aporteConyugeAval3, $sociedadAval3,
@@ -1424,7 +1446,7 @@
 
           if($editarSoli->ActualizarPersona($idPersonaAval3, $idNacionalidadAval3, $idGeneroAval3, $idEstadoCivilAval3, $idProfesionAval3, null, 
           $idTipoClientesAval3, $idcategoriaCasaAval3, $idtiempoVivirAval3, $idTiempoLaboralAval3, $pagaAlquilerAval3, $estadoCreditoAval3, $esAvalAval3, $avalMoraAval3, $idMunicipioAval3,
-          $nombreAval3, $apellidoAval3, $identidadAval3, $fechaNacimientoAval3, $patronoAval3, $actividadDesempeniaAval3, $ObservacionesSolicitudAval3)){
+          $nombreAval3, $apellidoAval3, $identidadAval3, $fechaNacimientoAval3, $patronoAval3, $actividadDesempeniaAval3, $ObservacionesSolicitudAval3, $ModificadoPor)){
               
   
               //CONTACTOS
@@ -1451,7 +1473,7 @@
                   array('cuenta'=>$cuentaAval3, 'idPersona' =>$idPersonaAval3),
               ); 
               //actualiza los contactos y referencias
-              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas);
+              $editarSoli->Actualizar_contactos_referencias_cuentas($contactos, $referencias, $cuentas, $ModificadoPor);
 
               //trae el id para actualizar las referencias comerciales
               $idReferenciaComercial = $editarSoli->idReferenciasComerciales($idPersonaAval3);
@@ -1462,7 +1484,7 @@
                 array('nombre' => $nombreComercial2AVAL3, 'direccion' => $direccionComercial2AVAL3,  'idReferenciaComercial' => $idReferenciaComercial[1]['idReferenciaComercial'])
             );
             //actualiza las referencias comerciales
-             $editarSoli->Actualizar_referencias_comerciales($comerciales);
+             $editarSoli->Actualizar_referencias_comerciales($comerciales, $ModificadoPor);
    
               //Actualizar analisis crediticio
               $editarSoli->ActualizarAnalisisCrediticio($idPersonaAval3, $sueldoBase_analisisAval3, $ingresosNegocioAval3, $rentaAval3, $remesasAval3, $aporteConyugeAval3, $sociedadAval3,
@@ -1482,6 +1504,26 @@
   
         echo $response;
   
+    break;
+
+    case "Consultar_estado_solicitud":
+
+        if(isset($_POST["idSolicitud"]) && !empty($_POST["idSolicitud"])){
+            $data = $editarSoli->ConsultarEstadoSolicitud($_POST["idSolicitud"]);
+            if($data){
+             
+                $list[]=array(  //se pone los campos que queremos guardar
+                    "ESTADO"=>$data['idEstadoSolicitud']
+            
+                    
+                );
+                
+                echo json_encode($list); //se devuelve los datos en formato json 
+
+               
+            }
+        }
+ 
     break;
     
     

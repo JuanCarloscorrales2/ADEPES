@@ -18,30 +18,27 @@
             //cabecera de pagina
             function Header(){
 
-                $this->Image('logo.png', 230, 15, 30); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
+                $this->Image('logo.png', 175, 15, 30); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
                 $this->SetFont('Arial', 'B', 14);      //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
                 $this->Cell(45);                       // Movernos a la derecha
                 $this->SetTextColor(0, 0, 0);          //color
             
                 //creamos una celda o fila
-                $this->Cell(160, 15, utf8_decode('ASOCIACIÓN DE DESARROLLO PESPIRENSE'), 0, 1, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
-                $this->Cell(135, 2, utf8_decode('"ADEPES"'), 0, 1, 'R', 0);
+                $this->Cell(100, 15, utf8_decode('ASOCIACIÓN DE DESARROLLO PESPIRENSE'), 0, 1, 'C', 0); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion(L-C-R),ColorFondo(1-0)
+                $this->Cell(110, 2, utf8_decode('"ADEPES"'), 0, 1, 'R', 0);
                 $this->Ln(3); // Salto de línea
                 $this->SetTextColor(103); //color
                 $this->Ln(3); // Salto de línea
-                //fecha
-                /*$this->SetTextColor(0, 0, 0); //color
-                $this->SetFont('Arial', 'B', 12); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
-                $hoy = date('d/m/Y');
-                $this->Cell(10, 10, utf8_decode('FECHA:'.$hoy), 0, 0, 'L', 0);*/
+               
                 
                 /* TITULO DE LA TABLA */
                 //color
                 $this->SetTextColor(0, 0, 0);
-                $this->Cell(100); // mover a la derecha
+                $this->Cell(95); // mover a la derecha
                 $this->SetFont('Arial', 'B', 12);
-                $this->Cell(50, 10, utf8_decode("LISTADO DE PARÁMETROS DEL SISTEMA"), 0, 1, 'C', 0);
+                $this->Cell(2, 10, utf8_decode("LISTADO DE PARÁMETROS DEL SISTEMA"), 0, 1, 'C', 0);
                 $this->Ln(7);
+                $this->SetLeftMargin(10);
 
                 /* CAMPOS DE LA TABLA */
                 //color
@@ -50,11 +47,11 @@
                 $this->SetDrawColor(163, 163, 163); //colorBorde
                 $this->SetFont('Arial', 'B', 11);
 
-                //$this->Cell(18, 10, utf8_decode('N°'), 1, 0, 'C', 1);
-                $this->Cell(100, 10, utf8_decode('PARÁMETROS'), 1, 0, 'C', 1);
+                $this->Cell(10, 10, utf8_decode('NO.'), 1, 0, 'C', 1);
+                $this->Cell(55, 10, utf8_decode('PARÁMETROS'), 1, 0, 'C', 1);
                 $this->Cell(30, 10, utf8_decode('VALOR'), 1, 0, 'C', 1);
-                $this->Cell(60, 10, utf8_decode('FECHA DE CREACIÓN'), 1, 0, 'C', 1);
-                $this->Cell(58, 10, utf8_decode('FECHA DE MODIFICACIÓN'), 1, 1, 'C', 1);
+                $this->Cell(50, 10, utf8_decode('FECHA DE CREACIÓN'), 1, 0, 'C', 1);
+                $this->Cell(50, 10, utf8_decode('FECHA DE MODIFICACIÓN'), 1, 1, 'C', 1);
                 
             }//fin de la cabecera de pagina
             //INicio de Pie de página
@@ -62,31 +59,131 @@
             {
                 $this->SetY(-15); // Posición: a 1,5 cm del final
                 $this->SetFont('Arial', 'I', 8); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
-                $this->Cell(0, 10, utf8_decode('Página ') . $this->PageNo() . '/{nb}', 0, 0, 'C'); //pie de pagina(numero de pagina)
+                $this->Cell(200, 10, utf8_decode('Página ') . $this->PageNo() . '/{nb}', 0, 0, 'C'); //pie de pagina(numero de pagina)
                 //fecha
                 $this->SetY(-15); // Posición: a 1,5 cm del final
                 $this->SetFont('Arial', 'I', 8); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
                 $hoy = date('d/m/Y H:i:s');
-                $this->Cell(445, 10, utf8_decode('Fecha y Hora de impresión:'.$hoy), 0, 0, 'C');
+                $this->Cell(330, 10, utf8_decode('Fecha y Hora de impresión: '.$hoy), 0, 0, 'C');
             } // Fin de pie de pagina.
+        /******************************* METODO PARA AJUSTAR CELDAS ********************************** */
+   protected $widths;
+   protected $aligns;
+
+   function SetWidths($w)
+   {
+       // Set the array of column widths
+       $this->widths = $w;
+   }
+
+   function SetAligns($a)
+   {
+       // Set the array of column alignments
+       $this->aligns = $a;
+   }
+
+   function Row($data)
+   {
+       // Calculate the height of the row
+       $nb = 0;
+       for($i=0;$i<count($data);$i++)
+           $nb = max($nb,$this->NbLines($this->widths[$i],$data[$i]));
+       $h = 5*$nb;
+       // Issue a page break first if needed
+       $this->CheckPageBreak($h);
+       // Draw the cells of the row
+       for($i=0;$i<count($data);$i++)
+       {
+           $w = $this->widths[$i];
+           $a = isset($this->aligns[$i]) ? $this->aligns[$i] : 'L';
+           // Save the current position
+           $x = $this->GetX();
+           $y = $this->GetY();
+           // Draw the border
+           $this->Rect($x,$y,$w,$h);
+           // Print the text
+           $this->MultiCell($w,5,$data[$i],0,$a);
+           // Put the position to the right of the cell
+           $this->SetXY($x+$w,$y);
+       }
+       // Go to the next line
+       $this->Ln($h);
+   }
+
+   function CheckPageBreak($h)
+   {
+       // If the height h would cause an overflow, add a new page immediately
+       if($this->GetY()+$h>$this->PageBreakTrigger)
+           $this->AddPage($this->CurOrientation);
+   }
+
+   function NbLines($w, $txt)
+   {
+       // Compute the number of lines a MultiCell of width w will take
+       if(!isset($this->CurrentFont))
+           $this->Error('No font has been set');
+       $cw = $this->CurrentFont['cw'];
+       if($w==0)
+           $w = $this->w-$this->rMargin-$this->x;
+       $wmax = ($w-2*$this->cMargin)*1000/$this->FontSize;
+       $s = str_replace("\r",'',(string)$txt);
+       $nb = strlen($s);
+       if($nb>0 && $s[$nb-1]=="\n")
+           $nb--;
+       $sep = -1;
+       $i = 0;
+       $j = 0;
+       $l = 0;
+       $nl = 1;
+       while($i<$nb)
+       {
+           $c = $s[$i];
+           if($c=="\n")
+           {
+               $i++;
+               $sep = -1;
+               $j = $i;
+               $l = 0;
+               $nl++;
+               continue;
+           }
+           if($c==' ')
+               $sep = $i;
+           $l += $cw[$c];
+           if($l>$wmax)
+           {
+               if($sep==-1)
+               {
+                   if($i==$j)
+                       $i++;
+               }
+               else
+                   $i = $sep+1;
+               $sep = -1;
+               $j = $i;
+               $l = 0;
+               $nl++;
+           }
+           else
+               $i++;
+       }
+       return $nl;
+   } // FIN DEL METODO AJUSTAR CELDAS
+
         } //Fin de libreria de reporte.
         //Ahora instanciar para la pagina y el formato y su contenido.
         $pdf = new PDF();
-        $pdf->AddPage("landscape","letter"); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
+        $pdf->AddPage("portrait","letter"); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
         $pdf->AliasNbPages(); //muestra la pagina / y total de paginas
         
         $i = 0;
         $pdf->SetFont('Arial', '', 10);
         $pdf->SetDrawColor(163, 163, 163); //colorBorde
+        $pdf->setWidths(array(10, 55, 30, 50, 50)); //tamano de las celdas segun el encabezado de la tabla
 
         //construir el contenido del PDF DE LOS DATOS OBTENIDOS DEL DATATABLESS
         foreach ($datosFiltradosOrdenados as $fila) {
-            //$pdf->Cell(18, 10, $fila['id'], 1, 0, 'C', 0); //LOS NOMBRE SON DE LA FUNCION: LlenarTablaParametro  JS
-            $pdf->Cell(100, 10, utf8_decode($fila['parametro']), 1, 0, 'C', 0);
-            $pdf->Cell(30, 10, $fila['valor'], 1, 0, 'C', 0);
-            $pdf->Cell(60, 10, $fila['Fecha'], 1, 0, 'C', 0);
-            $pdf->Cell(58, 10, $fila['FechaM'], 1, 1, 'C', 0);
-        //$pdf->Ln();
+            $pdf->Row(array($fila['IDSECUENCIAL'], utf8_decode($fila['parametro']), $fila['valor'], $fila['Fecha'],$fila['FechaM']), 0 );
         } //Fin de obtener todos los datos.
         // Enviar el PDF al navegador para su descarga 
         $pdf->Output('Reportes_de_parametros_del_Sistema.pdf', 'I'); //nombre de descarga
@@ -94,5 +191,5 @@
         echo "Error, no se pudo realizar la descarga del listado de parametros";
     }
 //Fin de recibir datos AJAX.
-//Fin del listado de Usuarios del sistema.
+//Fin del listado de Usuarios del sistema. 
 ?> 

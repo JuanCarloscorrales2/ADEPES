@@ -3460,7 +3460,7 @@ function RegistrarTipoPago(){
           if(response == "success"){  //si inserto correctamente
              tablaTipopago.ajax.reload();  //actualiza la tablaSSSS
              LimpiarControles();
-             $('#registral_tipopago').modal('hide'); //cierra el modal
+             $('#registral_Tipopago').modal('hide'); //cierra el modal
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
@@ -3660,7 +3660,7 @@ function RegistrarTipoCliente(){
           if(response == "success"){  //si inserto correctamente
              tablaTipocliente.ajax.reload();  //actualiza la tablaSSSS
              LimpiarControles();
-             $('#registral_tipocliente').modal('hide'); //cierra el modal
+             $('#registral_Tipocliente').modal('hide'); //cierra el modal
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
@@ -3860,7 +3860,7 @@ function RegistrarEstadoCredito(){
           if(response == "success"){  //si inserto correctamente
             tablaEstadocredito.ajax.reload();  //actualiza la tablaSSSS
              LimpiarControles();
-             $('#registral_estadocredito').modal('hide'); //cierra el modal
+             $('#registral_Estadocredito').modal('hide'); //cierra el modal
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
@@ -4060,7 +4060,7 @@ function RegistrarAnalisis(){
           if(response == "success"){  //si inserto correctamente
              tablaAnalisis.ajax.reload();  //actualiza la tablaSSSS
              LimpiarControles();
-             $('#registral_tipopago').modal('hide'); //cierra el modal
+             $('#registral_Analisis').modal('hide'); //cierra el modal
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',

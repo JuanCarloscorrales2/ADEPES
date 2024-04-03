@@ -20,17 +20,21 @@ switch ($_REQUEST["operador"]) {
          for ($i = 0; $i < count($datos); $i++) {
             $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" href="../pages/editarSolicitud.php"
             onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Editar'" . ');"><i class="icon-edit"></i>Editar</a>
-' : '<span class="tag tag-warning">No puede editar</span>   <a class="dropdown-item"
-onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"> <i class="icon-print"></i> Imprimir</a>
-';
+            <a class="dropdown-item" href="../pages/Contrato.php"
+            onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Contrato'" . ');"><i class="icon-document"></i>Contrato</a>
+            ' : '<span class="tag tag-warning">No puede editar</span>  ';
+            $boton_reporte = $_SESSION["reportes"] >= 1 ? '<a class="dropdown-item"
+            onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"> <i class="icon-print"></i> Imprimir</a>
+            ' : '<span class="tag tag-warning">No puede imprimir</span>   <a class="dropdown-item" ';
             $list[] = array(
-               "Acciones" => ($datos[$i]['idEstadoSolicitud'] == 1) ?
+               "Acciones" => ($datos[$i]['idEstadoSolicitud'] == 1 || $datos[$i]['idEstadoSolicitud'] == 4) ?
                   '<div class="btn-group"> 
                      <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
                      </button>
                      <div class="dropdown-menu">
                      ' . $boton_editar  . '
+                     ' . $boton_reporte  . '
                      </div>
                   </div>' : (($datos[$i]['idEstadoSolicitud'] == 3 && $datos[$i]['idTipoPrestamo'] == 1 && $datos[$i]['cantidadAval'] < 3) ?
                      '<div class="btn-group"> 
@@ -39,13 +43,11 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
                      </button>
                      <div class="dropdown-menu">
                      ' . $boton_editar  . '
+                     ' . $boton_reporte  . '
                            <a class="dropdown-item" data-toggle="modal" data-target="#comiteCredito"
                               onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Comite'" . ');">
                               <i class="icon-check"></i>Comité Crédito
                            </a>
-                           <a class="dropdown-item"
-                                      onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"> <i class="icon-print"></i> Imprimir</a>
-
                            <a class="dropdown-item"  onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'registrarAval'" . ')" href="../pages/nuevaSolicitudAval.php"><i class="icon-person"></i>Agregar Aval</a>
                      </div>
                      
@@ -58,9 +60,7 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
               </button>
               <div class="dropdown-menu">
               ' . $boton_editar  . '
-                  <a class="dropdown-item"
-                  onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"> <i class="icon-print"></i> Imprimir</a>
-
+              ' . $boton_reporte  . '
                    <a class="dropdown-item" data-toggle="modal" data-target="#comiteCredito"
                       onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Comite'" . ');">
                       <i class="icon-check"></i>Comité Crédito
@@ -77,9 +77,9 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
                "MONTO" => $datos[$i]['Monto'],
                "TASA" => $datos[$i]['tasa'],
                "PLAZO" => $datos[$i]['Plazo'],
-               "ESTADO" => ($datos[$i]['idEstadoSolicitud']),
-               "ESTADO" => ($datos[$i]['idEstadoSolicitud'] == 1) ? '<span class="tag tag-success">Aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 2) ? '<span class="tag tag-danger">No aprobado</span>' :
-                     '<span class="tag tag-warning">Pendiente</span>'),
+               //"ESTADO" => ($datos[$i]['idEstadoSolicitud'] == 1 || $datos[$i]['idEstadoSolicitud'] == 4) ? '<span class="tag tag-success">Aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 2) ? '<span class="tag tag-danger">No aprobado</span>' :
+               //      '<span class="tag tag-warning">Pendiente</span>'),
+               "ESTADO" => ($datos[$i]['idEstadoSolicitud'] == 1) ? '<span class="tag tag-info">Aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 2) ? '<span class="tag tag-danger">No aprobado</span>' : (($datos[$i]['idEstadoSolicitud'] == 4) ? '<span class="tag tag-success">Contrato Aprobado</span>' : '<span class="tag tag-warning">Pendiente</span>')),
                "ESTADON" => ($datos[$i]['Estado']),
                "FECHA_DESEMBOLSO" => $datos[$i]['fechaDesembolso'],
 
@@ -225,8 +225,17 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
       //$idUsuarioDictamen =  $_SESSION["user"]["idUsuario"];
       if (isset($_POST["idSoli"], $_POST["estadoSoli"]) && !empty($_POST["idSoli"])) {
 
-
-         if ($solicitud->AprobarSolicitud($_POST["numeroActa"], $_POST["estadoSoli"], $_POST["idSoli"])) {
+         $idUsuario =  $_SESSION["user"]["idUsuario"];
+         $nombre = $_POST["nombre"];
+         if($_POST["estadoSoli"] == 1){
+           
+            $descripcionB= "Aprobó la solicitud del cliente: ".$nombre;
+         }else{
+            $descripcionB= "No aprobó la solicitud del cliente: ".$nombre;
+         }
+         
+         if ($solicitud->AprobarSolicitud($_POST["numeroActa"], $_POST["estadoSoli"], $_POST["idSoli"]) 
+            && $solicitud->RegistrarBitacora($idUsuario, 6, "Modifico", $descripcionB) ) {
             $response = "success";
          } else {
             $response = "error";
@@ -499,6 +508,7 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
    case "registrar_cliente":
 
       $hoy = date('Y-m-d');
+      $CreadoPor =  $_SESSION["user"]["Usuario"];
       $idTipoPersona =  1; //cliente
       $idNacionalidad =  $_POST["idNacionalidad"];
       $idGenero =  $_POST["idGenero"];
@@ -615,39 +625,8 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
          $response = "fechaAntigua";
       } else if ($idEstadoCivil == 2 || $idEstadoCivil == 3) {
 
-
-         if ($nombresP == "") {
-            $response = "nombrePareja";
-         } else if ($apellidosP == "") {
-            $response = "apellidoPareja";
-         } else if ($identidadP == "") {
-            $response = "identidadPareja";
-         } else if ($identidadP == "0000-0000-00000" || strlen($identidadP) < 15) {
-            $response = "identidadIncorrecta";
-         } else if ($fechaNacimientoP == "") {
-            $response = "fechaNacimientoP";
-         } else if (substr($identidadP, 5, 4) != substr($fechaNacimientoP, 0, 4)) {
-            $response = "fechaIdentidadCorrecta";
-         } else if (!empty($telefonoPareja) && strlen($telefonoPareja) < 9  || $telefonoPareja == "0000-0000") {
-            $response = "telefonoIncorrecto";
-         } else if (!empty($celularPareja) && strlen($celularPareja) < 9  || $celularPareja == "0000-0000") {
-            $response = "celularIncorrecto";
-         } else if ($idGeneroP == "") {
-            $response = "genero";
-         } else if ($actividadDesempeniaP == "") {
-            $response = "actividadP";
-         } else if ($idtiempoLaboralP == "") {
-            $response = "tiempoLaboral";
-         } else if ($idProfesionP == "") {
-            $response = "profesion";
-         } else if ($patronoP == "") {
-            $response = "patronoP";
-         } else if (!empty($telefonoTrabajoPareja) && strlen($telefonoTrabajoPareja) < 9  || $telefonoTrabajoPareja == "0000-0000") {
-            $response = "telefonoTrabajoIncorrecto";
-         } else if ($idTipoClientesP == "") {
-            $response = "tipoCliente";
             //inserta los datos del cliente
-         } else if ($idPersona = $solicitud->RegistrarCliente(
+         if ($idPersona = $solicitud->RegistrarCliente(
             $idTipoPersona,
             $idNacionalidad,
             $idGenero,
@@ -669,7 +648,8 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
             $ObservacionesSolicitud,
             $esAval,
             $avalMora,
-            $estadoCreditoCliente
+            $estadoCreditoCliente,
+            $CreadoPor
          )) {
 
             //solicitud
@@ -687,7 +667,7 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
             }
 
             //se registra la nueva solicitud
-            $solicitud->RegistrarSolicitud($idPersona, $idTipoPrestamo, $rubro, $idEstadoSolicitud, $idUsuario, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $prestamoAprobados);
+            $solicitud->RegistrarSolicitud($idPersona, $idTipoPrestamo, $rubro, $idEstadoSolicitud, $idUsuario, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $prestamoAprobados, $CreadoPor);
             //registra la cuenta
             $solicitud->RegistrarCuenta($idPersona, 1, $cuentaCliente);
             //obtiene el id de la solicitud para registrar el analisis crediticio
@@ -738,7 +718,8 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
                $ObservacionesSolicitud,
                $esAvalPareja,
                $avalMoraPareja,
-               $estadoCreditoPareja
+               $estadoCreditoPareja,
+               $CreadoPor
             )) {
                //  
                //$idPersonaPareja = $solicitud->idPersona($identidadP); //id de la pareja para guardar los contactos
@@ -770,9 +751,12 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
                );
 
                //registras los contactos y referencias
-               $solicitud->Registrar_contactos_referencias($contactos, $referencias);
+               $solicitud->Registrar_contactos_referencias($contactos, $referencias, $CreadoPor);
 
                $solicitud->RegistrarDependientes($idPersona, 1, $dependientes);  //registra los dependientes
+               //registrar en bitacora
+               $descripcionBitacora = "Se creo una nueva solicitud al cliente: ".$nombres." ".$apellidos;
+               $solicitud->RegistrarBitacora($idUsuario, 6, "Inserto", $descripcionBitacora);
 
             }
 
@@ -803,7 +787,8 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
             $ObservacionesSolicitud,
             $esAval,
             $avalMora,
-            $estadoCreditoCliente
+            $estadoCreditoCliente,
+            $CreadoPor
          )) {
             //solicitud
             //trae el id de la persona para registrala en la solicitud
@@ -841,7 +826,7 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
                $prestamoAprobados = "ES SU QUINTO CRÉDITO EN EL FONDO ROTATORIO";
             }
 
-            $solicitud->RegistrarSolicitud($idPersona, $idTipoPrestamo, $rubro, $idEstadoSolicitud, $idUsuario, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $prestamoAprobados);
+            $solicitud->RegistrarSolicitud($idPersona, $idTipoPrestamo, $rubro, $idEstadoSolicitud, $idUsuario, $monto, $tasa, $plazo, $fechaEmision, $invierteEn, $prestamoAprobados, $CreadoPor);
 
             //obtiene el id de la solicitud para registrar el analisis crediticio
             $id = $solicitud->id_Solicitud($idPersona);
@@ -866,11 +851,13 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
             );
 
             //registras los contactos y referencias
-            $solicitud->Registrar_contactos_referencias($contactos, $referencias);
+            $solicitud->Registrar_contactos_referencias($contactos, $referencias, $CreadoPor);
 
 
             $solicitud->RegistrarDependientes($idPersona, 1, $dependientes);  //registra los dependientes
-
+            //registrar en bitacora
+            $descripcionBitacora = "Se creo una nueva solicitud al cliente: ".$nombres." ".$apellidos;
+            $solicitud->RegistrarBitacora($idUsuario, 6, "Inserto", $descripcionBitacora);
 
             $response = "success";  //si se inserto en la BD manda mensaje de exito
          } else {
@@ -890,6 +877,7 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
    case "registrar_aval":
 
       $hoy = date('Y-m-d');
+      $nombreSolicitante =  $_POST["nombreSolicitante"];
       $idTipoPersona =  3; //AVAL
       $nombres =  $_POST["nombres"];
       $apellidos =  $_POST["apellidos"];
@@ -985,44 +973,14 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
       $idEstadoAnalisisCrediticio = 1;
 
       $idUsuario =  $_SESSION["user"]["idUsuario"];
+      $CreadoPor =  $_SESSION["user"]["Usuario"];
       $idEstadoSolicitud = 3;
 
 
       if ($idEstadoCivil == 2 || $idEstadoCivil == 3) {
-
-
-         if ($nombresP == "") {
-            $response = "nombrePareja";
-         } else if ($apellidosP == "") {
-            $response = "apellidoPareja";
-         } else if ($identidadP == "") {
-            $response = "identidadPareja";
-         } else if ($identidadP == "0000-0000-00000" || strlen($identidadP) < 15) {
-            $response = "identidadIncorrecta";
-         } else if ($fechaNacimientoP == "") {
-            $response = "fechaNacimientoP";
-         } else if (substr($identidadP, 5, 4) != substr($fechaNacimientoP, 0, 4)) {
-            $response = "fechaIdentidadCorrecta";
-         } else if (!empty($telefonoPareja) && strlen($telefonoPareja) < 9  || $telefonoPareja == "0000-0000") {
-            $response = "telefonoIncorrecto";
-         } else if (!empty($celularPareja) && strlen($celularPareja) < 9  || $celularPareja == "0000-0000") {
-            $response = "celularIncorrecto";
-         } else if ($idGeneroP == "") {
-            $response = "genero";
-         } else if ($actividadDesempeniaP == "") {
-            $response = "actividadP";
-         } else if ($idtiempoLaboralP == "") {
-            $response = "tiempoLaboral";
-         } else if ($idProfesionP == "") {
-            $response = "profesion";
-         } else if ($patronoP == "") {
-            $response = "patronoP";
-         } else if (!empty($telefonoTrabajoPareja) && strlen($telefonoTrabajoPareja) < 9  || $telefonoTrabajoPareja == "0000-0000") {
-            $response = "telefonoTrabajoIncorrecto";
-         } else if ($idTipoClientesP == "") {
-            $response = "tipoCliente";
+    
             //inserta los datos del cliente
-         } else if ($idPersona = $solicitud->RegistrarCliente(
+         if ($idPersona = $solicitud->RegistrarCliente(
             $idTipoPersona,
             $idNacionalidad,
             $idGenero,
@@ -1044,7 +1002,8 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
             $ObservacionesSolicitud,
             $esAval,
             $avalMora,
-            $estadoCreditoCliente
+            $estadoCreditoCliente,
+            $CreadoPor
          )) {
 
 
@@ -1053,7 +1012,7 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
             //obtiene el id de la solicitud para registrar el analisis crediticio
             $solicitud_id = $_SESSION["Solicitud"]["idSolicitud"];
             //registra el aval
-            $solicitud->RegistrarAval($solicitud_id, $idPersona);
+            $solicitud->RegistrarAval($solicitud_id, $idPersona, $CreadoPor);
 
             $solicitud->RegistrarAnalisis(
                $solicitud_id,
@@ -1100,7 +1059,8 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
                $ObservacionesSolicitud,
                $esAvalPareja,
                $avalMoraPareja,
-               $estadoCreditoPareja
+               $estadoCreditoPareja,
+               $CreadoPor
             )) {
 
                //registra los ingresos del conyugue
@@ -1138,10 +1098,13 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
                );
 
                //registras los contactos y referencias
-               $solicitud->Registrar_contactos_referencias($contactos, $referencias);
+               $solicitud->Registrar_contactos_referencias($contactos, $referencias, $CreadoPor);
                //referencias comerciales del aval
-               $solicitud->RegistrarReferenciasComerciales($comerciales);
+               $solicitud->RegistrarReferenciasComerciales($comerciales, $CreadoPor);
+               $descripcionBitacora = "Se agrego el aval: ".$nombres." ".$apellidos.", a la solicitud del cliente: ".$nombreSolicitante;
+               $solicitud->RegistrarBitacora($idUsuario, 6, "Inserto", $descripcionBitacora);
             }
+
 
             $response = "registrarPareja";  //si se inserto en la BD manda mensaje de exito
          } else {
@@ -1170,7 +1133,8 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
             $ObservacionesSolicitud,
             $esAval,
             $avalMora,
-            $estadoCreditoCliente
+            $estadoCreditoCliente,
+            $CreadoPor
          )) {
             //solicitud
 
@@ -1178,7 +1142,7 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
             $solicitud->RegistrarCuenta($idPersona, 1, $cuentaCliente);
             //registra el aval con el id del solicitante
             $solicitud_id = $_SESSION["Solicitud"]["idSolicitud"];
-            $solicitud->RegistrarAval($solicitud_id, $idPersona);
+            $solicitud->RegistrarAval($solicitud_id, $idPersona, $CreadoPor);
 
             $contactos = array(
                array('idPersona' => $idPersona, 'idTipoContacto' => 1, 'valor' => $celularCliente),
@@ -1228,10 +1192,11 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
             );
 
             //registras los contactos y referencias
-            $solicitud->Registrar_contactos_referencias($contactos, $referencias);
+            $solicitud->Registrar_contactos_referencias($contactos, $referencias, $CreadoPor);
             //referencia comercial
-            $solicitud->RegistrarReferenciasComerciales($comerciales);
-
+            $solicitud->RegistrarReferenciasComerciales($comerciales, $CreadoPor);
+            $descripcionBitacora = "Se agrego el aval: ".$nombres." ".$apellidos.", a la solicitud del cliente: ".$nombreSolicitante;
+            $solicitud->RegistrarBitacora($idUsuario, 6, "Inserto", $descripcionBitacora);
 
 
             $response = "success";  //si se inserto en la BD manda mensaje de exito
@@ -1317,5 +1282,7 @@ onclick="ObtenerSolicitudPor_Id(' . $datos[$i]['persona'] . ",'Imprimir'" . ');"
          }
       }
 
-      break;
+   break;
+
+  
 } //fin switch

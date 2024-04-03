@@ -85,6 +85,8 @@ function ObtenerSolicitudPor_Id(persona, Acciones){
              
               }else if(Acciones == "Imprimir"){
                 ReporteSolicitud(data[0]['idSoli'], data[0]['idPerso']);
+              }else if(Acciones == "Contrato"){
+                localStorage.setItem('dataP', JSON.stringify(data));
               }
               
             }
@@ -104,9 +106,10 @@ function ObtenerSolicitudPor_Id(persona, Acciones){
     idSoli = $('#idSoli').val();
     numeroActa = $('#numeroActa').val();
     estadoSoli = $('#estado').val();
+    nombre = $('#nombreComite').val();
 
     $.ajax({
-        data: { "idSoli": idSoli, "numeroActa": numeroActa, "estadoSoli": estadoSoli  },
+        data: { "idSoli": idSoli, "numeroActa": numeroActa, "estadoSoli": estadoSoli, "nombre":nombre  },
         url:'../controller/SolicitudNuevaController.php?operador=aprobar_Solicitud', //url del controlador Conttroller
         type:'POST',
         beforeSend:function(){},
@@ -219,7 +222,7 @@ function ObtenerSolicitudPor_Id(persona, Acciones){
 
   function comiteCreeditoGenerarPDF(idSoli){
  // Envía el idSoli al script PHP que genera el PDF
-   window.location.href = '../pages/fpdf/ComiteCredito.php?idSoli=' + idSoli;
+   window.open('../pages/fpdf/ComiteCredito.php?idSoli=' + idSoli, '_blank');
   }
 
 
@@ -251,8 +254,8 @@ $('#boton_descargar_pdf').on('click', function() {
 
 //funcion para generar el reporte de toda la solicitud
 function ReporteSolicitud(idSolicitud, idPersona) {
-  // Envía el idSoli al script PHP que genera el PDF
-  window.location.href = '../pages/fpdf/SolicitudReporteCompleto.php?idSolicitud=' + idSolicitud + '&idPersona=' + idPersona;
+  
+  window.open('../pages/fpdf/SolicitudReporteCompleto.php?idSolicitud=' + idSolicitud + '&idPersona=' + idPersona, '_blank');
 }
 
  //funcion que valida un solo espacio entre palabras
@@ -265,3 +268,32 @@ function ReporteSolicitud(idSolicitud, idPersona) {
      let texto = elemento.value;
      elemento.value = texto.toUpperCase();
  }
+
+ //funcion para controlar el evento click fuera del modal
+ function eventoCerrarModalComite(){
+
+  if($('#numeroActa').val() != "" || $('#estado').val() != ""){ //validad que los input hayan datos
+      
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "La información ingresada se perderá.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, salir',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        // Si el usuario confirma, cierra el modal 
+        if (result.isConfirmed) {
+          //limpia los inputs
+          $('#numeroActa').val('');
+          $('#estado').val('');
+    
+        } else {
+          // Si el usuario cancela, vuelve a abrir el modal
+          $('#comiteCredito').modal('show');
+        }
+      });
+  }
+}

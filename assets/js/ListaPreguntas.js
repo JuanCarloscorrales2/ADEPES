@@ -59,7 +59,8 @@ function RegistrarPregunta(){
                Swal.fire({
                 icon: 'success',
                 title: 'Registro Exitoso',
-                text: 'Se guardado correctamente los datos',
+                text: 'Se han guardado correctamente los datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
                //mensaje
             }else if(response == "requerid"){
@@ -71,9 +72,9 @@ function RegistrarPregunta(){
                 //mensaje
             }else{
                 Swal.fire({
-                    icon: 'error',
+                    icon: 'Error',
                     title: '¡Atención',
-                    text: 'error inesperado',
+                    text: 'Error inesperado',
                   })
                //mensaje
             }
@@ -142,20 +143,21 @@ function ActualizarPregunta(){
               icon: 'success',
               title: 'Actualización Exitosa',
               text: 'Se han actualizado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
   
           }else if(response == "requerid"){
               Swal.fire({
-                icon: 'error',
+                icon: 'Error',
                 title: '¡Atención!',
                 text: 'Complete todos los datos por favor',
               })
   
           }else{
               Swal.fire({
-                icon: 'error',
+                icon: 'Error',
                 title: '¡Atención!',
-                text: 'error al actaulizar en la base de datos',
+                text: 'Error al actaulizar en la base de datos',
               })
           }
       }
@@ -178,7 +180,7 @@ function EliminarPregunta(idPregunta){
                  swal.fire({
                     icon: "success",
                     title: "Eliminado",
-                    text: "El registro se elimino"   
+                    text: "El registro se eliminó"   
                 })
               
             }else if(response == "llave_uso"){
@@ -203,7 +205,7 @@ function EliminarPregunta(idPregunta){
   }
   function AlertaEliminarPregunta(idPregunta, Descripcion){
     Swal.fire({
-      title: '¿Esta seguro que desea eliminar?',
+      title: '¿Está seguro que desea eliminar?',
       text: "Pregunta: "+Descripcion,
       icon: 'warning',
       showCancelButton: true,
@@ -211,6 +213,7 @@ function EliminarPregunta(idPregunta){
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     }).then((result) => {
       if (result.isConfirmed) {
         
