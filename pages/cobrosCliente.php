@@ -77,12 +77,12 @@ if (isset($_SESSION["user"])) {
 										</div>
 										<div class="col-md-2">
 											<br><b>Monto a Pagar:</b>
-											<input type="number" id="montoPagoAdicional" class="form-control">
+											<input type="number" id="montoPagoAdicional" class="form-control" oninput="validarInput(event)">
 										</div>
 
 
 										<div class="col-md-2">
-											<br><br><button class="btn  btn-success" onclick="validarPago();">Registrar Pago</button>
+											<br><br><button class="btn  btn-success" onclick="validarMontoPagoAdicional();">Registrar Pago</button>
 										</div>
 										<div class="col-md-2">
 											<br><br><button class="btn  btn-warning" onclick="AdvertenciaLiquidarPrestamo();">Liquidar Préstamo</button>
@@ -201,6 +201,55 @@ if (isset($_SESSION["user"])) {
 			</div>
 		</div>
 	</div>
+	<script>
+        function validarInput(event) {
+            var input = event.target; // Obtén el elemento de entrada
+            var valor = input.value; // Obtén el valor del input
+
+            // Elimina guiones del valor
+            valor = valor.replace(/-/g, '');
+
+            // Actualiza el valor del input
+            input.value = valor;
+        }
+    </script>
+
+	<script>
+	function validarMontoPagoAdicional() {
+	var fechaPago = $('#fechaPago').val().trim();
+	var idPlanCuota = $('#idPlanCuota').val().trim();
+    var montoPagoAdicional = $('#montoPagoAdicional').val().trim();
+    
+		
+    // Verificar si el campo de fechaPago está vacío
+    if (fechaPago === "") {
+        toastr.warning('Por favor ingrese la fecha de pago');
+        return;
+    }
+
+	if (idPlanCuota === "") {
+        toastr.warning('Para registrar un pago seleccione una cuota');
+        return
+    }
+    // Verificar si el campo de montoPagoAdicional está vacío
+    if (montoPagoAdicional === "") {
+        toastr.warning('Por favor ingrese el monto a pagar');
+        return;
+    }
+
+	// Obtener el monto de la cuota (asumiendo que lo tienes almacenado en una variable llamada montoCuota)
+	var montoCuota = parseFloat($('#montoPago').val().trim());
+
+	// Verificar si el campo de montoPagoAdicional está vacío o si es menor que el monto de la cuota
+	if (isNaN(montoPagoAdicional) || montoPagoAdicional <= 0 || montoPagoAdicional < montoCuota) {
+		toastr.warning('El monto a pagar debe ser mayor o igual que el monto de la cuota');
+		return;
+	}
+
+    // Si el campo no está vacío, llamamos a la función validarPago
+    validarPago();
+	}
+	</script>
 
 	<!-- ========= | scripts robust | ============-->
 	<?php include "layouts/main_scripts.php"; ?>

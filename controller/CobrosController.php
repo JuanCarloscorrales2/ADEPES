@@ -6,6 +6,12 @@ $cobro =  new Cobros();
 switch ($_REQUEST["operador"]) {
 
     case "listar_prestamos_cobro":
+        $resultados = array(
+            "sEcho" => 0,
+            "iTotalRecords" => 0,
+            "iTotalDisplayRecords" => 0,
+            "aaData" => []
+         );
 
         $datos = $cobro->ListarPrestamosCobros(); //obtiene los datos del metodo
         if ($datos) {
