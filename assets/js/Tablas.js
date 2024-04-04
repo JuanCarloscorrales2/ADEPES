@@ -3251,6 +3251,23 @@ function LlenarTablaRubro(){
           
       ]
   });
+  let timeout = null;
+
+    // Agregar controlador de eventos para detectar la búsqueda
+    $('#tabla_rubro').on('search.dt', function(event) {
+        // Limpiar el timeout anterior, si existe
+        clearTimeout(timeout);
+        
+        // Iniciar un nuevo timeout
+        timeout = setTimeout(function(){
+            // Verificar si la búsqueda actual no está vacía
+            if (tablaRubro.search() !== '') {
+                // Realizar acciones solo si hay una búsqueda activa
+                //TIPOConsulta, ID DE LA PANTALLA, Y DESCRIPCION
+                EventoBitacora(2, 23, "Realizo consulta de filtros en LISTADO DE RUBROS");
+            }
+        }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+    });
 }
  //FUNCION PARA REGISTRA UN estado civil AJAX
 function RegistrarRubro(){

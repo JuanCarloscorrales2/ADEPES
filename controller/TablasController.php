@@ -1763,7 +1763,7 @@ switch ($_REQUEST["operador"]) {
                 $response = "existe";
 
             }else if($result == "inserto") {
-                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 22, "Inserto", "Inserto el estado el estado de solicitud: ".$descripcion);
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 22, "Inserto", "Inserto el estado de solicitud: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -1890,6 +1890,7 @@ switch ($_REQUEST["operador"]) {
             $descripcion = $_POST["Descripcion"];
 
             if ($tablas->RegistrarRubro($descripcion)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 23, "Inserto", "Inserto el rubro: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -1911,6 +1912,7 @@ switch ($_REQUEST["operador"]) {
 
 
             if ($tablas->ActualizarRubro($idRubro, $Descripcion)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 23, "Modifico", "Modificó el rubro: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -1929,6 +1931,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarRubro($_POST["idRubro"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 23, "Elimino", "Elimino el rubro con id: ".$_POST["idRubro"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
