@@ -567,7 +567,14 @@ switch ($_REQUEST["operador"]) {
 
             $descripcion = $_POST["descripcion"];
 
-            if ($tablas->RegistrarCategoria($descripcion)) {
+            $result = $tablas->RegistrarCategoria($descripcion);
+
+            if($result == "existe"){
+
+                $response = "existe";  
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 12, "Inserto", "Inserto la siguiente categoria casa: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -587,8 +594,14 @@ switch ($_REQUEST["operador"]) {
             $idcategoriaCasa = $_POST["idcategoriaCasa"];
             $descripcion = $_POST["descripcion"];
 
+            $result =$tablas->ActualizarCategoria($idcategoriaCasa, $descripcion);
 
-            if ($tablas->ActualizarCategoria($idcategoriaCasa, $descripcion)) {
+            if($result == "existe"){
+
+                $response = "existe";  
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 12, "Modifico", "Modificó la siguiente categoria casa: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -607,6 +620,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarCategoria($_POST["idcategoriaCasa"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 12, "Elimino", "Elimino la categoria casa con id: ".$_POST["idcategoriaCasa"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
