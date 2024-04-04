@@ -89,6 +89,7 @@ switch ($_REQUEST["operador"]) {
             if ($montoMinimo >= $montoMaximo) {
                 $response = "minimo";
             } else if ($tablas->RegistrarTipoPrestamo($nombre, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 10, "Inserto", "Inserto el nuevo préstamo: ".$nombre);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -163,10 +164,12 @@ switch ($_REQUEST["operador"]) {
                 $response = "enUso";
             } else if($resultado == "existe" && $idEstadoTipoPrestamo !=2) {
                 $tablas->ActualizarTipoPrestamo($idTipoPrestamo, $idEstadoTipoPrestamo, $Descripcion, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo);
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 10, "Modifico", "Modificó el préstamo: ".$Descripcion);
                 $response = "success";
     
             }else if($resultado  ==  "noexiste"){
                 $tablas->ActualizarTipoPrestamo($idTipoPrestamo, $idEstadoTipoPrestamo, $Descripcion, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo);
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 10, "Modifico", "Modificó el préstamo: ".$Descripcion);
                 $response = "success"; 
             } else {
                 $response = "error";  //error al insertar en BD
@@ -185,6 +188,7 @@ switch ($_REQUEST["operador"]) {
             $resultado = $tablas->InactivarTipoPrestamo($_POST["idTipoPrestamo"]);
 
             if ($resultado == "inactivado") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 10, "Elimino", "Inactivo el préstamo con id: ".$_POST["idTipoPrestamo"]);
                 $response = "success";
 
             } else if($resultado == "enUso"){
@@ -206,6 +210,7 @@ switch ($_REQUEST["operador"]) {
 
 
             if ($tablas->ActivarTipoPrestamo($_POST["idTipoPrestamo"])) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 10, "Modifico", "Activo el préstamo con id: ".$_POST["idTipoPrestamo"]);
                 $response = "success";
             } else {
                 $response = "error";
