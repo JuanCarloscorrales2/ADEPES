@@ -13,11 +13,11 @@
         <input type="hidden"  class="form-control" id="id_editar" >
           <div class="form-group">
             <label  class="col-form-label">Nombre del Rol:</label>
-            <input type="text"  id="nombres_rol" placeholder="Ingrese el nombre del nuevo rol" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" oninput="validarInput(this);">
+            <input type="text"  id="nombres_rol" placeholder="Ingrese el nombre del nuevo rol" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event);" onkeyup="espacios(this);" oninput="validarInput(this);">
           </div>
           <div class="form-group">
             <label  class="col-form-label">Descripción:</label>
-            <textarea id="rol_desc" placeholder="Ingrese la descripción del nuevo rol" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" oninput="validarInput(this);"></textarea>
+            <textarea id="rol_desc" placeholder="Ingrese la descripción del nuevo rol" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event);" onkeyup="espacios(this);" oninput="validarInput(this);"></textarea>
           </div>
     
         </form>
