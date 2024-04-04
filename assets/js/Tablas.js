@@ -2570,8 +2570,23 @@ function LlenarTablaTiempovivir(){
           
       ]
 
-     
+  });
 
+  let timeout = null;
+  // Agregar controlador de eventos para detectar la búsqueda
+  $('#tabla_tiempovivir').on('search.dt', function(event) {
+   // Limpiar el timeout anterior, si existe
+   clearTimeout(timeout);
+   
+   // Iniciar un nuevo timeout
+   timeout = setTimeout(function(){
+       // Verificar si la búsqueda actual no está vacía
+       if (tablaTiempovivir.search() !== '') {
+           // Realizar acciones solo si hay una búsqueda activa
+           //TIPOConsulta, ID DE LA PANTALLA, Y DESCRIPCION
+           EventoBitacora(2, 20, "Realizo consulta de filtros en LISTADO DE TIEMPO DE VIVIR");
+       }
+    }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
   });
 }
 
@@ -2598,6 +2613,13 @@ $.ajax({
             icon: 'success',
             title: 'Registro exitoso',
             text: 'Se ha guardado correctamente los datos',
+          })
+
+        }else if(response == "existe"){
+          Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'No puedes registrar un tiempo de vivir que ya existe',
           })
         }else if(response == "requerid"){
             Swal.fire({
@@ -2669,7 +2691,12 @@ $.ajax({
           title: 'Actualización Exitosa',
           text: 'Se han actualizado correctamente los datos',
         })
-
+      }else if(response == "existe"){
+        Swal.fire({
+            icon: 'warning',
+            title: '¡Atención!',
+            text: 'No puedes actualizar a un tiempo de vivir que ya existe',
+        })
       }else if(response == "requerid"){
           Swal.fire({
             icon: 'warning',
