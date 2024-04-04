@@ -671,12 +671,25 @@ function RegistrarCategoria($Descripcion){
     
  //FUNCION PARA REGISTRAR UN NUEVO PARENTESCO
  function RegistrarContacto($Descripcion){
+
+    // Consulta para verificar si ya existe un registro con la misma descripción
+    $checkQuery = "SELECT COUNT(*) AS total FROM tbl_mn_tipo_contacto WHERE Descripcion = ?";
+    $checkResult = $this->cnx->prepare($checkQuery);
+    $checkResult->bindParam(1, $Descripcion);
+    $checkResult->execute();
+    $row = $checkResult->fetch(PDO::FETCH_ASSOC);
+
+    if ($row['total'] > 0) {
+        // Si ya existe un registro con la misma descripción, devuelve false
+        return "existe";
+    }
+
     $query = "INSERT INTO tbl_mn_tipo_contacto (Descripcion) VALUES(?)";
     $result = $this->cnx->prepare($query); //preparacion de la sentencia
     $result->bindParam(1,$Descripcion);
 
     if($result->execute()){ //validacion de la ejecucion
-        return true;
+        return "inserto";
     }
 
     return false; //si fallo se devuelvo false
@@ -698,6 +711,20 @@ function RegistrarCategoria($Descripcion){
 
     //FUNCION PARA ACTUALIZR LOS PARENTESCO 
     function ActualizarContacto($idTipoContacto, $Descripcion){
+
+         // Consulta para verificar si ya existe un registro con la misma descripción
+         $checkQuery = "SELECT COUNT(*) AS total FROM tbl_mn_tipo_contacto WHERE Descripcion = ? AND idTipoContacto != ? ";
+         $checkResult = $this->cnx->prepare($checkQuery);
+         $checkResult->bindParam(1, $Descripcion);
+         $checkResult->bindParam(2, $idTipoContacto);
+         $checkResult->execute();
+         $row = $checkResult->fetch(PDO::FETCH_ASSOC);
+     
+         if ($row['total'] > 0) {
+             // Si ya existe un registro con la misma descripción, devuelve false
+             return "existe";
+         }
+
         $query = "UPDATE tbl_mn_tipo_contacto SET Descripcion = ? WHERE idTipoContacto = ?";
         $result = $this->cnx->prepare($query); //preparacion de la sentencia
         $result->bindParam(1,$Descripcion);
@@ -705,7 +732,7 @@ function RegistrarCategoria($Descripcion){
      
 
         if($result->execute()){ //validacion de la ejecucion
-            return true;
+            return "inserto";
         }
 
         return false; //si fallo se devuelvo false

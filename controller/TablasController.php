@@ -836,7 +836,12 @@ switch ($_REQUEST["operador"]) {
 
             $descripcion = $_POST["Descripcion"];
 
-            if ($tablas->RegistrarContacto($descripcion)) {
+            $result = $tablas->RegistrarContacto($descripcion);
+            if($result == "existe"){
+
+                $response = "existe";
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 15, "Inserto", "Inserto el siguiente tipo contacto: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -856,8 +861,13 @@ switch ($_REQUEST["operador"]) {
             $idTipoContacto = $_POST["idTipoContacto"];
             $Descripcion = $_POST["Descripcion"];
 
+            $result = $tablas->ActualizarContacto($idTipoContacto, $Descripcion);
+            if($result == "existe"){
 
-            if ($tablas->ActualizarContacto($idTipoContacto, $Descripcion)) {
+                $response = "existe";
+
+            }else if($result = "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 15, "Modifico", "Modificó el tipo contacto: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -876,6 +886,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarContacto($_POST["idTipoContacto"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 15, "Elimino", "Elimino el tipo contacto con id: ".$_POST["idTipoContacto"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
