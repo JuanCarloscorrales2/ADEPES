@@ -547,6 +547,12 @@ function RegistrarEstadoCivil(){
                     title: '¡Atención!',
                     text: 'Complete todos los campos',
                   })
+            }else if(response == "existe"){
+                  Swal.fire({
+                      icon: 'warning',
+                      title: '¡Atención!',
+                      text: 'El estado civil ya existe',
+            })
             }else{
                 Swal.fire({
                     icon: 'error',
@@ -617,7 +623,12 @@ function ObtenerEstadoCivilPorId(idEstadoCivil, Acciones){
                 title: '¡Atención!',
                 text: 'Complete todos los datos por favor',
               })     
-  
+          }else if(response == "existe"){
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'El nombre del estado civil ya existe',
+            })
          }else{
               Swal.fire({
                 icon: 'error',

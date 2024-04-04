@@ -291,8 +291,16 @@ switch ($_REQUEST["operador"]) {
 
             $descripcion = $_POST["descripcion"];
 
-            if ($tablas->RegistrarEstadoCivil($descripcion)) {
+            $result =$tablas->RegistrarEstadoCivil($descripcion);
+            if ($result == "existeCivil") {
+                
+                $response = "existe";  
+
+            }else if($result == "inserto"){
+
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 11, "Inserto", "Inserto el estado civil: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
+
             } else {
                 $response = "error";
             }
@@ -311,8 +319,13 @@ switch ($_REQUEST["operador"]) {
             $idEstadoCivil = $_POST["idEstadoCivil"];
             $Descripcion = $_POST["Descripcion"];
 
+            $result = $tablas->ActualizarEstadoCivil($idEstadoCivil, $Descripcion);
 
-            if ($tablas->ActualizarEstadoCivil($idEstadoCivil, $Descripcion)) {
+            if($result == "existeCivil"){
+                $response = "existe";
+                
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 11, "Modifico", "Modificó el estado civil: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -332,9 +345,11 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarEstadoCivil($_POST["idEstadoCivil"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 11, "Elimino", "Elimino el estado civil con id: ".$_POST["idEstadoCivil"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 11, "Elimino", "Intento eliminar el estado civil con id: ".$_POST["idEstadoCivil"]);
                 $response = "llave_uso";
             } else {
                 $response = "error";  //cualquier otro tipo de error

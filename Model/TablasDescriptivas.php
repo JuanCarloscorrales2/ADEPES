@@ -199,7 +199,7 @@ class Tablas {
   }
 
   //FUNCION PARA REGISTRAR UN NUEVO ESTADO CIVIL
-  function RegistrarEstadoCivil($Descripcion){
+ /* function RegistrarEstadoCivil($Descripcion){
     $query = "INSERT INTO tbl_mn_estadocivil (Descripcion) VALUES(?)";
     $result = $this->cnx->prepare($query); //preparacion de la sentencia
     $result->bindParam(1,$Descripcion);
@@ -210,7 +210,34 @@ class Tablas {
 
     return false; //si fallo se devuelvo false
 
+}*/
+function RegistrarEstadoCivil($Descripcion){
+    // Consulta para verificar si ya existe un registro con la misma descripción
+    $checkQuery = "SELECT COUNT(*) AS total FROM tbl_mn_estadocivil WHERE Descripcion = ?";
+    $checkResult = $this->cnx->prepare($checkQuery);
+    $checkResult->bindParam(1, $Descripcion);
+    $checkResult->execute();
+    $row = $checkResult->fetch(PDO::FETCH_ASSOC);
+
+    if ($row['total'] > 0) {
+        // Si ya existe un registro con la misma descripción, devuelve false
+        return "existeCivil";
+    }
+
+    // Si no existe, procede con la inserción
+    $insertQuery = "INSERT INTO tbl_mn_estadocivil (Descripcion) VALUES(?)";
+    $insertResult = $this->cnx->prepare($insertQuery);
+    $insertResult->bindParam(1, $Descripcion);
+
+    if ($insertResult->execute()) { 
+        // Si la inserción fue exitosa, devuelve true
+        return "inserto";
+    }
+
+    // Si la inserción falla, devuelve false
+    return false;
 }
+
 
  //funcion que trae los datos del prestamo a actualizar
  function ObtenerEstadoCivilPorId($idEstadoCivil)
@@ -227,6 +254,22 @@ class Tablas {
 
     //FUNCION PARA ACTUALIZR LOS ESTADO CIVILES
     function ActualizarEstadoCivil($idEstadoCivil, $Descripcion){
+
+        // Consulta para verificar si ya existe un registro con la misma descripción
+        $checkQuery = "SELECT COUNT(*) AS total FROM tbl_mn_estadocivil WHERE Descripcion = ? AND idEstadoCivil != ?";
+        $checkResult = $this->cnx->prepare($checkQuery);
+        $checkResult->bindParam(1, $Descripcion);
+        $checkResult->bindParam(2, $idEstadoCivil);
+        $checkResult->execute();
+        $row = $checkResult->fetch(PDO::FETCH_ASSOC);
+
+        if ($row['total'] > 0) {
+            // Si ya existe un registro con la misma descripción, devuelve false
+            return "existeCivil";
+        }
+
+
+        //si no existe actualiza
         $query = "UPDATE tbl_mn_estadocivil SET Descripcion = ? WHERE idEstadoCivil = ?";
         $result = $this->cnx->prepare($query); //preparacion de la sentencia
         $result->bindParam(1,$Descripcion);
@@ -234,7 +277,7 @@ class Tablas {
      
 
         if($result->execute()){ //validacion de la ejecucion
-            return true;
+            return "inserto";
         }
 
         return false; //si fallo se devuelvo false
