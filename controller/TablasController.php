@@ -1360,7 +1360,13 @@ switch ($_REQUEST["operador"]) {
 
             $descripcion = $_POST["Descripcion"];
 
-            if ($tablas->RegistrarEstadoplanpago($descripcion)) {
+            $result = $tablas->RegistrarEstadoplanpago($descripcion);
+            if($result == "existe"){
+
+                $response = "existe";
+
+            }else if($result = "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 19, "Inserto", "Inserto el siguiente estado plan de pago: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -1380,8 +1386,12 @@ switch ($_REQUEST["operador"]) {
             $idEstadoPlanPagos = $_POST["idEstadoPlanPagos"];
             $Descripcion = $_POST["Descripcion"];
 
+            $result = $tablas->ActualizarEstadoplanpago($idEstadoPlanPagos, $Descripcion);
+            if($result == "existe"){
 
-            if ($tablas->ActualizarEstadoplanpago($idEstadoPlanPagos, $Descripcion)) {
+                $response = "existe";
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 19, "Modifico", "Modificó el estado plan de pago: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -1400,9 +1410,11 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarEstadoplanpago($_POST["idEstadoPlanPagos"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 19, "Elimino", "Elimino el estado plan de pagos con id: ".$_POST["idEstadoPlanPagos"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
+                
                 $response = "llave_uso";
             } else {
                 $response = "error";  //cualquier otro tipo de error

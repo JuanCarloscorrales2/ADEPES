@@ -2341,6 +2341,23 @@ function LlenarTablaEstadoplanpago(){
           
       ]
   });
+
+  let timeout = null;
+  // Agregar controlador de eventos para detectar la búsqueda
+  $('#tabla_estadoplanpago').on('search.dt', function(event) {
+   // Limpiar el timeout anterior, si existe
+   clearTimeout(timeout);
+   
+   // Iniciar un nuevo timeout
+   timeout = setTimeout(function(){
+       // Verificar si la búsqueda actual no está vacía
+       if (tablaEstadoplanpago.search() !== '') {
+           // Realizar acciones solo si hay una búsqueda activa
+           //TIPOConsulta, ID DE LA PANTALLA, Y DESCRIPCION
+           EventoBitacora(2, 19, "Realizo consulta de filtros en LISTADO DE ESTADO PLAN DE PAGOS");
+       }
+    }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+  });
 }
  //FUNCION PARA REGISTRA UN estado civil AJAX
 function RegistrarEstadoplanpago(){
@@ -2372,6 +2389,12 @@ function RegistrarEstadoplanpago(){
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
                 })
+          }else if(response == "existe"){
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'No puedes registrar un plan de pagos que ya existe',
+            }) 
           }else{
               Swal.fire({
                   icon: 'error',
@@ -2442,7 +2465,13 @@ function ActualizarEstadoplanpago(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
-            })     
+            })
+        }else if(response == "existe"){
+          Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'No puedes actualizar a un plan de pagos que ya existe',
+          }) 
 
        }else{
             Swal.fire({

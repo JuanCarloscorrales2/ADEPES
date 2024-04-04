@@ -15,6 +15,7 @@ function generarPDF() {
   
     // Agregar el formulario a la página y enviarlo
     form.appendTo('body').submit();
+    EventoBitacora(1, 19, "Imprimió el reporte de LISTADO DE ESTADO PLAN DE PAGO");//bitacora reporte
   }
   
   //botón en la página para generar y descargar el PDF
@@ -48,4 +49,31 @@ function eventoCerrarModal(){
         }
       });
   }
+}
+
+function EventoBitacora(evento, idPantalla, descripcion){ //registra el evento de pdf
+  
+  $.ajax({
+      data: { "evento": evento, "idPantalla":idPantalla, "descripcion":descripcion },
+      url:'../controller/TablasController.php?operador=registrarEventoBitacora', //url del controlador Conttroller
+      type:'POST',
+      beforeSend:function(){},
+      success:function(response){
+          
+          if(response == "success"){
+               //actualizar tabla
+          
+          }else{
+              swal.fire({
+                  icon: "error",
+                  title: "Atención",
+                  text: "No se pudo registrar el evento en bitacora de pdf"
+                  
+              })
+          }
+         
+      }
+
+  });
+
 }
