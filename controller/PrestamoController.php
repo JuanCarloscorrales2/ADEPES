@@ -7,6 +7,12 @@ $cli = new Cliente();
 switch($_REQUEST["oper"]){
 
     case "listar_prestamos":
+        $resultados = array(
+            "sEcho" => 0,
+            "iTotalRecords" => 0,
+            "iTotalDisplayRecords" => 0,
+            "aaData" => []
+         );
 
         $datos = $cli->ListarPrestamos(); //obtiene los datos del metodo
         if($datos){

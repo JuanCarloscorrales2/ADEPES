@@ -92,6 +92,10 @@ switch ($_REQUEST["operador"]) {
                     $hoy = date('d-m-Y');
                     $contrato->RegistrarBitacora($idUsuario, 6, "Modifico", "Modificó y aprobó el contrato del cliente: ".$nombre."| Aprobación: ".$hoy);
                     $response = "success";  //si se inserto o actualizo en la BD manda mensaje de exito
+                }else if($resultado == "Inserto"){
+                    $hoy = date('d-m-Y');
+                    $contrato->RegistrarBitacora($idUsuario, 6, "Modifico", "Modificó y aprobó el contrato del cliente: ".$nombre."| Aprobación: ".$hoy);
+                    $response = "success";  //si se inserto o actualizo en la BD manda mensaje de exito
                 }else{
                     $response = "error"; 
                 }
