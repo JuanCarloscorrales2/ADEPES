@@ -1436,8 +1436,8 @@ function LlenarTablaContacto(){
            //TIPOConsulta, ID DE LA PANTALLA, Y DESCRIPCION
            EventoBitacora(2, 15, "Realizo consulta de filtros en LISTADO DE TIPO CONTACTO");
        }
-   }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
-});
+    }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+  });
 }
  //FUNCION PARA REGISTRA UN estado civil AJAX
 function RegistrarContacto(){
@@ -1651,6 +1651,23 @@ function LlenarTablaBienes(){
           
       ]
   });
+
+  let timeout = null;
+  // Agregar controlador de eventos para detectar la búsqueda
+  $('#tabla_bienes').on('search.dt', function(event) {
+   // Limpiar el timeout anterior, si existe
+   clearTimeout(timeout);
+   
+   // Iniciar un nuevo timeout
+   timeout = setTimeout(function(){
+       // Verificar si la búsqueda actual no está vacía
+       if (tablaBienes.search() !== '') {
+           // Realizar acciones solo si hay una búsqueda activa
+           //TIPOConsulta, ID DE LA PANTALLA, Y DESCRIPCION
+           EventoBitacora(2, 17, "Realizo consulta de filtros en LISTADO DE BIENES");
+       }
+    }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+  });
 }
  //FUNCION PARA REGISTRA UN estado civil AJAX
 function RegistrarBienes(){
@@ -1682,6 +1699,12 @@ function RegistrarBienes(){
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
                 })
+          }else if(response == "existe"){
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'No puedes registrar ya existe',
+            }) 
           }else{
               Swal.fire({
                   icon: 'error',
@@ -1738,7 +1761,7 @@ function ActualizarBienes(){
     beforeSend:function(){},
     success:function(response){
         if(response == "success"){  //si inserto correctamente
-          TablaBienes.ajax.reload();  //actualiza la tabla
+          tablaBienes.ajax.reload();  //actualiza la tabla
            $('#actualizar_Bienes').modal('hide'); //cierra el modal id del modal
 
           Swal.fire({
@@ -1753,7 +1776,12 @@ function ActualizarBienes(){
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
             })     
-
+        }else if(response == "existe"){
+          Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'No puedes actualizar ya que el tipo de Bienes ya existe',
+          }) 
        }else{
             Swal.fire({
               icon: 'error',

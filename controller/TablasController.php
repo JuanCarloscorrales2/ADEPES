@@ -964,7 +964,13 @@ switch ($_REQUEST["operador"]) {
 
             $descripcion = $_POST["Descripcion"];
 
-            if ($tablas->RegistrarBienes($descripcion)) {
+            $result = $tablas->RegistrarBienes($descripcion);
+            if($result == "existe"){
+
+                $response = "existe";
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 15, "Inserto", "Inserto el siguiente tipo de bien: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -984,8 +990,14 @@ switch ($_REQUEST["operador"]) {
             $idPersonaBienes = $_POST["idPersonaBienes"];
             $Descripcion = $_POST["Descripcion"];
 
+            $result = $tablas->ActualizarBienes($idPersonaBienes, $Descripcion);
+            if($result == "existe"){
 
-            if ($tablas->ActualizarBienes($idPersonaBienes, $Descripcion)) {
+                $response = "existe";
+
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 17, "Modifico", "Modificó el tipo de bien: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -1004,6 +1016,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarBienes($_POST["idPersonaBienes"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 17, "Elimino", "Elimino el tipo de bien con id: ".$_POST["idPersonaBienes"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
