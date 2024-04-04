@@ -703,7 +703,13 @@ switch ($_REQUEST["operador"]) {
 
             $descripcion = $_POST["Descripcion"];
 
-            if ($tablas->RegistrarGenero($descripcion)) {
+            $result = $tablas->RegistrarGenero($descripcion);
+            if($result == "existe"){
+
+                $response = "existe";
+
+            }else if($result) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 14, "Inserto", "Inserto el siguiente genero: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -723,8 +729,14 @@ switch ($_REQUEST["operador"]) {
             $idGenero = $_POST["idGenero"];
             $Descripcion = $_POST["Descripcion"];
 
+            $result = $tablas->ActualizarGenero($idGenero, $Descripcion);
+            if($result == "existe"){
 
-            if ($tablas->ActualizarGenero($idGenero, $Descripcion)) {
+                $response = "existe";
+
+
+            }else if($result = "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 14, "Modifico", "Modificó el genero: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -743,6 +755,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarGenero($_POST["idGenero"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 14, "Elimino", "Elimino el genero con id: ".$_POST["idGenero"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
