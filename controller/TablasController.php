@@ -433,7 +433,14 @@ switch ($_REQUEST["operador"]) {
 
             $Descripcion = $_POST["descripcion"];
 
-            if ($tablas->RegistrarParentesco($Descripcion)) {
+            $result = $tablas->RegistrarParentesco($Descripcion);
+
+            if($result == "existe"){
+
+              $response = "existe";  
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 13, "Inserto", "Inserto el parentesco: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -452,9 +459,14 @@ switch ($_REQUEST["operador"]) {
 
             $idParentesco = $_POST["idParentesco"];
             $descripcion = $_POST["descripcion"];
+ 
+            $result = $tablas->ActualizarParentesco($idParentesco, $descripcion);
 
+            if($result  == "existe"){
+                $response = "existe";
 
-            if ($tablas->ActualizarParentesco($idParentesco, $descripcion)) {
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 13, "Modifico", "Modificó el parentesco: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -474,6 +486,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarParentesco($_POST["idParentesco"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 13, "Elimino", "Elimino el parentesco con id: ".$_POST["idParentesco"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas

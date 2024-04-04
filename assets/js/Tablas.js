@@ -551,7 +551,7 @@ function RegistrarEstadoCivil(){
                   Swal.fire({
                       icon: 'warning',
                       title: '¡Atención!',
-                      text: 'El estado civil ya existe',
+                      text: 'El estado civil que deseas crear ya existe',
             })
             }else{
                 Swal.fire({
@@ -731,6 +731,8 @@ function LlenarTablaParentesco(){
        
 
     });
+     // Agregar controlador de eventos para detectar la búsqueda
+
 }
 
 //FUNCION PARA REGISTRA UN estado civil AJAX
@@ -757,6 +759,13 @@ function RegistrarParentesco(){
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
             })
+          }else if(response == "existe"){
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'El parentesco ya existe',
+            })
+
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
@@ -833,7 +842,13 @@ function ActualizarParentesco(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
-            })     
+            })    
+        }else if(response == "existe"){
+          Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'No puedes actulizar ya que ese parentesco ya existe',
+          }) 
 
        }else{
             Swal.fire({
