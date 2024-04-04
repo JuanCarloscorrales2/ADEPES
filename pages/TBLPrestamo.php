@@ -3,12 +3,15 @@ session_start();
 if(isset($_SESSION["user"])){
 include "layouts/head.php"; 
 require "../model/Permisos.php";
+require "../model/BitacoraModel.php";
 $permiso = new Permisos();
 $rol = $_SESSION["user"]["idRol"];
 $tiene_permiso = $permiso->ListarPermisosRol(10, $rol);
 $_SESSION["actualizar"] = $tiene_permiso ? $tiene_permiso["actualizar"] : 0;
 $_SESSION["eliminar"] = $tiene_permiso ? $tiene_permiso["eliminar"] : 0;
 $_SESSION["consultar"] = $tiene_permiso ? $tiene_permiso["consultar"] : 0;
+$bita = new Bitacora();
+$bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 10, "Ingreso", "Ingreso a la pantalla de tipo de préstamos");
 ?>
 <!--==========================================-->
 
@@ -158,6 +161,20 @@ include "Modals/Actualizar/ActualizarTipoPrestamo.php";
 			input.value = texto.substring(0, texto.length - 1);
 	    }
 	}
+
+	window.addEventListener('beforeunload', function (event) {  //funcion para registrar salidas
+		// Parámetros que deseas enviar al script PHP
+		var usuarioId = <?php echo $_SESSION["user"]["idUsuario"]; ?>;
+		var pantallaId = 10; // ID de la pantalla en la cual se esta registrado el evento
+		var accion = "Salio"; // Acción del evento
+		var descripcion = "Salió de la pantalla de tipo de préstamos"; // Descripción de la acción
+		
+		// Realiza una solicitud AJAX para registrar la salida del usuario
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '../pages/registrar_salida.php', true);
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.send('usuarioId=' + usuarioId + '&pantallaId=' + pantallaId + '&accion=' + accion + '&descripcion=' + descripcion);
+	});
 </script>
 
 

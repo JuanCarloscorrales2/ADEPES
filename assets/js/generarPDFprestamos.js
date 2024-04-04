@@ -16,6 +16,7 @@
   
     // Agregar el formulario a la página y enviarlo
     form.appendTo('body').submit();
+    
   }
   
   //botón en la página para generar y descargar el PDF
@@ -23,3 +24,4 @@
     generarpPDF();
   });
    
+  
