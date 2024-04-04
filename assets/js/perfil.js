@@ -79,19 +79,23 @@ function ActualizarUsuario( ){
               icon: 'success',
               title: 'Actualización Exitosa',
               text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
   
           }else if(response == "requerid"){
               Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
-                text: 'Complete todos los datos por favors',
+                text: 'Complete todos los datos por favor',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
+                
               })
           }else{
               Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
-                text: 'error inesperado',
+                text: 'Error inesperado',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }
       }

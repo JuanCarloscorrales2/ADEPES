@@ -362,7 +362,7 @@ function ActualizarUsuario( ){
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'Complete todos los datos por favors',
+              text: 'Complete todos los datos por favor',
             })
         }else if(response == "dominio"){
             Swal.fire({
