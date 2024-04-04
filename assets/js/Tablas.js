@@ -3671,6 +3671,23 @@ function LlenarTablaMunicipio(){
           
       ]
   });
+  let timeout = null;
+
+    // Agregar controlador de eventos para detectar la búsqueda
+    $('#tabla_municipio').on('search.dt', function(event) {
+        // Limpiar el timeout anterior, si existe
+        clearTimeout(timeout);
+        
+        // Iniciar un nuevo timeout
+        timeout = setTimeout(function(){
+            // Verificar si la búsqueda actual no está vacía
+            if (tablaMunicipio.search() !== '') {
+                // Realizar acciones solo si hay una búsqueda activa
+                //TIPOConsulta, ID DE LA PANTALLA, Y DESCRIPCION
+                EventoBitacora(2, 25, "Realizo consulta de filtros en LISTADO DE MUNICIPIOS");
+            }
+        }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+    });
 }
 
  //FUNCION PARA REGISTRA UN estado civil AJAX
@@ -3696,6 +3713,12 @@ function LlenarTablaMunicipio(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se a guardado correctamente los datos',
+            })
+          }else if(response == "existe"){
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'No puedes registrar un municipio que ya existe',
             })
           }else if(response == "requerid"){
               Swal.fire({
@@ -3768,7 +3791,12 @@ function ActualizarMunicipio(){
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
           })
-
+        }else if(response == "existe"){
+          Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'No puedes actualizar a un municipio que ya existe',
+          })
         }else if(response == "requerid"){
             Swal.fire({
               icon: 'warning',
