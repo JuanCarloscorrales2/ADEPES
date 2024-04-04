@@ -31,6 +31,17 @@
         $CorreoElectronicos=$resultado['CorreoElectronico'];
         //generar y almacenar token
         $sql ="UPDATE tbl_ms_usuario SET token= '$token', fechaRecuperacion='$fechaRecuperacion' WHERE CorreoElectronico ='$CorreoElectronicos'";
+        
+        $sqlp = "SELECT * FROM tbl_ms_parametros WHERE idParametro = 6;";
+        $query = $cnx->query($sqlp);
+        $nombreParametro["valores"] = array(); // Inicializamos el arreglo
+        
+        while ($fila = $query->fetch(PDO::FETCH_ASSOC)) {
+            foreach ($fila as $campos => $valor) {
+                $nombreParametro["valores"][$campos] = $valor; // Almacenamos el valor del parámetro
+            }
+            break; // Salimos del bucle después de la primera iteración
+        }
 
         try{
             $cnx->exec($sql);
@@ -44,7 +55,7 @@
                         <br> Por favor, no compartir su contraseña, para mayor seguridad.
                         <br> Sino puede ignorar este mensaje. 
                         <br> <a class='btn btn-primary' href='$url' role='button'>Restablecer Contraseña</a>
-                        <br> Este restablecimiento de contraseña solo es válido durante las próximas 24 horas.";
+                        <br> Este restablecimiento de contraseña solo es válido durante las próximas " . $nombreParametro["valores"]["Valor"] . " horas.";
         
             if($mailer->enviarEmail($CorreoElectronicos,$asunto, $cuerpo)){
                                     echo '<script>
