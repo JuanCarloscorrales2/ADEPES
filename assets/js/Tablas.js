@@ -3022,6 +3022,23 @@ function LlenarTablaEstadosolicitud(){
           
       ]
   });
+
+  let timeout = null;
+  // Agregar controlador de eventos para detectar la búsqueda
+  $('#tabla_estadosolicitud').on('search.dt', function(event) {
+   // Limpiar el timeout anterior, si existe
+   clearTimeout(timeout);
+   
+   // Iniciar un nuevo timeout
+   timeout = setTimeout(function(){
+       // Verificar si la búsqueda actual no está vacía
+       if (tablaEstadosolicitud.search() !== '') {
+           // Realizar acciones solo si hay una búsqueda activa
+           //TIPOConsulta, ID DE LA PANTALLA, Y DESCRIPCION
+           EventoBitacora(2, 22, "Realizo consulta de filtros en LISTADO DE ESTADO DE SOLICITUDES");
+       }
+    }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+  });
 }
  //FUNCION PARA REGISTRA UN estado civil AJAX
 function RegistrarEstadosolicitud(){
@@ -3046,6 +3063,13 @@ function RegistrarEstadosolicitud(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+            })
+
+          }else if(response == "existe"){
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'No puedes registrar un estado de solicitud que ya existe',
             })
           }else if(response == "requerid"){
               Swal.fire({
@@ -3117,7 +3141,12 @@ function ActualizarEstadosolicitud(){
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
           })
-
+        }else if(response == "existe"){
+          Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'No puedes actualizar a un estado de solicitud que ya existe',
+          })
         }else if(response == "requerid"){
             Swal.fire({
               icon: 'warning',
@@ -3187,7 +3216,7 @@ function AlertaEliminarEstadosolicitud(idEstadoSolicitud, descripcion){
   }).then((result) => {
     if (result.isConfirmed) {
       
-      EliminarEstadoplanpago(idEstadoSolicitud); //funcion que eliminar el estado
+      EliminarEstadosolicitud(idEstadoSolicitud); //funcion que eliminar el estado
 
     }
   })
@@ -3222,6 +3251,23 @@ function LlenarTablaRubro(){
           
       ]
   });
+  let timeout = null;
+
+    // Agregar controlador de eventos para detectar la búsqueda
+    $('#tabla_rubro').on('search.dt', function(event) {
+        // Limpiar el timeout anterior, si existe
+        clearTimeout(timeout);
+        
+        // Iniciar un nuevo timeout
+        timeout = setTimeout(function(){
+            // Verificar si la búsqueda actual no está vacía
+            if (tablaRubro.search() !== '') {
+                // Realizar acciones solo si hay una búsqueda activa
+                //TIPOConsulta, ID DE LA PANTALLA, Y DESCRIPCION
+                EventoBitacora(2, 23, "Realizo consulta de filtros en LISTADO DE RUBROS");
+            }
+        }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+    });
 }
  //FUNCION PARA REGISTRA UN estado civil AJAX
 function RegistrarRubro(){
@@ -3625,6 +3671,23 @@ function LlenarTablaMunicipio(){
           
       ]
   });
+  let timeout = null;
+
+    // Agregar controlador de eventos para detectar la búsqueda
+    $('#tabla_municipio').on('search.dt', function(event) {
+        // Limpiar el timeout anterior, si existe
+        clearTimeout(timeout);
+        
+        // Iniciar un nuevo timeout
+        timeout = setTimeout(function(){
+            // Verificar si la búsqueda actual no está vacía
+            if (tablaMunicipio.search() !== '') {
+                // Realizar acciones solo si hay una búsqueda activa
+                //TIPOConsulta, ID DE LA PANTALLA, Y DESCRIPCION
+                EventoBitacora(2, 25, "Realizo consulta de filtros en LISTADO DE MUNICIPIOS");
+            }
+        }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+    });
 }
 
  //FUNCION PARA REGISTRA UN estado civil AJAX
@@ -3650,6 +3713,12 @@ function LlenarTablaMunicipio(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se a guardado correctamente los datos',
+            })
+          }else if(response == "existe"){
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Atención!',
+                text: 'No puedes registrar un municipio que ya existe',
             })
           }else if(response == "requerid"){
               Swal.fire({
@@ -3722,7 +3791,12 @@ function ActualizarMunicipio(){
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
           })
-
+        }else if(response == "existe"){
+          Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'No puedes actualizar a un municipio que ya existe',
+          })
         }else if(response == "requerid"){
             Swal.fire({
               icon: 'warning',

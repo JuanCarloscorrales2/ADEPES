@@ -1757,7 +1757,13 @@ switch ($_REQUEST["operador"]) {
 
             $descripcion = $_POST["Descripcion"];
 
-            if ($tablas->RegistrarEstadosolicitud($descripcion)) {
+            $result = $tablas->RegistrarEstadosolicitud($descripcion);
+            if($result == "existe"){
+
+                $response = "existe";
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 22, "Inserto", "Inserto el estado de solicitud: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -1777,8 +1783,12 @@ switch ($_REQUEST["operador"]) {
             $idEstadoSolicitud = $_POST["idEstadoSolicitud"];
             $Descripcion = $_POST["Descripcion"];
 
+            $result = $tablas->ActualizarEstadosolicitud($idEstadoSolicitud, $Descripcion);
+            if($result == "existe"){
 
-            if ($tablas->ActualizarEstadosolicitud($idEstadoSolicitud, $Descripcion)) {
+                $response = "existe";
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 22, "Modifico", "Modificó el estado de solicitud: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -1797,6 +1807,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarEstadosolicitud($_POST["idEstadoSolicitud"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 22, "Elimino", "Elimino el estado de solicitud con id: ".$_POST["idEstadoSolicitud"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
@@ -1879,6 +1890,7 @@ switch ($_REQUEST["operador"]) {
             $descripcion = $_POST["Descripcion"];
 
             if ($tablas->RegistrarRubro($descripcion)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 23, "Inserto", "Inserto el rubro: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -1900,6 +1912,7 @@ switch ($_REQUEST["operador"]) {
 
 
             if ($tablas->ActualizarRubro($idRubro, $Descripcion)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 23, "Modifico", "Modificó el rubro: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -1918,6 +1931,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarRubro($_POST["idRubro"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 23, "Elimino", "Elimino el rubro con id: ".$_POST["idRubro"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
@@ -2243,8 +2257,13 @@ case "registrar_Municipio":
     if( isset($_POST["Descripcion"]) && !empty($_POST["Descripcion"])){
 
         $descripcion = $_POST["Descripcion"];
+        $result =  $tablas->RegistrarMunicipio($descripcion);
+        if($result == "existe"){
 
-        if( $tablas->RegistrarMunicipio($descripcion) ){
+            $response = "existe";
+
+        }else if($result == "inserto" ){
+            $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 25, "Inserto", "Inserto el municipio: ".$descripcion);
            $response = "success";  //si se inserto en la BD manda mensaje de exito
         }else{
             $response = "error"; 
@@ -2264,8 +2283,12 @@ case "actualizar_municipio":
             $idMunicipio = $_POST["idMunicipio"];
             $Descripcion = $_POST["Descripcion"];
            
-          
-            if( $tablas->ActualizarMunicipio($idMunicipio, $Descripcion) ){
+            $result = $tablas->ActualizarMunicipio($idMunicipio, $Descripcion);
+            if($result == "existe"){
+
+                $response = "existe";
+            }else if( $result == "inserto" ){
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 25, "Modifico", "Modificó el municipio: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
            
             }else{
@@ -2285,6 +2308,7 @@ case "eliminar_Municipio":
  
         $eliminar = $tablas->EliminarMunicipio($_POST["idMunicipio"]);
        if( $eliminar == "elimino"){
+        $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 25, "Elimino", "Elimino el municipio con id: ".$_POST["idMunicipio"]);
             $response ="success";  //si elimino correctamente
 
        }else if($eliminar == "Llave en uso"){  //si la llave ya esta en uso en otras tablas
