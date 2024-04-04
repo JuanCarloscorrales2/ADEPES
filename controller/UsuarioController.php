@@ -185,8 +185,8 @@ switch ($_REQUEST["operador"]) {
             && !empty($_POST["Usuario"]) && !empty($_POST["idRol"]) && !empty($_POST["NombreUsuario"]) && !empty($_POST["CorreoElectronico"])
             && !empty($_POST["Clave"]) && !empty($_POST["ConfirmarClave"])
         ) {
-            //valida que el correo tenga un dominio correcto
-            if (strpos($_POST["CorreoElectronico"], '@gmail.com') !== false || strpos($_POST["CorreoElectronico"], '@yahoo.com') !== false) {
+          
+            if ((strpos($_POST["CorreoElectronico"], '@gmail.com') !== false || strpos($_POST["CorreoElectronico"], '@yahoo.com') !== false) && strpos($_POST["CorreoElectronico"], '@') > 0) {
                 if ($_POST["Clave"] == $_POST["ConfirmarClave"]) {
 
                     $Usuario = $_POST["Usuario"];
@@ -244,16 +244,20 @@ switch ($_REQUEST["operador"]) {
                         $asunto = "Bienvenido A Fondo Revolvente";
                         $cuerpo = "Estimado $NombreUsuario se le a creado una cuenta de usuario
                         <br>DATOS DE ACCESO:<br>USUARIO :$Usuario<br>CONTRASEÑA :$Clave
-                        <br>Inicia sesión aquí http://localhost/SistemaADEPES/";
+                        <br>Inicia sesión aquí http://localhost/ADEPES/";
 
-                        if ($usu->RegistrarUsuario($Usuario, $idRol, $NombreUsuario, $EstadoUsuario, $CorreoElectronico, $Clave, $CreadoPor, $FechaVencimiento)) {
-                            if ($mailer->enviarEmailRegistro($CorreoElectronico, $asunto, $cuerpo)) {
+                        if($mailer->enviarEmailRegistro($CorreoElectronico,$asunto, $cuerpo) ){
+                            if($usu->RegistrarUsuario($Usuario, $idRol, $NombreUsuario, $EstadoUsuario, $CorreoElectronico, $Clave, $CreadoPor, $FechaVencimiento)
+                            &&  $usu->RegistrarBitacora( $_SESSION["user"]["idUsuario"], 3,"Inserto", "Creo el usuario: ".$Usuario)){
+                               
                                 $response = "success";  //si se inserto en la BD y se envio el correo manda mensaje de exitos
-                                // exit;
-                            }
-                            $usu->RegistrarBitacora($_SESSION["user"]["idUsuario"], 3, "Inserto", "Creo el usuario: " . $Usuario); //registro de bitacora
-                        } else {
-                            $response = "error";
+                            
+ 
+							}
+                   
+                        }else{
+                            $response = "errorCorreo_NO_AUTENTICADO";
+                         
                         }
                     }
                 } else {

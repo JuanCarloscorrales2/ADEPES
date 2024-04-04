@@ -263,7 +263,7 @@ function RegistrarUsuario(){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
-              text: 'has ingresado un correo incorrecto, Dominios permitidos (gmail, yahoo, icloud)',
+              text: 'Haz ingresado un correo incorrecto o dominio incorrecto. Dominios permitidos (gmail, yahoo, icloud)',
             })
           }else if(response == "ClaveDistinta"){
             Swal.fire({
@@ -309,6 +309,13 @@ function RegistrarUsuario(){
               title: '¡Atención!',
               text: 'Su contraseña debe tener al menos unos de los siguientes caracteres: "_#@$&%"',
             })
+
+          }else if(response == "errorCorreo_NO_AUTENTICADO"){
+            Swal.fire({
+              icon: 'warning',
+              title: '¡Atención!',
+              text: 'El correo electrónico del sistema no esta autenticado.',
+          })
           }else{
               Swal.fire({
                 icon: 'error',

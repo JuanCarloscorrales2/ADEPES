@@ -60,7 +60,7 @@ class Mailer {
                 return false;
             }
         } catch (Exception $e) {
-            echo "No se pudo enviar el mensaje. Error de envío: {$mail->ErrorInfo}";
+            //echo "No se pudo enviar el mensaje. Error de envío: {$mail->ErrorInfo}";
             return false;
 
         }
@@ -119,7 +119,7 @@ class Mailer {
                 return false;
             }
         } catch (Exception $e) {
-            echo "No se pudo enviar el mensaje. Error de envío: {$mail->ErrorInfo}";
+            //echo "No se pudo enviar el mensaje. Error de envío: {$mail->ErrorInfo}";
             return false;
 
         }

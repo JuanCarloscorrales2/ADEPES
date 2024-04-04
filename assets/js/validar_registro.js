@@ -87,7 +87,7 @@ function AutoregistroUsuario(){
 				Swal.fire({
 				  icon: 'error',
 				  title: '¡Atención!',
-				  text: 'No se pudo enviar el correo de confirmación',
+				  text: 'No se pudo enviar el correo de confirmación, intentalo mas tarde',
 				})
 			}else{
 				Swal.fire({

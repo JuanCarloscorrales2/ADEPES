@@ -18,7 +18,7 @@
 
             <div class="form-group">
               <label for="" class="col-form-label">Valor:</label>
-              <input type="text" placeholder="INGRESE EL VALOR"  class="form-control" id="valor_edit" onblur="CambiarMayuscula(this);"  onblur="limpiaUsuario()" maxlength="100" onkeyup="espacios(this);" oninput="validarInput(this);">
+              <input type="text" placeholder="INGRESE EL VALOR"  class="form-control" id="valor_edit" onblur="CambiarMayuscula(this);"  onblur="limpiaUsuario()" maxlength="100" onkeyup="espacios(this);">
             </div>
      
         </form>
@@ -37,17 +37,18 @@
  
 /******************************************************************* */
   //Valida que solo ingrese mayusculas 
-  function CambiarMayuscula(elemento){
-    var idParametros = document.getElementById("idp_editar").value; //trae el id del parametros
-    let texto = elemento.value;
-    if(idParametros == 10 || idParametro = 11 )// 10 correo  11 clave del servidor
-     //no cambia a mayuscula el parametro de correo
-     input.value=input.value.replace('  ','');
-    }else{
-      elemento.value = texto.toUpperCase();
+  function CambiarMayuscula(elemento) {
+    var idParametros = document.getElementById("idp_editar").value; // Trae el ID del parámetro
+    var texto = elemento.value;
+
+    if (idParametros == 10 || idParametros == 11) { // Se corrigió el error aquí, cambié '=' por '=='
+        // No cambia a mayúscula el parámetro de correo
+        elemento.value = texto.replace(/\s/g, ''); // Se eliminan los espacios en blanco
+    } else {
+        elemento.value = texto.toUpperCase(); // Cambia a mayúsculas
     }
-    
-  }
+}
+
 //funcion para solo letras del input usuario
 function soloLetras(e) {
       key = e.keyCode || e.which;
@@ -108,19 +109,6 @@ function contarLetras(input) {
 	  inputElement.value = textoInput.slice(0, -1); // Eliminamos la última letra ingresada.
 	}
   });
-
-
-//validar que no se ingresen más de 3 letras seguidas
-function validarInput(input) {
-    var texto = input.value;
-    var regex = /([a-zA-Z])\1{3,}/g; // La expresión regular coincide con 3 letras iguales o más seguidas
-    
-    if (regex.test(texto)) {
-        // Elimina el último caracter ingresado si es parte de una secuencia de 3 letras iguales o más
-        input.value = texto.substring(0, texto.length - 1);
-    }
-}
-
 
   /******************************************************************************************** */
 </script>
