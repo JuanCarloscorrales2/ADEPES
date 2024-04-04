@@ -4,6 +4,7 @@ session_start();
 if (isset($_SESSION["user"])) {
 	include "layouts/head.php";
 	require "../model/Permisos.php";
+	require "../model/BitacoraModel.php";
 	$permiso = new Permisos();
 	$rol = $_SESSION["user"]["idRol"];
 	$tiene_permiso = $permiso->ListarPermisosRol(21, $rol);
@@ -11,6 +12,8 @@ if (isset($_SESSION["user"])) {
 	$_SESSION["eliminar"] = $tiene_permiso ? $tiene_permiso["eliminar"] : 0;
 	$_SESSION["consultar"] = $tiene_permiso ? $tiene_permiso["consultar"] : 0;
 	$_SESSION["reportes"] = $tiene_permiso ? $tiene_permiso["reportes"] : 0;
+	$bita = new Bitacora();
+	$bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 21, "Ingreso", "Ingreso a la pantalla de estado tipo préstamos");	
 ?>
 	<!--==========================================-->
 
@@ -136,8 +139,23 @@ if (isset($_SESSION["user"])) {
 	<!--TABLAS jS -->
 	<script src="../assets/js/Tablas.js"></script>
 	<script src="../assets/js/listadoEstadoTipoPrestamo.js"></script>
-
-
+	<!-- Advertencias Toastr -->
+	<script src="../app-assets/plugins/toastr/toastr.min.js">  </script> 
+   <script>
+	window.addEventListener('beforeunload', function (event) {  //funcion para registrar salidas
+		// Parámetros que deseas enviar al script PHP
+		var usuarioId = <?php echo $_SESSION["user"]["idUsuario"]; ?>;
+		var pantallaId = 21; // ID de la pantalla en la cual se esta registrado el evento
+		var accion = "Salio"; // Acción del evento
+		var descripcion = "Salió de la pantalla de estado tipo préstamos"; // Descripción de la acción
+		
+		// Realiza una solicitud AJAX para registrar la salida del usuario
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '../pages/registrar_salida.php', true);
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.send('usuarioId=' + usuarioId + '&pantallaId=' + pantallaId + '&accion=' + accion + '&descripcion=' + descripcion);
+	});
+   </script>
 
 	<!--==========================================-->
 

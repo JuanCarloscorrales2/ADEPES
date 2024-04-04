@@ -1630,6 +1630,7 @@ switch ($_REQUEST["operador"]) {
             $Descripcion = $_POST["descripcion"];
 
             if ($tablas->RegistrarEstadotipoprestamo($Descripcion)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 21, "Inserto", "Inserto el estado tipo préstamo: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -1651,6 +1652,7 @@ switch ($_REQUEST["operador"]) {
 
 
             if ($tablas->ActualizarEstadotipoprestamo($idestadoTipoPrestamo, $descripcion)) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 21, "Modifico", "Modificó el estado tipo préstamo: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -1670,6 +1672,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarEstadotipoprestamo($_POST["idestadoTipoPrestamo"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 21, "Elimino", "Elimino el estado tipo préstamo con id: ".$_POST["idestadoTipoPrestamo"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
