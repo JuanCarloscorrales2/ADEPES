@@ -970,7 +970,7 @@ switch ($_REQUEST["operador"]) {
                 $response = "existe";
 
             }else if($result == "inserto") {
-                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 15, "Inserto", "Inserto el siguiente tipo de bien: ".$descripcion);
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 17, "Inserto", "Inserto el siguiente tipo de bien: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -1097,7 +1097,13 @@ switch ($_REQUEST["operador"]) {
 
             $descripcion = $_POST["Descripcion"];
 
-            if ($tablas->RegistrarNacionalidad($descripcion)) {
+            $result = $tablas->RegistrarNacionalidad($descripcion);
+            if($result == "existe"){
+
+                $response = "existe";
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 16, "Inserto", "Inserto la siguiente nacionalidad: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -1117,8 +1123,14 @@ switch ($_REQUEST["operador"]) {
             $idNacionalidad = $_POST["idNacionalidad"];
             $Descripcion = $_POST["Descripcion"];
 
+            $result = $tablas->ActualizarNacionalidad($idNacionalidad, $Descripcion);
+            if($result == "existe"){
 
-            if ($tablas->ActualizarNacionalidad($idNacionalidad, $Descripcion)) {
+                $response = "existe";
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 16, "Modifico", "Modificó la nacionalidad: ".$Descripcion);
+
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -1137,6 +1149,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarNacionalidad($_POST["idNacionalidad"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 16, "Elimino", "Elimino el tipo nacionalidad con id: ".$_POST["idNacionalidad"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
