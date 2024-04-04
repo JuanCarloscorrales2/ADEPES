@@ -308,7 +308,15 @@ function ListarEstadoPrestamoSelect(idTipoPrestamo){
               icon: 'warning',
               title: '¡Atención!',
               text: 'El monto minimo debe ser menor que el máximo',
-            })       
+            })    
+
+        }else if(response =="enUso"){
+          swal.fire({
+            icon: "warning",
+            title: "Atención",
+            text: "El tipo de préstamo ya se encuentra en uso no lo puedes inactivar"
+            
+          })   
   
          }else{
               Swal.fire({
@@ -341,7 +349,14 @@ function InactivarTipoPrestamo(idTipoPrestamo){
                     
                 })
               
-              
+            }else if(response =="enUso"){
+              swal.fire({
+                icon: "warning",
+                title: "Atención",
+                text: "El tipo de préstamo ya se encuentra en uso"
+                
+              })
+                
             }else{
                 swal.fire({
                     icon: "error",

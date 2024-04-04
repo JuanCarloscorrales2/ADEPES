@@ -151,12 +151,20 @@ switch ($_REQUEST["operador"]) {
             $PlazoMaximo = $_POST["PlazoMaximo"];
             $montoMaximo = $_POST["montoMaximo"];
             $montoMinimo = $_POST["montoMinimo"];
-        
+            
+            $resultado = $tablas->ConsultarEstadoPrestamo($idTipoPrestamo);
+
             if ($montoMinimo >= $montoMaximo) {
                 $response = "minimo";
-            } else if ($tablas->ActualizarTipoPrestamo($idTipoPrestamo, $idEstadoTipoPrestamo, $Descripcion, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo)) {
-                $response = "success";  //si se inserto en la BD manda mensaje de exito
-
+            } else if($resultado == "existe" && $idEstadoTipoPrestamo == 2) {
+                $response = "enUso";
+            } else if($resultado == "existe" && $idEstadoTipoPrestamo !=2) {
+                $tablas->ActualizarTipoPrestamo($idTipoPrestamo, $idEstadoTipoPrestamo, $Descripcion, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo);
+                $response = "success";
+    
+            }else if($resultado  ==  "noexiste"){
+                $tablas->ActualizarTipoPrestamo($idTipoPrestamo, $idEstadoTipoPrestamo, $Descripcion, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo);
+                $response = "success"; 
             } else {
                 $response = "error";  //error al insertar en BD
             }
@@ -171,12 +179,18 @@ switch ($_REQUEST["operador"]) {
     case "inactivar_tipoPrestamo":
         if (isset($_POST["idTipoPrestamo"]) && !empty($_POST["idTipoPrestamo"])) {
 
+            $resultado = $tablas->InactivarTipoPrestamo($_POST["idTipoPrestamo"]);
 
-            if ($tablas->InactivarTipoPrestamo($_POST["idTipoPrestamo"])) {
+            if ($resultado == "inactivado") {
                 $response = "success";
-            } else {
+
+            } else if($resultado == "enUso"){
+                $response = "enUso";
+            }else{
                 $response = "error";
+
             }
+            
         } else {
             $response = "error";
         }

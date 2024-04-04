@@ -88,8 +88,9 @@ class Tablas {
 
       //FUNCION PARA ACTUALIZR el tipo de prestamo
     function ActualizarTipoPrestamo($idTipoPrestamo, $idEstadoTipoPrestamo, $Descripcion, $tasa, $PlazoMaximo, $montoMaximo, $montoMinimo){
+  
         $query = "UPDATE tbl_mn_tipos_prestamos SET idEstadoTipoPrestamo = ?, Descripcion = ?, tasa = ?, PlazoMaximo = ?, montoMaximo = ?, montoMinimo = ?
-                  WHERE idTipoPrestamo = ?";
+            WHERE idTipoPrestamo = ?";
         $result = $this->cnx->prepare($query); //preparacion de la sentencia
         $result->bindParam(1,$idEstadoTipoPrestamo);
         $result->bindParam(2,$Descripcion);
@@ -107,14 +108,57 @@ class Tablas {
 
     }
     //FUNCION PARA PONER INACTIVO UN TIPO DE PRESTAMO
-    function InactivarTipoPrestamo($idTipoPrestamo){
-        $query = "UPDATE tbl_mn_tipos_prestamos SET idEstadoTipoPrestamo = 2 WHERE idTipoPrestamo = ?";
-        $result = $this->cnx->prepare($query); //preparacion de la sentencia
-        $result->bindParam(1,$idTipoPrestamo);
-
-        if($result->execute()){ //validacion de la ejecucion
-            return true;
+    function ConsultarEstadoPrestamo($idTipoPrestamo) {
+        try {
+            // Consultar que el préstamo no esté en uso
+            $queryP = "SELECT * FROM tbl_mn_solicitudes_creditos WHERE idTipoPrestamo = ?";
+            $resultP = $this->cnx->prepare($queryP);
+            $resultP->bindParam(1, $idTipoPrestamo);
+            
+            if ($resultP->execute()) {
+                if ($resultP->rowCount() > 0) {
+                    // Si existen resultados, el préstamo está en uso
+                    return "existe";
+                } else {
+                    // Si no hay resultados, el préstamo no está en uso
+                    return "noexiste";
+                }
+            } else {
+                // Manejo de errores en la ejecución de la consulta
+                return "error";
+            }
+        } catch (PDOException $e) {
+            // Manejo de errores de base de datos
+            return "error_db";
         }
+    }
+    
+
+    //FUNCION PARA PONER INACTIVO UN TIPO DE PRESTAMO
+    function InactivarTipoPrestamo($idTipoPrestamo){
+        //consultar que el prestamo no este en uso
+        $queryP = "SELECT * FROM tbl_mn_solicitudes_creditos WHERE idTipoPrestamo = ?"; //sentencia sql
+        $resultP = $this->cnx->prepare($queryP);
+        $resultP->bindParam(1,$idTipoPrestamo);
+        if($resultP->execute())
+        {
+            if($resultP->rowCount() > 0){ //validacion para verificar si trae datos
+                return "enUso";
+                
+            }else{  //actualiza el prestamo a inactivo
+                
+                $query = "UPDATE tbl_mn_tipos_prestamos SET idEstadoTipoPrestamo = 2 WHERE idTipoPrestamo = ?";
+                $result = $this->cnx->prepare($query); //preparacion de la sentencia
+                $result->bindParam(1,$idTipoPrestamo);
+                if($result->execute()){ //validacion de la ejecucion
+                    return "inactivado";
+                }
+
+            }
+        }
+
+
+        
 
         return false; //si fallo se devuelvo false
 
