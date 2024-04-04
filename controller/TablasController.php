@@ -1229,8 +1229,13 @@ switch ($_REQUEST["operador"]) {
         if (isset($_POST["descripcion"]) && !empty($_POST["descripcion"])) {
 
             $Descripcion = $_POST["descripcion"];
+            $result = $tablas->RegistrarLaboral($Descripcion);
+            if($result == "existe"){
 
-            if ($tablas->RegistrarLaboral($Descripcion)) {
+                $response = "existe";
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 18, "Inserto", "Inserto el siguiente tiempo laboral: ".$Descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
             } else {
                 $response = "error";
@@ -1250,8 +1255,13 @@ switch ($_REQUEST["operador"]) {
             $idTiempoLaboral = $_POST["idTiempoLaboral"];
             $descripcion = $_POST["descripcion"];
 
+            $result = $tablas->ActualizarLaboral($idTiempoLaboral, $descripcion);
+            if($result == "existe"){
 
-            if ($tablas->ActualizarLaboral($idTiempoLaboral, $descripcion)) {
+                $response = "existe";
+
+            }else if($result == "inserto") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 18, "Modifico", "Modificó el tiempo laboral: ".$descripcion);
                 $response = "success";  //si se inserto en la BD manda mensaje de exito
 
             } else {
@@ -1271,6 +1281,7 @@ switch ($_REQUEST["operador"]) {
 
             $eliminar = $tablas->EliminarLaboral($_POST["idTiempoLaboral"]);
             if ($eliminar == "elimino") {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 18, "Elimino", "Elimino el tiempo laboral con id: ".$_POST["idTiempoLaboral"]);
                 $response = "success";  //si elimino correctamente
 
             } else if ($eliminar == "Llave en uso") {  //si la llave ya esta en uso en otras tablas
