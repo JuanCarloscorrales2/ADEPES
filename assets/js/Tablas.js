@@ -186,7 +186,7 @@ function RegistrarTipoPrestamo(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -362,7 +362,7 @@ function InactivarTipoPrestamo(idTipoPrestamo){
                  tablaPrestamo.ajax.reload();
                  swal.fire({
                     icon: "warning",
-                    title: "No se a podido eliminar",
+                    title: "No se ha podido eliminar",
                     text: "El préstamo se ha inactivado, para poder usuarlo activalo"
                     
                 })
@@ -379,7 +379,7 @@ function InactivarTipoPrestamo(idTipoPrestamo){
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se a podido eliminar"
+                    text: "No se ha podido eliminar"
                     
                 })
             }
@@ -557,7 +557,7 @@ function RegistrarEstadoCivil(){
                 Swal.fire({
                     icon: 'error',
                     title: '¡Atención!',
-                    text: 'No se puedieron guardar los datos',
+                    text: 'No se lograron guardar los datos',
                   })
             }
         }
@@ -656,7 +656,7 @@ function EliminarEstadoCivil(idEstadoCivil){
                  swal.fire({
                     icon: "success",
                     title: "Eliminado",
-                    text: "El registro se elimino"   
+                    text: "El registro se eliminó"   
                 })
               
             }else if(response == "llave_uso"){
@@ -669,7 +669,7 @@ function EliminarEstadoCivil(idEstadoCivil){
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se a podido eliminar"
+                    text: "No se ha podido eliminar"
                     
                 })
             }
@@ -681,7 +681,7 @@ function EliminarEstadoCivil(idEstadoCivil){
   }
   function AlertaEliminarEstadoCivil(idEstadoCivil, Descripcion){
     Swal.fire({
-      title: '¿Esta seguro que desea eliminar?',
+      title: '¿Está seguro que desea eliminar?',
       text: "Estado Civil: "+Descripcion,
       icon: 'warning',
       showCancelButton: true,
@@ -791,7 +791,7 @@ function RegistrarParentesco(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -892,7 +892,7 @@ function ActualizarParentesco(){
                    swal.fire({
                       icon: "success",
                       title: "Eliminado",
-                      text: "El registro se elimino"   
+                      text: "El registro se eliminó"   
                   })
                 
               }else if(response == "llave_uso"){
@@ -905,7 +905,7 @@ function ActualizarParentesco(){
                   swal.fire({
                       icon: "error",
                       title: "Atención",
-                      text: "No se a podido eliminar"
+                      text: "No se ha podido eliminar"
                       
                   })
               }
@@ -917,7 +917,7 @@ function ActualizarParentesco(){
     }
     function AlertaEliminarParentesco(idParentesco, descripcion){
       Swal.fire({
-        title: '¿Esta seguro que desea eliminar?',
+        title: '¿Está seguro que desea eliminar?',
         text: "Parentesco: "+descripcion,
         icon: 'warning',
         showCancelButton: true,
@@ -1021,7 +1021,7 @@ function RegistrarCategoria(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -1122,7 +1122,7 @@ function EliminarCategoria(idcategoriaCasa){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -1135,7 +1135,7 @@ function EliminarCategoria(idcategoriaCasa){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -1147,7 +1147,7 @@ function EliminarCategoria(idcategoriaCasa){
 }
 function AlertaEliminarCategoria(idcategoriaCasa, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Categoria Casa: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -1251,7 +1251,7 @@ function RegistrarGenero(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -1350,7 +1350,7 @@ function EliminarGenero(idGenero){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -1363,7 +1363,7 @@ function EliminarGenero(idGenero){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -1375,7 +1375,7 @@ function EliminarGenero(idGenero){
 }
 function AlertaEliminarGenero(idGenero, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Género: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -1480,7 +1480,7 @@ function RegistrarContacto(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -1579,7 +1579,7 @@ function EliminarContacto(idTipoContacto){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -1592,7 +1592,7 @@ function EliminarContacto(idTipoContacto){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -1808,7 +1808,7 @@ function EliminarBienes(idPersonaBienes){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -1821,7 +1821,7 @@ function EliminarBienes(idPersonaBienes){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -1833,7 +1833,7 @@ function EliminarBienes(idPersonaBienes){
 }
 function AlertaEliminarBienes(idPersonaBienes, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Bienes: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -1938,7 +1938,7 @@ function RegistrarNacionalidad(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -2038,7 +2038,7 @@ function EliminarNacionalidad(idNacionalidad){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -2051,7 +2051,7 @@ function EliminarNacionalidad(idNacionalidad){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -2063,7 +2063,7 @@ function EliminarNacionalidad(idNacionalidad){
 }
 function AlertaEliminarNacionalidad(idNacionalidad, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Nacionalidad: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -2169,7 +2169,7 @@ $.ajax({
             Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
-                text: 'No se puedieron guardar los datos',
+                text: 'No se lograron guardar los datos',
               })
         }
     }
@@ -2269,7 +2269,7 @@ $.ajax({
                  swal.fire({
                     icon: "success",
                     title: "Eliminado",
-                    text: "El registro se elimino"   
+                    text: "El registro se eliminó"   
                 })
               
             }else if(response == "llave_uso"){
@@ -2282,7 +2282,7 @@ $.ajax({
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se a podido eliminar"
+                    text: "No se ha podido eliminar"
                     
                 })
             }
@@ -2294,7 +2294,7 @@ $.ajax({
   }
   function AlertaEliminarLaboral(idTiempoLaboral, descripcion){
     Swal.fire({
-      title: '¿Esta seguro que desea eliminar?',
+      title: '¿Está seguro que desea eliminar?',
       text: "Tiempo Laboral: "+descripcion,
       icon: 'warning',
       showCancelButton: true,
@@ -2399,7 +2399,7 @@ function RegistrarEstadoplanpago(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -2499,7 +2499,7 @@ function EliminarEstadoplanpago(idEstadoPlanPagos){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -2512,7 +2512,7 @@ function EliminarEstadoplanpago(idEstadoPlanPagos){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -2524,7 +2524,7 @@ function EliminarEstadoplanpago(idEstadoPlanPagos){
 }
 function AlertaEliminarEstadoplanpago(idEstadoPlanPagos, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Estado Plan de Pago: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -2631,7 +2631,7 @@ $.ajax({
             Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
-                text: 'No se puedieron guardar los datos',
+                text: 'No se lograron guardar los datos',
               })
         }
     }
@@ -2731,7 +2731,7 @@ $.ajax({
                  swal.fire({
                     icon: "success",
                     title: "Eliminado",
-                    text: "El registro se elimino"   
+                    text: "El registro se eliminó"   
                 })
               
             }else if(response == "llave_uso"){
@@ -2744,7 +2744,7 @@ $.ajax({
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se a podido eliminar"
+                    text: "No se ha podido eliminar"
                     
                 })
             }
@@ -2756,7 +2756,7 @@ $.ajax({
   }
   function AlertaEliminarTiempovivir(idtiempoVivir, descripcion){
     Swal.fire({
-      title: '¿Esta seguro que desea eliminar?',
+      title: '¿Está seguro que desea eliminar?',
       text: "Tiempo de Vivir: "+descripcion,
       icon: 'warning',
       showCancelButton: true,
@@ -2856,7 +2856,7 @@ $.ajax({
             Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
-                text: 'No se puedieron guardar los datos',
+                text: 'No se lograron guardar los datos',
               })
         }
     }
@@ -2951,7 +2951,7 @@ $.ajax({
                  swal.fire({
                     icon: "success",
                     title: "Eliminado",
-                    text: "El registro se elimino"   
+                    text: "El registro se eliminó"   
                 })
               
             }else if(response == "llave_uso"){
@@ -2964,7 +2964,7 @@ $.ajax({
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se a podido eliminar"
+                    text: "No se ha podido eliminar"
                     
                 })
             }
@@ -2976,7 +2976,7 @@ $.ajax({
   }
   function AlertaEliminarEstadotipoprestamo(idestadoTipoPrestamo, descripcion){
     Swal.fire({
-      title: '¿Esta seguro que desea eliminar?',
+      title: '¿Está seguro que desea eliminar?',
       text: "Estado Tipo del Préstamo: "+descripcion,
       icon: 'warning',
       showCancelButton: true,
@@ -3081,7 +3081,7 @@ function RegistrarEstadosolicitud(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -3180,7 +3180,7 @@ function EliminarEstadosolicitud(idEstadoSolicitud){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -3193,7 +3193,7 @@ function EliminarEstadosolicitud(idEstadoSolicitud){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -3205,7 +3205,7 @@ function EliminarEstadosolicitud(idEstadoSolicitud){
 }
 function AlertaEliminarEstadosolicitud(idEstadoSolicitud, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Estado Solicitud: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -3303,7 +3303,7 @@ function RegistrarRubro(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -3397,7 +3397,7 @@ function EliminarRubro(idRubro){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -3410,7 +3410,7 @@ function EliminarRubro(idRubro){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -3422,7 +3422,7 @@ function EliminarRubro(idRubro){
 }
 function AlertaEliminarRubro(idRubro, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Rubro: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -3503,7 +3503,7 @@ function RegistrarProfesion(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -3622,7 +3622,7 @@ function EliminarProfesion(idProfesion){
 }
 function AlertaEliminarProfesion(idProfesion, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Profesión: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -3712,7 +3712,7 @@ function LlenarTablaMunicipio(){
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
-              text: 'Se a guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
             })
           }else if(response == "existe"){
             Swal.fire({
@@ -3730,7 +3730,7 @@ function LlenarTablaMunicipio(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -3830,7 +3830,7 @@ function EliminarMunicipio(idMunicipio){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -3843,7 +3843,7 @@ function EliminarMunicipio(idMunicipio){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -3855,7 +3855,7 @@ function EliminarMunicipio(idMunicipio){
 }
 function AlertaEliminarMunicipio(idMunicipio, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Municipio: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -3937,7 +3937,7 @@ function RegistrarTipoPago(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -4031,7 +4031,7 @@ function EliminarTipoPago(idTipoPago){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -4044,7 +4044,7 @@ function EliminarTipoPago(idTipoPago){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -4056,7 +4056,7 @@ function EliminarTipoPago(idTipoPago){
 }
 function AlertaEliminarTipopago(idTipoPago, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Tipo de pago: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -4137,7 +4137,7 @@ function RegistrarTipoCliente(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -4231,7 +4231,7 @@ function EliminarTipoCliente(idTipoCliente){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -4244,7 +4244,7 @@ function EliminarTipoCliente(idTipoCliente){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -4256,7 +4256,7 @@ function EliminarTipoCliente(idTipoCliente){
 }
 function AlertaEliminarTipocliente(idTipoCliente, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Tipo de Cliente: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -4337,7 +4337,7 @@ function RegistrarEstadoCredito(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -4431,7 +4431,7 @@ function EliminarEstadoCredito(idEstadoCredito){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -4444,7 +4444,7 @@ function EliminarEstadoCredito(idEstadoCredito){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -4456,7 +4456,7 @@ function EliminarEstadoCredito(idEstadoCredito){
 }
 function AlertaEliminarEstadoCredito(idEstadoCredito, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Estado Credito: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -4537,7 +4537,7 @@ function RegistrarAnalisis(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -4631,7 +4631,7 @@ function EliminarAnalisis(idestadoAnalisisCrediticio){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -4644,7 +4644,7 @@ function EliminarAnalisis(idestadoAnalisisCrediticio){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -4656,7 +4656,7 @@ function EliminarAnalisis(idestadoAnalisisCrediticio){
 }
 function AlertaEliminarAnalisis(idestadoAnalisisCrediticio, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Analisis Crediticio: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -4738,7 +4738,7 @@ function RegistrarAvala(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -4832,7 +4832,7 @@ function EliminarAvala(idEsAval){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -4845,7 +4845,7 @@ function EliminarAvala(idEsAval){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -4857,7 +4857,7 @@ function EliminarAvala(idEsAval){
 }
 function AlertaEliminarAvala(idEsAval, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Avala a Persona: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -4938,7 +4938,7 @@ function LlenarTablaTipopersona(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -5032,7 +5032,7 @@ function EliminarTipoPersona(idTipoPersona){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -5045,7 +5045,7 @@ function EliminarTipoPersona(idTipoPersona){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -5057,7 +5057,7 @@ function EliminarTipoPersona(idTipoPersona){
 }
 function AlertaEliminarTipopersona(idTipoPersona, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Tipo Persona: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -5138,7 +5138,7 @@ function LlenarTablaTipocuenta(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -5232,7 +5232,7 @@ function EliminarTipoCuenta(idTipoCuenta){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -5245,7 +5245,7 @@ function EliminarTipoCuenta(idTipoCuenta){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -5257,7 +5257,7 @@ function EliminarTipoCuenta(idTipoCuenta){
 }
 function AlertaEliminarTipocuenta(idTipoCuenta, descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Tipo Cuenta: "+descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -5344,7 +5344,7 @@ function RegistrarCreditoAval(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -5438,7 +5438,7 @@ function EliminarCreditoAval(idCreditoAval){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -5451,7 +5451,7 @@ function EliminarCreditoAval(idCreditoAval){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -5463,7 +5463,7 @@ function EliminarCreditoAval(idCreditoAval){
 }
 function AlertaEliminarCreditoAval(idCreditoAval, Descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Credito Aval: "+Descripcion,
     icon: 'warning',
     showCancelButton: true,
@@ -5549,7 +5549,7 @@ function RegistrarObjetos(){
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
-                  text: 'No se puedieron guardar los datos',
+                  text: 'No se lograron guardar los datos',
                 })
           }
       }
@@ -5643,7 +5643,7 @@ function EliminarObjetos(idObjetos){
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -5656,7 +5656,7 @@ function EliminarObjetos(idObjetos){
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -5668,7 +5668,7 @@ function EliminarObjetos(idObjetos){
 }
 function AlertaEliminarObjetos(idObjetos, Descripcion){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Objetos: "+Descripcion,
     icon: 'warning',
     showCancelButton: true,

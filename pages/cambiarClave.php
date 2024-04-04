@@ -213,7 +213,7 @@ include "layouts/head.php"; ?>
 			Swal.fire({
 				icon: 'error',
 				title: 'Advertencia',
-				text: 'Las contraseña no coinciden ',
+				text: 'Las contraseñas no coinciden ',
 				
 			})
 		} 

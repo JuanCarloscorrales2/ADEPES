@@ -154,7 +154,7 @@ function LlenartablaEstadousuario(){
                 Swal.fire({
                     icon: 'error',
                     title: '¡Atención!',
-                    text: 'No se puedieron guardar los datos',
+                    text: 'No se lograron guardar los datos',
                   })
             }
         }
@@ -177,7 +177,7 @@ function LlenartablaEstadousuario(){
                      swal.fire({
                         icon: "success",
                         title: "Eliminado",
-                        text: "El registro se elimino"   
+                        text: "El registro se eliminó"   
                     })
                   
                 }else if(response == "llave_uso"){
@@ -190,7 +190,7 @@ function LlenartablaEstadousuario(){
                     swal.fire({
                         icon: "error",
                         title: "Atención",
-                        text: "No se a podido eliminar"
+                        text: "No se ha podido eliminar"
                         
                     })
                 }
@@ -202,7 +202,7 @@ function LlenartablaEstadousuario(){
       }
       function AlertaEliminarEstadousuario(idEstadoUsuario, descripcion){
         Swal.fire({
-          title: '¿Esta seguro que desea eliminar?',
+          title: '¿Está seguro que desea eliminar?',
           text: "Estado Usuario: "+descripcion,
           icon: 'warning',
           showCancelButton: true,

@@ -173,7 +173,7 @@ function ActualizarPregunta(){
               Swal.fire({
                 icon: 'Error',
                 title: '¡Atención!',
-                text: 'Error al actaulizar en la base de datos',
+                text: 'Error al actualizar en la base de datos',
               })
           }
       }
@@ -209,7 +209,7 @@ function EliminarPregunta(idPregunta){
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se a podido eliminar"
+                    text: "No se ha podido eliminar"
                     
                 })
             }

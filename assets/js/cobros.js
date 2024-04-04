@@ -186,13 +186,15 @@ function validarPago() {
             showCancelButton: true,
             confirmButtonText: "Si, Hacer pago Adicional!",
             cancelButtonText: "No, Recibir cambio!",
-            reverseButtons: true
+            reverseButtons: true,
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
         }).then((result) => {
             if (result.isConfirmed) {
                 swalWithBootstrapButtons.fire({
-                    title: "¡Hará un Pago Adicional!",
-                    text: "Su pago Adicional sera de " + diferencia,
-                    icon: "success"
+                    title: "¡Hará un Pago adicional!",
+                    text: "Su pago adicional sera de " + diferencia,
+                    icon: "success",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.s
                 }).then(()=>{
                     RegistrarPago(diferencia)
                 });
@@ -203,7 +205,8 @@ function validarPago() {
                 swalWithBootstrapButtons.fire({
                     title: "Debe brindar cambio al cliente",
                     text: "El efectivo que debe entregar es de " + diferencia,
-                    icon: "info"
+                    icon: "info",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 }).then(()=>{
                     RegistrarPago(0)
                 });
@@ -249,7 +252,7 @@ function RegistrarPago(pagoAdicional) {
                 $('#montoPagoAdicional').val('');
             } else if (response == "requerid") {
                 Swal.fire({
-                    icon: 'error',
+                    icon: 'Error',
                     title: '¡Atención!',
                     text: 'Complete todos los datos por favor',
                 })//mensaje
@@ -259,7 +262,7 @@ function RegistrarPago(pagoAdicional) {
                 Swal.fire({
                     icon: 'error',
                     title: '¡Atención!',
-                    text: 'error inesperado',
+                    text: 'Error inesperado',
                 })
             }
         }
@@ -284,7 +287,7 @@ function AdvertenciaLiquidarPrestamo() {
             if (data.length > 0) { //valida que existan datos
                 var capitalAdeudado = monto - data[0]['totalAbonoCapital'];
                 Swal.fire({
-                    title: '¿Esta seguro de liquidar el préstamo?',
+                    title: '¿Está seguro de liquidar el préstamo?',
                     icon: 'info',
                     html: 'Capital Abonado: L. ' + data[0]['totalAbonoCapital'] + '<br><b>Capital Adeudado: L. ' + capitalAdeudado + '</b>',
                     showCancelButton: true,
@@ -292,6 +295,7 @@ function AdvertenciaLiquidarPrestamo() {
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Aceptar',
                     cancelButtonText: 'Cancelar',
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 }).then((result) => {
                     if (result.isConfirmed) {
                         //metodo que mandara la solicitud para eliminar al usuario
@@ -326,6 +330,7 @@ function valorCapitalTotal(idSolicitud) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Préstamo Liquidado',
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
 
                 })//mensaje
 
@@ -333,7 +338,7 @@ function valorCapitalTotal(idSolicitud) {
                 Swal.fire({
                     icon: 'error',
                     title: '¡Atención!',
-                    text: 'error en la Base de datos al liquidar el préstamo',
+                    text: 'Error en la Base de datos al liquidar el préstamo',
                 })
             }
         }

@@ -178,7 +178,7 @@ if (array_key_exists('token',$_GET)){
 			Swal.fire({
 				icon: 'error',
 				title: 'Advertencia',
-				text: 'Las contraseña no coinciden ',
+				text: 'Las contraseñas no coinciden ',
 				
 			})
 		} //valida el maximo y minimo de caracteres segun parametros 

@@ -163,7 +163,7 @@ function ActualizarRoles(){
               Swal.fire({
                 icon: 'Error',
                 title: '¡Atención!',
-                text: 'Error al actaulizar en la base de datos',
+                text: 'Error al actualizar en la base de datos',
                 allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }

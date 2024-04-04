@@ -78,7 +78,7 @@ function ActualizarUsuario( ){
             Swal.fire({
               icon: 'success',
               title: 'Actualización Exitosa',
-              text: 'Se a guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
             })
   
           }else if(response == "requerid"){

@@ -54,7 +54,7 @@ function RegistrarPregunta(){
           //console.log(response);
           if(response == "success"){  //si inserto correctamente
             // $('#RegistrarUsuario').modal('hide'); //cierra el modal
-             swal('Registro Exitoso','Se a guardado correctamente los datos','success'); //mensaje
+             swal('Registro Exitoso','Se han guardado correctamente los datos','success'); //mensaje
              LimpiarController();
              //location.href="../pages/configPreguntasUser.php";
 

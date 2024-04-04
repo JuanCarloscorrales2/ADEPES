@@ -262,7 +262,7 @@ async function actualizar_registro(parametros) {
 }
 function eliminar_permiso(id) {
     swal.fire({
-        title: "¿Esta seguro que desea Eliminar?",
+        title: "¿Está seguro que desea eliminar?",
         text: "Esta Accion no puede revertirse",
         icon: "warning",
         buttons: [

@@ -153,7 +153,7 @@ function ActualizarClientes(){
               Swal.fire({
                 icon: 'Error',
                 title: '¡Atención!',
-                text: 'Error al actaulizar en la base de datos',
+                text: 'Error al actualizar en la base de datos',
               })
           }
       }
@@ -202,7 +202,7 @@ $('#boton_descargar_pdf_clientes').on('click', function() {
                swal.fire({
                   icon: "success",
                   title: "Eliminado",
-                  text: "El registro se elimino"   
+                  text: "El registro se eliminó"   
               })
             
           }else if(response == "llave_uso"){
@@ -215,7 +215,7 @@ $('#boton_descargar_pdf_clientes').on('click', function() {
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se a podido eliminar"
+                  text: "No se ha podido eliminar"
                   
               })
           }
@@ -227,7 +227,7 @@ $('#boton_descargar_pdf_clientes').on('click', function() {
 }
 function AlertaEliminarCliente(idPersona, nombres){
   Swal.fire({
-    title: '¿Esta seguro que desea eliminar?',
+    title: '¿Está seguro que desea eliminar?',
     text: "Cliente: "+nombres,
     icon: 'warning',
     showCancelButton: true,
