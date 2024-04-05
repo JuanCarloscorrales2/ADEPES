@@ -98,6 +98,7 @@ function LlenartablaEstadousuario(){
               icon: 'success',
               title: 'Actualización Exitosa',
               text: 'Se han actualizado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
   
           }else if(response == "requerid"){
@@ -105,6 +106,7 @@ function LlenartablaEstadousuario(){
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'Complete todos los datos por favor',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })     
   
          }else{
@@ -112,6 +114,7 @@ function LlenartablaEstadousuario(){
                 icon: 'error',
                 title: '¡Atención!',
                 text: 'error al actualizar en la base de datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }
       }
@@ -143,18 +146,21 @@ function LlenartablaEstadousuario(){
                 icon: 'success',
                 title: 'Registro exitoso',
                 text: 'Se ha guardado correctamente los datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
             }else if(response == "requerid"){
                 Swal.fire({
                     icon: 'warning',
                     title: '¡Atención!',
                     text: 'Complete todos los campos',
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   })
             }else{
                 Swal.fire({
                     icon: 'error',
                     title: '¡Atención!',
                     text: 'No se lograron guardar los datos',
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   })
             }
         }

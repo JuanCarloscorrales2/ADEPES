@@ -245,6 +245,7 @@ function RegistrarUsuario(){
               icon: 'error',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })//mensaje
 
           }else if(response == "existeUsuario"){ 
@@ -252,24 +253,28 @@ function RegistrarUsuario(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'El usuario ya se encuentra en uso',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "existeCorreo"){ 
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'El Correo ya esta en uso',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "dominio"){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'Haz ingresado un correo incorrecto o dominio incorrecto. Dominios permitidos (gmail, yahoo, icloud)',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "ClaveDistinta"){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'La contraseñas no coinciden',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
 
           }else if(response == "claveminima"){
@@ -277,18 +282,21 @@ function RegistrarUsuario(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'La contraseña es muy debil',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "clavemaxima"){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'Su contraseña ha alcanzado el máximo de caracteres permitido',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "minuscula"){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'La contraseña debe tener al menos una minúscula',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
             
           }else if(response == "mayuscula"){
@@ -296,18 +304,21 @@ function RegistrarUsuario(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'La contraseña debe tener al menos una mayúscula',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "numero"){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'La contraseña debe tener al menos un número',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "caracteres"){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'Su contraseña debe tener al menos unos de los siguientes caracteres: "_#@$&%"',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
 
           }else if(response == "errorCorreo_NO_AUTENTICADO"){
@@ -315,12 +326,14 @@ function RegistrarUsuario(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'El correo electrónico del sistema no esta autenticado.',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
           }else{
               Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
-                text: 'error inesperado',
+                text: 'Error inesperado',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }
       }
@@ -363,6 +376,7 @@ function ActualizarUsuario( ){
               icon: 'error',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }else if(response == "dominio"){
             Swal.fire({

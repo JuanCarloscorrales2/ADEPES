@@ -78,11 +78,26 @@ function RegistrarRol(){
                table.ajax.reload();  //actualiza la tabla
                LimpiarControles();
                $('#RegistrarRol').modal('hide'); //cierra el modal
-               swal('Registro Exitoso','Se han guardado correctamente los datos','success'); //mensaje
+               Swal.fire({
+                icon: 'success',
+                title: 'Registro exitoso',
+                text: 'Se han guardado correctamente los datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
+              })
             }else if(response == "requerid"){
-                swal('¡Atención!','Complete todos los datos por favor','error'); //mensaje
+                Swal.fire({
+                    icon: 'warning',
+                    title: '¡Atención!',
+                    text: 'Complete todos los campos por favor',
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
+                  })
             }else{
-                swal('¡Atención!','error inesperado','error'); //mensaje
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Atención!',
+                    text: 'Error inesperado',
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
+                  })
             }
         }
     })

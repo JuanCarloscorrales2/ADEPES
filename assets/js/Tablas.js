@@ -126,6 +126,7 @@ function RegistrarTipoPrestamo(){
       icon: 'warning',
       title: '¡Atención!',
       text: 'La tasa  debe ser mayor que 0',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
    })
 
     return
@@ -135,6 +136,7 @@ function RegistrarTipoPrestamo(){
       icon: 'warning',
       title: '¡Atención!',
       text: 'El plazo  debe ser mayor que 0',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   })
 
       return
@@ -144,6 +146,7 @@ function RegistrarTipoPrestamo(){
       icon: 'warning',
       title: '¡Atención!',
       text: 'Los montos deben ser mayor que 0',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   })
 
     return
@@ -167,26 +170,30 @@ function RegistrarTipoPrestamo(){
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
-              text: 'Se ha guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
 
           }else if(response == "minimo"){
               Swal.fire({
                  icon: 'warning',
                  title: '¡Atención!',
-                 text: 'El monto minimo debe ser menor que el máximo',
+                 text: 'El monto mínimo debe ser menor que el máximo',
+                 allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
              })   
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -272,6 +279,7 @@ function ListarEstadoPrestamoSelect(idTipoPrestamo){
         icon: 'warning',
         title: '¡Atención!',
         text: 'La tasa  debe ser mayor que 0',
+        allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
      })
 
       return
@@ -281,6 +289,7 @@ function ListarEstadoPrestamoSelect(idTipoPrestamo){
         icon: 'warning',
         title: '¡Atención!',
         text: 'El plazo  debe ser mayor que 0',
+        allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     })
 
         return
@@ -290,6 +299,7 @@ function ListarEstadoPrestamoSelect(idTipoPrestamo){
         icon: 'warning',
         title: '¡Atención!',
         text: 'Los montos deben ser mayor que 0',
+        allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     })
 
       return
@@ -311,7 +321,8 @@ function ListarEstadoPrestamoSelect(idTipoPrestamo){
             Swal.fire({
               icon: 'success',
               title: 'Actualización Exitosa',
-              text: 'Se ha guardado correctamente los datos del préstamo',
+              text: 'Se han guardado correctamente los datos del préstamo',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
   
           }else if(response == "requerid"){
@@ -319,6 +330,7 @@ function ListarEstadoPrestamoSelect(idTipoPrestamo){
                 icon: 'error',
                 title: '¡Atención!',
                 text: 'Complete todos los datos por favor',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
 
         }else if(response == "minimo"){
@@ -326,13 +338,15 @@ function ListarEstadoPrestamoSelect(idTipoPrestamo){
               icon: 'warning',
               title: '¡Atención!',
               text: 'El monto minimo debe ser menor que el máximo',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })    
 
         }else if(response =="enUso"){
           swal.fire({
             icon: "warning",
             title: "Atención",
-            text: "El tipo de préstamo ya se encuentra en uso no lo puedes inactivar"
+            text: "El tipo de préstamo ya se encuentra en uso no lo puedes inactivar",
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             
           })   
   
@@ -340,7 +354,8 @@ function ListarEstadoPrestamoSelect(idTipoPrestamo){
               Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
-                text: 'error al actualizar en la base de datos',
+                text: 'Error al actualizar en la base de datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }
       }
@@ -363,7 +378,8 @@ function InactivarTipoPrestamo(idTipoPrestamo){
                  swal.fire({
                     icon: "warning",
                     title: "No se ha podido eliminar",
-                    text: "El préstamo se ha inactivado, para poder usuarlo activalo"
+                    text: "El préstamo se ha inactivado, para poder usuarlo activalo",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                     
                 })
               
@@ -371,7 +387,8 @@ function InactivarTipoPrestamo(idTipoPrestamo){
               swal.fire({
                 icon: "warning",
                 title: "Atención",
-                text: "El tipo de préstamo ya se encuentra en uso"
+                text: "El tipo de préstamo ya se encuentra en uso",
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 
               })
                 
@@ -379,7 +396,8 @@ function InactivarTipoPrestamo(idTipoPrestamo){
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se ha podido eliminar"
+                    text: "No se ha podido eliminar",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                     
                 })
             }
@@ -404,7 +422,8 @@ function InactivarTipoPrestamo(idTipoPrestamo){
                  swal.fire({
                     icon: "success",
                     title: "Activo",
-                    text: "El préstamo se ha activo para su uso"
+                    text: "El préstamo se ha activo para su uso",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                     
                 })
               
@@ -413,7 +432,8 @@ function InactivarTipoPrestamo(idTipoPrestamo){
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se a activar"
+                    text: "No se a activar",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                     
                 })
             }
@@ -426,7 +446,7 @@ function InactivarTipoPrestamo(idTipoPrestamo){
 
   function AlertaInactivarPrestamo(idTipoPrestamo, Nombre){
     Swal.fire({
-      title: '¿Esta seguro que desea eliminar no podras usarlo?',
+      title: '¿Está seguro que desea eliminar, no podrá utilizarlo?',
       text: "Préstamo: "+Nombre,
       icon: 'warning',
       showCancelButton: true,
@@ -434,6 +454,7 @@ function InactivarTipoPrestamo(idTipoPrestamo){
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     }).then((result) => {
       if (result.isConfirmed) {
         
@@ -445,7 +466,7 @@ function InactivarTipoPrestamo(idTipoPrestamo){
 
   function AlertaActivarPrestamo(idTipoPrestamo, Nombre){
     Swal.fire({
-      title: '¿Esta seguro que desea activar?',
+      title: '¿Está seguro que desea activar?',
       text: "Préstamo: "+Nombre,
       icon: 'warning',
       showCancelButton: true,
@@ -453,6 +474,7 @@ function InactivarTipoPrestamo(idTipoPrestamo){
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     }).then((result) => {
       if (result.isConfirmed) {
         
@@ -540,24 +562,28 @@ function RegistrarEstadoCivil(){
                 icon: 'success',
                 title: 'Registro exitoso',
                 text: 'Se ha guardado correctamente los datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
             }else if(response == "requerid"){
                 Swal.fire({
                     icon: 'warning',
                     title: '¡Atención!',
                     text: 'Complete todos los campos',
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   })
             }else if(response == "existe"){
                   Swal.fire({
                       icon: 'warning',
                       title: '¡Atención!',
                       text: 'El estado civil que deseas crear ya existe',
+                      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
             }else{
                 Swal.fire({
                     icon: 'error',
                     title: '¡Atención!',
                     text: 'No se lograron guardar los datos',
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   })
             }
         }
@@ -615,6 +641,7 @@ function ObtenerEstadoCivilPorId(idEstadoCivil, Acciones){
               icon: 'success',
               title: 'Actualización Exitosa',
               text: 'Se han actualizado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
   
           }else if(response == "requerid"){
@@ -622,18 +649,21 @@ function ObtenerEstadoCivilPorId(idEstadoCivil, Acciones){
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'Complete todos los datos por favor',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })     
           }else if(response == "existe"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'El nombre del estado civil ya existe',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
          }else{
               Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
-                text: 'error al actualizar en la base de datos',
+                text: 'Error al actualizar en la base de datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }
       }
@@ -663,13 +693,15 @@ function EliminarEstadoCivil(idEstadoCivil){
                 swal.fire({
                     icon: "warning",
                     title: "Atención",
-                    text: "El registro no se puede eliminar ya que se encuentra en uso."
+                    text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
             }else{
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se ha podido eliminar"
+                    text: "No se ha podido eliminar",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                     
                 })
             }
@@ -689,6 +721,7 @@ function EliminarEstadoCivil(idEstadoCivil){
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     }).then((result) => {
       if (result.isConfirmed) {
         
@@ -773,12 +806,14 @@ function RegistrarParentesco(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "existe"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'El parentesco ya existe',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
 
           }else if(response == "requerid"){
@@ -786,12 +821,14 @@ function RegistrarParentesco(){
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -850,6 +887,7 @@ function ActualizarParentesco(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -857,19 +895,22 @@ function ActualizarParentesco(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })    
         }else if(response == "existe"){
           Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes actulizar ya que ese parentesco ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           }) 
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -899,13 +940,15 @@ function ActualizarParentesco(){
                   swal.fire({
                       icon: "warning",
                       title: "Atención",
-                      text: "El registro no se puede eliminar ya que se encuentra en uso."
+                      text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   })
               }else{
                   swal.fire({
                       icon: "error",
                       title: "Atención",
-                      text: "No se ha podido eliminar"
+                      text: "No se ha podido eliminar",
+                      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                       
                   })
               }
@@ -925,6 +968,7 @@ function ActualizarParentesco(){
         cancelButtonColor: '#d33',
         confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar',
+        allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
       }).then((result) => {
         if (result.isConfirmed) {
           
@@ -1004,24 +1048,28 @@ function RegistrarCategoria(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else if(response == "existe"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'La categoría que intentas registrar ya existe',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             }) 
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -1080,6 +1128,7 @@ function ActualizarCategoria(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -1087,6 +1136,7 @@ function ActualizarCategoria(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
         }else if(response == "existe"){
@@ -1094,13 +1144,15 @@ function ActualizarCategoria(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes actulizar ya que esa categoría ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           }) 
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -1129,13 +1181,15 @@ function EliminarCategoria(idcategoriaCasa){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -1155,6 +1209,7 @@ function AlertaEliminarCategoria(idcategoriaCasa, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -1233,25 +1288,29 @@ function RegistrarGenero(){
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
-              text: 'Se ha guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
             }else if(response == "existe"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'El genero que intentas registrar ya existe',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               }) 
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -1310,25 +1369,29 @@ function ActualizarGenero(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
         }else if(response == "existe"){
           Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes actualizar ya que el genero ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           }) 
         }else if(response == "requerid"){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -1357,13 +1420,15 @@ function EliminarGenero(idGenero){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -1383,6 +1448,7 @@ function AlertaEliminarGenero(idGenero, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -1461,13 +1527,15 @@ function RegistrarContacto(){
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
-              text: 'Se ha guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
 
           }else if(response == "existe"){
@@ -1475,12 +1543,14 @@ function RegistrarContacto(){
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'No puedes registrar ya que el contacto ya existe',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             }) 
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -1539,6 +1609,7 @@ function ActualizarContacto(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -1546,18 +1617,21 @@ function ActualizarContacto(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
         }else if(response == "existe"){
           Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes actualizar ya que el contacto ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           }) 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -1586,13 +1660,15 @@ function EliminarContacto(idTipoContacto){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -1612,6 +1688,7 @@ function AlertaEliminarContacto(idTipoContacto, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -1691,25 +1768,29 @@ function RegistrarBienes(){
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
-              text: 'Se ha guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else if(response == "existe"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'No puedes registrar ya existe',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             }) 
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se pudieron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -1768,6 +1849,7 @@ function ActualizarBienes(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -1775,18 +1857,21 @@ function ActualizarBienes(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
         }else if(response == "existe"){
           Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes actualizar ya que el tipo de Bienes ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           }) 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -1815,13 +1900,15 @@ function EliminarBienes(idPersonaBienes){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -1841,6 +1928,7 @@ function AlertaEliminarBienes(idPersonaBienes, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -1920,25 +2008,29 @@ function RegistrarNacionalidad(){
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
-              text: 'Se ha guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "existe"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'No puedes registrar la nacionalidad ya existe',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             }) 
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -1997,12 +2089,14 @@ function ActualizarNacionalidad(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
         }else if(response == "existe"){
           Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes actualizar ya que la nacionalidad ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           }) 
 
         }else if(response == "requerid"){
@@ -2010,13 +2104,15 @@ function ActualizarNacionalidad(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -2045,13 +2141,15 @@ function EliminarNacionalidad(idNacionalidad){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -2071,6 +2169,7 @@ function AlertaEliminarNacionalidad(idNacionalidad, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -2151,25 +2250,29 @@ $.ajax({
            Swal.fire({
             icon: 'success',
             title: 'Registro exitoso',
-            text: 'Se ha guardado correctamente los datos',
+            text: 'Se han guardado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
         }else if(response == "requerid"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'Complete todos los campos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
         }else if(response == "existe"){
           Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes registrar un dato que ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           }) 
         }else{
             Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
                 text: 'No se lograron guardar los datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
         }
     }
@@ -2228,6 +2331,7 @@ $.ajax({
           icon: 'success',
           title: 'Actualización Exitosa',
           text: 'Se han actualizado correctamente los datos',
+          allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
         })
 
       }else if(response == "requerid"){
@@ -2235,18 +2339,21 @@ $.ajax({
             icon: 'warning',
             title: '¡Atención!',
             text: 'Complete todos los datos por favor',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })     
       }else if(response == "existe"){
         Swal.fire({
             icon: 'warning',
             title: '¡Atención!',
             text: 'No puedes actualizar ya que la tiempo laboral ya existe',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
         }) 
      }else{
           Swal.fire({
             icon: 'error',
             title: '¡Atención!',
-            text: 'error al actualizar en la base de datos',
+            text: 'Error al actualizar en la base de datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
       }
   }
@@ -2276,13 +2383,15 @@ $.ajax({
                 swal.fire({
                     icon: "warning",
                     title: "Atención",
-                    text: "El registro no se puede eliminar ya que se encuentra en uso."
+                    text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
             }else{
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se ha podido eliminar"
+                    text: "No se ha podido eliminar",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                     
                 })
             }
@@ -2302,6 +2411,7 @@ $.ajax({
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     }).then((result) => {
       if (result.isConfirmed) {
         
@@ -2381,25 +2491,29 @@ function RegistrarEstadoplanpago(){
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
-              text: 'Se ha guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else if(response == "existe"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'No puedes registrar un plan de pagos que ya existe',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             }) 
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -2458,6 +2572,7 @@ function ActualizarEstadoplanpago(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -2465,19 +2580,22 @@ function ActualizarEstadoplanpago(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }else if(response == "existe"){
           Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes actualizar a un plan de pagos que ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           }) 
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -2506,13 +2624,15 @@ function EliminarEstadoplanpago(idEstadoPlanPagos){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -2532,6 +2652,7 @@ function AlertaEliminarEstadoplanpago(idEstadoPlanPagos, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -2612,7 +2733,8 @@ $.ajax({
            Swal.fire({
             icon: 'success',
             title: 'Registro exitoso',
-            text: 'Se ha guardado correctamente los datos',
+            text: 'Se han guardado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "existe"){
@@ -2620,18 +2742,21 @@ $.ajax({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes registrar un tiempo de vivir que ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
         }else if(response == "requerid"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'Complete todos los campos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
         }else{
             Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
                 text: 'No se lograron guardar los datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
         }
     }
@@ -2690,25 +2815,29 @@ $.ajax({
           icon: 'success',
           title: 'Actualización Exitosa',
           text: 'Se han actualizado correctamente los datos',
+          allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
         })
       }else if(response == "existe"){
         Swal.fire({
             icon: 'warning',
             title: '¡Atención!',
             text: 'No puedes actualizar a un tiempo de vivir que ya existe',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
         })
       }else if(response == "requerid"){
           Swal.fire({
             icon: 'warning',
             title: '¡Atención!',
             text: 'Complete todos los datos por favor',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })     
 
      }else{
           Swal.fire({
             icon: 'error',
             title: '¡Atención!',
-            text: 'error al actualizar en la base de datos',
+            text: 'Error al actualizar en la base de datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
       }
   }
@@ -2738,13 +2867,15 @@ $.ajax({
                 swal.fire({
                     icon: "warning",
                     title: "Atención",
-                    text: "El registro no se puede eliminar ya que se encuentra en uso."
+                    text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
             }else{
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se ha podido eliminar"
+                    text: "No se ha podido eliminar",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                     
                 })
             }
@@ -2764,6 +2895,7 @@ $.ajax({
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     }).then((result) => {
       if (result.isConfirmed) {
         
@@ -2844,19 +2976,22 @@ $.ajax({
            Swal.fire({
             icon: 'success',
             title: 'Registro exitoso',
-            text: 'Se ha guardado correctamente los datos',
+            text: 'Se han guardado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
         }else if(response == "requerid"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'Complete todos los campos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
         }else{
             Swal.fire({
                 icon: 'error',
                 title: '¡Atención!',
                 text: 'No se lograron guardar los datos',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
         }
     }
@@ -2915,6 +3050,7 @@ $.ajax({
           icon: 'success',
           title: 'Actualización Exitosa',
           text: 'Se han actualizado correctamente los datos',
+          allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
         })
 
       }else if(response == "requerid"){
@@ -2922,13 +3058,15 @@ $.ajax({
             icon: 'warning',
             title: '¡Atención!',
             text: 'Complete todos los datos por favor',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })     
 
      }else{
           Swal.fire({
             icon: 'error',
             title: '¡Atención!',
-            text: 'error al actualizar en la base de datos',
+            text: 'Error al actualizar en la base de datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
       }
   }
@@ -2958,13 +3096,15 @@ $.ajax({
                 swal.fire({
                     icon: "warning",
                     title: "Atención",
-                    text: "El registro no se puede eliminar ya que se encuentra en uso."
+                    text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
             }else{
                 swal.fire({
                     icon: "error",
                     title: "Atención",
-                    text: "No se ha podido eliminar"
+                    text: "No se ha podido eliminar",
+                    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                     
                 })
             }
@@ -2984,6 +3124,7 @@ $.ajax({
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
     }).then((result) => {
       if (result.isConfirmed) {
         
@@ -3063,6 +3204,7 @@ function RegistrarEstadosolicitud(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
 
           }else if(response == "existe"){
@@ -3070,18 +3212,21 @@ function RegistrarEstadosolicitud(){
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'No puedes registrar un estado de solicitud que ya existe',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -3140,25 +3285,29 @@ function ActualizarEstadosolicitud(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
         }else if(response == "existe"){
           Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes actualizar a un estado de solicitud que ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
         }else if(response == "requerid"){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -3187,13 +3336,15 @@ function EliminarEstadosolicitud(idEstadoSolicitud){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -3213,6 +3364,7 @@ function AlertaEliminarEstadosolicitud(idEstadoSolicitud, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -3292,18 +3444,21 @@ function RegistrarRubro(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -3362,6 +3517,7 @@ function ActualizarRubro(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -3369,13 +3525,15 @@ function ActualizarRubro(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -3404,13 +3562,15 @@ function EliminarRubro(idRubro){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -3430,6 +3590,7 @@ function AlertaEliminarRubro(idRubro, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -3492,18 +3653,22 @@ function RegistrarProfesion(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
+              
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -3562,6 +3727,7 @@ function ActualizarProfesion(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -3569,6 +3735,7 @@ function ActualizarProfesion(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
@@ -3576,6 +3743,7 @@ function ActualizarProfesion(){
               icon: 'error',
               title: '¡Atención!',
               text: 'error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -3604,13 +3772,15 @@ function EliminarProfesion(idProfesion){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -3630,6 +3800,7 @@ function AlertaEliminarProfesion(idProfesion, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -3713,24 +3884,28 @@ function LlenarTablaMunicipio(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "existe"){
             Swal.fire({
                 icon: 'warning',
                 title: '¡Atención!',
                 text: 'No puedes registrar un municipio que ya existe',
+                allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -3790,25 +3965,29 @@ function ActualizarMunicipio(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
         }else if(response == "existe"){
           Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'No puedes actualizar a un municipio que ya existe',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
         }else if(response == "requerid"){
             Swal.fire({
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -3837,13 +4016,15 @@ function EliminarMunicipio(idMunicipio){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -3863,6 +4044,7 @@ function AlertaEliminarMunicipio(idMunicipio, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -3926,18 +4108,21 @@ function RegistrarTipoPago(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -3996,6 +4181,7 @@ function ActualizarTipoPago(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -4003,13 +4189,15 @@ function ActualizarTipoPago(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -4038,13 +4226,15 @@ function EliminarTipoPago(idTipoPago){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -4064,6 +4254,7 @@ function AlertaEliminarTipopago(idTipoPago, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -4126,18 +4317,21 @@ function RegistrarTipoCliente(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -4196,6 +4390,7 @@ function ActualizarTipoCliente(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -4203,13 +4398,15 @@ function ActualizarTipoCliente(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -4238,13 +4435,15 @@ function EliminarTipoCliente(idTipoCliente){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -4264,6 +4463,7 @@ function AlertaEliminarTipocliente(idTipoCliente, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -4326,18 +4526,21 @@ function RegistrarEstadoCredito(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -4396,6 +4599,7 @@ function ActualizarEstadoCredito(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -4403,13 +4607,15 @@ function ActualizarEstadoCredito(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -4438,13 +4644,15 @@ function EliminarEstadoCredito(idEstadoCredito){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -4464,6 +4672,7 @@ function AlertaEliminarEstadoCredito(idEstadoCredito, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -4526,18 +4735,21 @@ function RegistrarAnalisis(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -4596,6 +4808,7 @@ function ActualizarAnalisis(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -4603,13 +4816,15 @@ function ActualizarAnalisis(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -4638,13 +4853,15 @@ function EliminarAnalisis(idestadoAnalisisCrediticio){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -4664,6 +4881,7 @@ function AlertaEliminarAnalisis(idestadoAnalisisCrediticio, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -4727,18 +4945,21 @@ function RegistrarAvala(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -4797,6 +5018,7 @@ function ActualizarAvala(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -4804,13 +5026,15 @@ function ActualizarAvala(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -4839,13 +5063,15 @@ function EliminarAvala(idEsAval){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -4865,6 +5091,7 @@ function AlertaEliminarAvala(idEsAval, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -4927,18 +5154,21 @@ function LlenarTablaTipopersona(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -4997,6 +5227,7 @@ function ActualizarTipoPersona(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -5004,13 +5235,15 @@ function ActualizarTipoPersona(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -5039,13 +5272,15 @@ function EliminarTipoPersona(idTipoPersona){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -5065,6 +5300,7 @@ function AlertaEliminarTipopersona(idTipoPersona, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.s
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -5127,18 +5363,21 @@ function LlenarTablaTipocuenta(){
               icon: 'success',
               title: 'Registro exitoso',
               text: 'Se ha guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -5197,6 +5436,7 @@ function ActualizarTipoCuenta(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -5204,13 +5444,15 @@ function ActualizarTipoCuenta(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -5239,13 +5481,15 @@ function EliminarTipoCuenta(idTipoCuenta){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -5265,6 +5509,7 @@ function AlertaEliminarTipocuenta(idTipoCuenta, descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -5332,19 +5577,22 @@ function RegistrarCreditoAval(){
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
-              text: 'Se ha guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -5402,6 +5650,7 @@ function ActualizarCreditoAval(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -5409,6 +5658,7 @@ function ActualizarCreditoAval(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
@@ -5416,6 +5666,7 @@ function ActualizarCreditoAval(){
               icon: 'error',
               title: '¡Atención!',
               text: 'error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -5445,13 +5696,15 @@ function EliminarCreditoAval(idCreditoAval){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -5471,6 +5724,7 @@ function AlertaEliminarCreditoAval(idCreditoAval, Descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -5537,19 +5791,22 @@ function RegistrarObjetos(){
              Swal.fire({
               icon: 'success',
               title: 'Registro exitoso',
-              text: 'Se ha guardado correctamente los datos',
+              text: 'Se han guardado correctamente los datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
           }else if(response == "requerid"){
               Swal.fire({
                   icon: 'warning',
                   title: '¡Atención!',
                   text: 'Complete todos los campos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }else{
               Swal.fire({
                   icon: 'error',
                   title: '¡Atención!',
                   text: 'No se lograron guardar los datos',
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                 })
           }
       }
@@ -5607,6 +5864,7 @@ function ActualizarObjetos(){
             icon: 'success',
             title: 'Actualización Exitosa',
             text: 'Se han actualizado correctamente los datos',
+            allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
           })
 
         }else if(response == "requerid"){
@@ -5614,13 +5872,15 @@ function ActualizarObjetos(){
               icon: 'warning',
               title: '¡Atención!',
               text: 'Complete todos los datos por favor',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })     
 
        }else{
             Swal.fire({
               icon: 'error',
               title: '¡Atención!',
-              text: 'error al actualizar en la base de datos',
+              text: 'Error al actualizar en la base de datos',
+              allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
             })
         }
     }
@@ -5650,13 +5910,15 @@ function EliminarObjetos(idObjetos){
               swal.fire({
                   icon: "warning",
                   title: "Atención",
-                  text: "El registro no se puede eliminar ya que se encuentra en uso."
+                  text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
               })
           }else{
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se ha podido eliminar"
+                  text: "No se ha podido eliminar",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
@@ -5676,6 +5938,7 @@ function AlertaEliminarObjetos(idObjetos, Descripcion){
     cancelButtonColor: '#d33',
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
+    allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -5742,7 +6005,7 @@ function LimpiarControles(){
     //objetos
     $('#descripcion_objeto').val('');
     
-    //khaterine agregue aqui los demas input de las demas tablas
+    //AQUÍ AGREGAR los demas input de las demas tablas
    
    
 }
@@ -5797,7 +6060,8 @@ function EventoBitacora(evento, idPantalla, descripcion){ //registra el evento d
               swal.fire({
                   icon: "error",
                   title: "Atención",
-                  text: "No se pudo registrar el evento en bitacora de pdf"
+                  text: "No se pudo registrar el evento en bitacora de pdf",
+                  allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                   
               })
           }
