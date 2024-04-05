@@ -1,6 +1,6 @@
 <?php
     if (!defined("SITE_URL")) {
-        define("SITE_URL", "http://localhost/SistemaADEPES/");
+        define("SITE_URL", "http://localhost/ADEPES/");
     }
     if (!defined("SERVIDOR")) {
         define("SERVIDOR", "localhost");
