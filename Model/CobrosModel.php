@@ -20,7 +20,7 @@ class Cobros {
         sub.identidad,
         sub.Monto, 
         sub.Plazo,
-        sub.fechaAprob, 
+        DATE_FORMAT(sub.fechaAprob, '%m-%d-%Y') as fechaAprob,
         sub.idEstadoPlanPagos
     FROM (
         SELECT 
@@ -60,7 +60,7 @@ class Cobros {
     //funcion para listar los prestamos
     function ListarCuotaPersona($idSolicitud,$next_pay){
         $extra_info=$next_pay?'and pagos is null and idEstadoPlanPagos <> 4 ORDER BY plan.NumeroCuotas ASC limit 1':'ORDER BY plan.NumeroCuotas ASC';
-        $query = "SELECT plan.idPlanCuota, plan.NumeroCuotas, plan.FechaCuota, movi.fechaDeposito, movi.pagos, movi.pagoAdicional, plan.saldoCapital,
+        $query = "SELECT plan.idPlanCuota, plan.NumeroCuotas, DATE_FORMAT(plan.FechaCuota, '%m-%d-%Y') as FechaCuota, DATE_FORMAT(movi.fechaDeposito, '%m-%d-%Y') as fechaDeposito, movi.pagos, movi.pagoAdicional, plan.saldoCapital,
         plan.diasRetraso, plan.interesesMoratorios, plan.mora, plan.idEstadoPlanPagos
         FROM tbl_mn_plan_pagos_cuota_nivelada  plan
         LEFT JOIN tbl_mn_movimientos_financieros movi ON movi.idPlanCuota = plan.idPlanCuota
@@ -85,7 +85,7 @@ class Cobros {
     function datosCliente($idSolicitud)
     {
         $query = "SELECT CONCAT(persona.nombres,' ',persona.apellidos) as cliente, persona.identidad,
-        soli.Monto, soli.plazo, soli.FechaAprob, SUM(valorInteres) as totalInteres
+        soli.Monto, soli.plazo, DATE_FORMAT(soli.FechaAprob, '%m/%d/%Y') as FechaAprob, SUM(valorInteres) as totalInteres
          FROM tbl_mn_solicitudes_creditos soli
         INNER JOIN tbl_mn_personas persona ON persona.idPersona =  soli.idPersona
         INNER JOIN tbl_mn_plan_pagos_cuota_nivelada plan ON plan.idSolicitud =  soli.idSolicitud

@@ -40,7 +40,7 @@ class Cliente {
         //funcion para listar los prestamos
         function ListarPrestamos(){
         $query = "SELECT  solicitudes.idSolicitud,  personas.idPersona, concat(personas.nombres, ' ',personas.apellidos) as Nombre,
-                    prestamos.Descripcion as Prestamo, solicitudes.Monto, solicitudes.FechaAprob, solicitudes.Plazo, 
+                    prestamos.Descripcion as Prestamo, solicitudes.Monto, DATE_FORMAT(solicitudes.FechaAprob, '%m-%d-%Y') as FechaAprob, solicitudes.Plazo, 
                     rubros.Descripcion as rubro, ep.Descripcion as Descripcion
                     FROM tbl_mn_personas personas
                     INNER JOIN tbl_mn_solicitudes_creditos solicitudes ON personas.idPersona =solicitudes.idPersona

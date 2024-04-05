@@ -39,7 +39,7 @@ if (isset($_SESSION["user"])) {
 										</div>
 										<div class="col-md-2">
 											<b>Fecha de desembolso:</b>
-											<input type="date" id="fecha" name="fecha" class="form-control" format="aaaa-mm-dd" readonly>
+											<input type="text" id="fecha" name="fecha" class="form-control" format="aaaa-mm-dd" readonly>
 										</div>
 										<div class="col-md-4">
 											<!--id del solicitante -->
@@ -201,18 +201,23 @@ if (isset($_SESSION["user"])) {
 			</div>
 		</div>
 	</div>
+
+	
 	<script>
-        function validarInput(event) {
-            var input = event.target; // Obtén el elemento de entrada
-            var valor = input.value; // Obtén el valor del input
+		//valida que no se ingresen numeros negativos y que se ingresen numeros decimales
+    function validarInput(event) {
+        var input = event.target; // Obtén el elemento de entrada
+        var entrada = event.data || ''; // Obtén la última entrada del usuario
 
-            // Elimina guiones del valor
-            valor = valor.replace(/-/g, '');
-
-            // Actualiza el valor del input
-            input.value = valor;
+        // Si la entrada es un número, un punto decimal o un espacio, o si es una acción de borrar, acepta la entrada
+        if (/[\d. ]/.test(entrada) || event.inputType === 'deleteContentBackward' || event.inputType === 'deleteContentForward') {
+            return;
+        } else {
+            // De lo contrario, evita la inserción de texto no válido
+            input.value = input.value.slice(0, input.value.length - 1); // Elimina el último caracter ingresado
         }
-    </script>
+    }
+</script>
 
 	<script>
 	function validarMontoPagoAdicional() {
