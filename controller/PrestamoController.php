@@ -14,7 +14,8 @@ switch($_REQUEST["oper"]){
             "aaData" => []
          );
 
-        $datos = $cli->ListarPrestamos(); //obtiene los datos del metodo
+        //$datos = $cli->ListarPrestamos(); //obtiene los datos del metodo
+        $datos = $_SESSION["consultar"] >= 1 ?  $cli->ListarPrestamos() : [];
         if($datos){
             for($i=0; $i<count($datos); $i++){
                 $list[] = array(

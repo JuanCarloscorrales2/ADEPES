@@ -15,7 +15,8 @@ switch ($_REQUEST["operador"]) {
             "iTotalDisplayRecords" => 0,
             "aaData" => []
         );
-        $datos = $permiso->ListarPermisos(); //obtiene los datos del metodo
+        //$datos = $permiso->ListarPermisos(); //obtiene los datos del metodo
+        $datos = $_SESSION["consultar"] >= 1 ?  $permiso->ListarPermisos() : [];
         if ($datos) {
             for ($i = 0; $i < count($datos); $i++) {
                 $list[] = array(

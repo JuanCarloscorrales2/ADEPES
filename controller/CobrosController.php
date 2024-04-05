@@ -13,7 +13,8 @@ switch ($_REQUEST["operador"]) {
             "aaData" => []
          );
 
-        $datos = $cobro->ListarPrestamosCobros(); //obtiene los datos del metodo
+       // $datos = $cobro->ListarPrestamosCobros(); //obtiene los datos del metodo
+        $datos = $_SESSION["consultar"] >= 1 ? $cobro->ListarPrestamosCobros() : [];
         if ($datos) {
             for ($i = 0; $i < count($datos); $i++) {
                 $list[] = array(

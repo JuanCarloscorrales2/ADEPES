@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(isset($_SESSION ["user"]) ){
+if(isset($_SESSION ["user"]) && $_SESSION ["user"]["idEstadoUsuario"] !=1 ){
     header("location:pages/welcome.php");
 } else{
   

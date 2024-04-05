@@ -82,7 +82,14 @@ switch ($_REQUEST["operador"]) {
 
     case "listar_usuarios":
 
-        $datos = $usu->ListarUsuarios(); //obtiene los datos del metodo
+        $resultados = array(
+            "sEcho" => 0,
+            "iTotalRecords" => 0,
+            "iTotalDisplayRecords" => 0,
+            "aaData" => []
+         );
+       // $datos = $usu->ListarUsuarios(); //obtiene los datos del metodo
+         $datos = $_SESSION["consultar"] >= 1 ?  $usu->ListarUsuarios() : [];
         if ($datos) {
             for ($i = 0; $i < count($datos); $i++) {
                 $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" data-toggle="modal" data-target="#ActualizarUsuario"
