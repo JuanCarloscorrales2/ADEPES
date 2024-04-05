@@ -96,7 +96,7 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
        
     //construir el contenido del PDF DE LOS DATOS OBTENIDOS DEL DATATABLESS
     foreach ($datosFiltradosOrdenados as $fila) {
-        $pdf->Cell(13, 10, $fila['idSolicitud'], 1, 0, 'C', 0); //LOS NOMBRE SON DE LA FUNCION: LlenarTablaSolicitudes JS
+        $pdf->Cell(13, 10, $fila['IdSe'], 1, 0, 'C', 0); //LOS NOMBRE SON DE LA FUNCION: LlenarTablaSolicitudes JS
         $pdf->Cell(65, 10, $fila['Nombre'], 1, 0, 'C', 0);
         $pdf->Cell(36, 10, $fila['Prestamo'], 1, 0, 'C', 0);
         $pdf->Cell(25, 10, $fila['Monto'], 1, 0, 'C', 0);

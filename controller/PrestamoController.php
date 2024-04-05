@@ -16,6 +16,7 @@ switch($_REQUEST["oper"]){
 
         //$datos = $cli->ListarPrestamos(); //obtiene los datos del metodo
         $datos = $_SESSION["consultar"] >= 1 ?  $cli->ListarPrestamos() : [];
+        $secuencia = 1;
         if($datos){
             for($i=0; $i<count($datos); $i++){
                 $list[] = array(
@@ -29,6 +30,7 @@ switch($_REQUEST["oper"]){
                                         
                                     </div>
                                  </div>', 
+                    "IdSe" => $secuencia++, //numero secuencial
                     "idSolicitud"=>$datos[$i]['idSolicitud'],                
                     "idPersona"=>$datos[$i]['idPersona'],                       
                     "Nombre"=>$datos[$i]['Nombre'], //nombre de la tablas en la base de datos

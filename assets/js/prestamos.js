@@ -31,7 +31,8 @@ function LlenarTablaPrestamos(){
         ajax: "../controller/PrestamoController.php?oper=listar_prestamos",
         columns : [
           { data : 'Acciones'},  //se ponen los datos del Controller.php
-          { data : 'idSolicitud'},
+          //{ data : 'idSolicitud'},
+          { data: 'IdSe' },
           { data : 'Nombre'},  //se ponen los datos del Controller.php
           { data : 'Prestamo'},
           { data : 'Monto'},
