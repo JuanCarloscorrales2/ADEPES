@@ -11,7 +11,7 @@ error_reporting(E_PARSE);
 const BD = "SistemaWebADEPES";
 
 //Contraseña de myqsl
-const PASS = "LaLc9901";
+const PASS = "";
 
 //Carpeta donde se almacenaran las copias de seguridad
 const BACKUP_PATH =  "../Backup/";
