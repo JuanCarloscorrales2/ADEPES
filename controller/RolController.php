@@ -18,6 +18,7 @@
         );
        
         $datos = $_SESSION["consultar"]>=1?$roll->ListarRoles():[]; //obtiene los datos del metodo
+        $secuencia = 1;
         if($datos){
             for($i=0; $i<count($datos); $i++){
                 $boton_editar=$_SESSION["actualizar"]>=1?'<a class="dropdown-item" data-toggle="modal" data-target="#actualizar_rol" 
@@ -27,6 +28,7 @@
                 :'<span class="tag tag-danger">No puede eliminar</span>';
              
                 $list[] = array(
+                    "IdSe" => $secuencia++, //numero secuencial
                     "Id"=>$datos[$i]['idRol'], //nombre de la tablas en la base de datos
                     "Rol"=>$datos[$i]['Rol'], //nombre de la tablas en la base de datos
                     "Descripcion"=>$datos[$i]['Descripcion'],

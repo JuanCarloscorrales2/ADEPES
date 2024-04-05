@@ -198,7 +198,7 @@ $pdf->SetWidths(array(15, 50, 50, 30, 25, 30, 30, 40));
 //construir el contenido del PDF DE LOS DATOS OBTENIDOS DEL DATATABLESS
 foreach ($datosFiltradosOrdenados as $fila) {
     
-    $pdf->Row(array( $fila['Id'],$fila['Rol'],$fila['Objeto'],strip_tags(utf8_decode($fila['Consultar'])), strip_tags(utf8_decode($fila['Insertar'])), strip_tags(utf8_decode($fila['Actualizar'])), strip_tags(utf8_decode($fila['Eliminar'])), strip_tags(utf8_decode($fila['Reportes']))), 0 );
+    $pdf->Row(array( $fila['IdSe'],$fila['Rol'],$fila['Objeto'],strip_tags(utf8_decode($fila['Consultar'])), strip_tags(utf8_decode($fila['Insertar'])), strip_tags(utf8_decode($fila['Actualizar'])), strip_tags(utf8_decode($fila['Eliminar'])), strip_tags(utf8_decode($fila['Reportes']))), 0 );
     
 }
 

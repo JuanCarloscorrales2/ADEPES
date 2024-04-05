@@ -70,7 +70,8 @@ function LlenarTablaPermisos() {
         },
         ajax: "../controller/PermisoController.php?operador=listar_permisos",
         columns: [
-            { data: 'Id' },  //se ponen los datos del RolController.php
+          //  { data: 'Id' },  //se ponen los datos del RolController.php
+            { data: 'IdSe' },
             { data: 'Rol' },  //se ponen los datos del RolController.php
             { data: 'Objeto' },
             { data: 'Consultar' },

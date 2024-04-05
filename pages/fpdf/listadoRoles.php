@@ -184,7 +184,7 @@
 
         //construir el contenido del PDF DE LOS DATOS OBTENIDOS DEL DATATABLESS
         foreach ($datosFiltradosOrdenados as $fila) {
-            $pdf->Row(array($fila['Id'], utf8_decode($fila['Rol']),utf8_decode($fila['Descripcion']), $fila['Fecha']), 0 );
+            $pdf->Row(array($fila['IdSe'], utf8_decode($fila['Rol']),utf8_decode($fila['Descripcion']), $fila['Fecha']), 0 );
         } //Fin de obtener todos los datos.
         // Enviar el PDF al navegador para su descarga 
         $pdf->Output('Reportes_de_Roles.pdf', 'I'); //nombre de descarga

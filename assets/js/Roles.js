@@ -28,7 +28,8 @@ function LlenarTablaRol(){
         },
         ajax: "../controller/RolController.php?operador=listar_roles",
         columns : [
-            { data : 'Id'},  //se ponen los datos del RolController.php
+            //{ data : 'Id'},  //se ponen los datos del RolController.php
+            { data: 'IdSe' },
             { data : 'Rol'},  //se ponen los datos del RolController.php
             { data : 'Descripcion'},
             { data : 'Fecha'},

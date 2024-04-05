@@ -17,9 +17,11 @@ switch ($_REQUEST["operador"]) {
         );
         //$datos = $permiso->ListarPermisos(); //obtiene los datos del metodo
         $datos = $_SESSION["consultar"] >= 1 ?  $permiso->ListarPermisos() : [];
+        $secuencia = 1;
         if ($datos) {
             for ($i = 0; $i < count($datos); $i++) {
                 $list[] = array(
+                    "IdSe" => $secuencia++, //numero secuencial
                     "Id" => $datos[$i]['idPermiso'], //nombre de la tablas en la base de datos
                     "Rol" => $datos[$i]['Rol'], //nombre de la tablas en la base de datos
                     "Objeto" => $datos[$i]['Objeto'],
