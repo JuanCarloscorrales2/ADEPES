@@ -16,6 +16,7 @@ switch ($_REQUEST["operador"]) {
          "aaData" => []
       );
       $datos = $_SESSION["consultar"] >= 1 ?  $solicitud->ListarSolicitudes() : [];
+      $secuencia = 1;
       if ($datos) {
          for ($i = 0; $i < count($datos); $i++) {
             $boton_editar = $_SESSION["actualizar"] >= 1 ? '<a class="dropdown-item" href="../pages/editarSolicitud.php"
@@ -70,7 +71,7 @@ switch ($_REQUEST["operador"]) {
               </div>
               
            </div>'),
-
+               "IdSe" => $secuencia++, //numero secuencial
                "ID" => $datos[$i]['idSolicitud'], //nombre de la tablas en la base de datos
                "NOMBRE" => $datos[$i]['Nombre'], //nombre de la tablas en la base de datos
                "PRESTAMO" => $datos[$i]['Prestamo'],

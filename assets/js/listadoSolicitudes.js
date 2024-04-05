@@ -29,7 +29,8 @@ function LlenarTablaSolicitudes(){
         ajax: "../controller/SolicitudNuevaController.php?operador=listar_solicitudes",
         columns : [
             { data : 'Acciones'},
-            { data : 'ID'},  //se ponen los datos del RolController.php
+            //{ data : 'ID'},  //se ponen los datos del RolController.php
+            { data: 'IdSe' },
             { data : 'NOMBRE'},  //se ponen los datos del RolController.php
             { data : 'PRESTAMO'},
             { data : 'MONTO'},
