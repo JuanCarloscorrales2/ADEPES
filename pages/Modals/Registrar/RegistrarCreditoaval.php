@@ -11,7 +11,7 @@
         <form>
           <div class="form-group">
             <label for="descripcion_rol" class="col-form-label">Descripción:</label>
-            <input type="text"  id="descripcion_credito_aval" placeholder="Ingrese un nuevo Credito Aval" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20" oninput="validarInput(this);">
+            <input type="text"  id="descripcion_credito_aval" placeholder="Ingrese un nuevo Crédito Aval" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20" oninput="validarInput(this);">
           </div>
         </form>
       </div>

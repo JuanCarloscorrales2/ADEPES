@@ -175,7 +175,7 @@ $pdf->setWidths(array(10, 60)); //tamano de las celdas segun el encabezado de la
 
     //construir el contenido del PDF DE LOS DATOS OBTENIDOS DEL DATATABLESS
     foreach ($datosFiltradosOrdenados as $fila) {
-        $pdf->Row(array($fila['NO'], $fila['PARENTESCO']), 0 );
+        $pdf->Row(array($fila['NO'], utf8_decode($fila['PARENTESCO'])), 0 );
     }
     // Enviar el PDF al navegador para su descarga 
     $pdf->Output('listado_de_Parentescos.pdf', 'I'); //nombre de descarga

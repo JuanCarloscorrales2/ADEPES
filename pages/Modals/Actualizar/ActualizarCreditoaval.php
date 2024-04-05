@@ -13,7 +13,7 @@
            <input type="hidden"  class="form-control" id="id_edit" >
           <div class="form-group">
             <label for="descripcion_rol" class="col-form-label">Descripción:</label>
-            <input type="text"  id="descripcion_credito_aval_edit" placeholder="Ingrese un nombre del estado" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20" oninput="validarInput(this);">
+            <input type="text"  id="descripcion_credito_aval_edit" placeholder="Ingrese un nombre del crédito aval" class="form-control" style="text-transform:uppercase;" onblur="CambiarMayuscula(this);" onkeypress="return soloLetras(event)" onkeyup="espacios(this);" maxlength="20" oninput="validarInput(this);">
           </div>
         </form>
       </div>

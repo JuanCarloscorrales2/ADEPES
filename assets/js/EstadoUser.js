@@ -190,13 +190,15 @@ function LlenartablaEstadousuario(){
                     swal.fire({
                         icon: "warning",
                         title: "Atención",
-                        text: "El registro no se puede eliminar ya que se encuentra en uso."
+                        text: "El registro no se puede eliminar ya que se encuentra en uso.",
+                        allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                     })
                 }else{
                     swal.fire({
                         icon: "error",
                         title: "Atención",
-                        text: "No se ha podido eliminar"
+                        text: "No se ha podido eliminar",
+                        allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
                         
                     })
                 }
@@ -216,6 +218,7 @@ function LlenartablaEstadousuario(){
           cancelButtonColor: '#d33',
           confirmButtonText: 'Aceptar',
           cancelButtonText: 'Cancelar',
+          allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
         }).then((result) => {
           if (result.isConfirmed) {
             
