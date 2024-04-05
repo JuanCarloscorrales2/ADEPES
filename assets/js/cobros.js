@@ -55,6 +55,23 @@ function LlenarTablaCobros(idSolicitud) {
 
     });
 
+    let timeout = null;
+
+    // Agregar controlador de eventos para detectar la búsqueda
+    $('#tabla_pagos').on('search.dt', function(event) {
+        // Limpiar el timeout anterior, si existe
+        clearTimeout(timeout);
+        
+        // Iniciar un nuevo timeout
+        timeout = setTimeout(function(){
+            // Verificar si la búsqueda actual no está vacía
+            if (tablaPagos.search() !== '') {
+                // Realizar acciones solo si hay una búsqueda activa
+                EventoBitacora(2);
+            }
+        }, 2000); // Este es el tiempo en milisegundos antes de que se ejecute el código después de que el usuario deja de escribir
+    });
+
 }
 function LlenarTablaCobrosHistorico(idSolicitud) {
 
@@ -349,11 +366,41 @@ function valorCapitalTotal(idSolicitud) {
 function reciboCuota(idPlanCuota) {
     var cliente = $('#cliente').val();
     // Envía el idSoli al script PHP que genera el PDF
-    window.location.href = '../pages/fpdf/ReciboCuota.php?idPlan=' + idPlanCuota + '&nombre=' + cliente;
+    window.open('../pages/fpdf/ReciboCuota.php?idPlan=' + idPlanCuota + '&nombre=' + cliente, '_blank');
+    EventoBitacora(3);
+
 }
 
 function EstadoDeCuentasPDF() {
     var idSolicitud = $('#idSoli').val();
     // Envía el idSoli al script PHP que genera el PDF
-    window.location.href = '../pages/fpdf/EstadoDeCuentas.php?idSoli=' + idSolicitud;
+    window.open('../pages/fpdf/EstadoDeCuentas.php?idSoli=' + idSolicitud, '_blank');
+    EventoBitacora(1);
 }
+
+function EventoBitacora(evento){ //registra el evento de pdf
+  
+    $.ajax({
+        data: { "evento": evento },
+        url:'../controller/CobrosController.php?operador=registrarEventoBitacora', //url del controlador Conttroller
+        type:'POST',
+        beforeSend:function(){},
+        success:function(response){
+            
+            if(response == "success"){
+                 //actualizar tabla
+            
+            }else{
+                swal.fire({
+                    icon: "error",
+                    title: "Atención",
+                    text: "No se pudo registrar el evento en bitacora de pdf"
+                    
+                })
+            }
+           
+        }
+  
+    });
+  
+  }

@@ -1,8 +1,11 @@
 <?php
 session_start(); //fuarda la sesion del usuario
 require "../model/CobrosModel.php";
+require "../model/BitacoraModel.php";
 date_default_timezone_set('America/Tegucigalpa');
 $cobro =  new Cobros();
+//bitacora
+$bita = new Bitacora();
 switch ($_REQUEST["operador"]) {
 
     case "listar_prestamos_cobro":
@@ -167,6 +170,7 @@ switch ($_REQUEST["operador"]) {
             $idSolicitud = $_POST["idSolicitud"];
             $resultado=$cobro->AgregarPagoPlanCuotas($idPlanCuota, $fechaDeposito, $montoPago, $abonoCapital, $pagoAdicional,$idSolicitud);
             if ($resultado) {
+                $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 8, "Modifico", "realizo un pago de cuota con monto: ".$montoPago);
                 $response ="success";
             } else {
                 $response = "error";
@@ -207,4 +211,41 @@ switch ($_REQUEST["operador"]) {
         echo $response;
 
         break;
+
+        case "registrarEventoBitacora":
+            if( isset($_POST["evento"]) && !empty($_POST["evento"]) ){
+      
+               if($_POST["evento"] == 1){  //evento reporte
+                    if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 8, "Reporte", "Imprimió el reporte de estado de cuenta")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+      
+               }else if($_POST["evento"] == 2){ //evento filtro
+                    if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 8, "Filtrar", "Realizo consulta de filtros en COBROS")){
+                        $response ="success";  
+      
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+               }else if($_POST["evento"] == 3){
+                    if(  $bita->RegistrarBitacora($_SESSION["user"]["idUsuario"], 8, "Reporte", "Imprimió un recibo de cobros")){
+                        $response ="success";  
+    
+                    }else{
+                        $response = "error";  //cualquier otro tipo de error
+                    }
+               }
+                
+               
+      
+            }else{
+               $response = "error";
+            }
+            echo $response;
+         
+         break;
+      
 }
