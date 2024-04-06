@@ -1053,7 +1053,7 @@ switch ($_REQUEST["operador"]) {
                 <button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="true"> <i class="icon-gear"> </i>
                 </button>
-                <div class="dropdown-menu">}
+                <div class="dropdown-menu">
                            
                 ' . $boton_editar . $boton_eliminar . '
                         
