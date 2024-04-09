@@ -201,16 +201,40 @@ switch ($_REQUEST["operador"]) {
     case "liquidar_prestamo":
         if (isset($_POST["idSolicitud"]) && !empty($_POST["idSolicitud"])) {
             $fechaDeposito = date('Y/m/d');
-            if ($cobro->LiquidarPrestamo($_POST["idSolicitud"], $fechaDeposito)) {
 
-                $response = "success";
-            } else {
-                $response = "error";
+            if($cobro->validarCuotas($_POST["idSolicitud"]) ){
+
+                if ($cobro->LiquidarPrestamo($_POST["idSolicitud"], $fechaDeposito)) {
+
+                    $response = "success";
+                } else {
+                    $response = "error";
+                }
+            }else{
+                $response = "liquidado";
             }
+
+            
         }
         echo $response;
 
         break;
+        case "verificar_prestamo_liquidado":
+            if (isset($_POST["idSolicitud"]) && !empty($_POST["idSolicitud"])) {
+               
+    
+                if($cobro->validarCuotas($_POST["idSolicitud"]) ){
+                    $response = "noLiquidado";
+
+                }else{
+                    $response = "liquidado";
+                }
+    
+                
+            }
+            echo $response;
+    
+            break;
 
         case "registrarEventoBitacora":
             if( isset($_POST["evento"]) && !empty($_POST["evento"]) ){

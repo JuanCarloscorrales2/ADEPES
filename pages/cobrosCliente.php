@@ -85,7 +85,7 @@ if (isset($_SESSION["user"])) {
 											<br><br><button class="btn  btn-success" onclick="validarMontoPagoAdicional();">Registrar Pago</button>
 										</div>
 										<div class="col-md-2">
-											<br><br><button class="btn  btn-warning" onclick="AdvertenciaLiquidarPrestamo();">Liquidar Préstamo</button>
+											<br><br><button class="btn  btn-warning" id = "btnLiquidar"onclick="AdvertenciaLiquidarPrestamo();">Liquidar Préstamo</button>
 										</div>
 										<div class="col-md-2">
 											<br><br><button class="btn  btn-danger" onclick="EstadoDeCuentasPDF();" > <i class="fas icon-file-pdf"></i>Estado de Cuentas</button>

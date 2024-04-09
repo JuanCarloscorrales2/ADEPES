@@ -183,6 +183,19 @@ class Cobros {
         }
     }
      
+    function validarCuotas($idSolicitud)  //funcion que valida que las cuotas las cuotas pagadas para liquidarlas
+{
+    $query = "SELECT * FROM tbl_mn_plan_pagos_cuota_nivelada WHERE idEstadoPlanPagos !=2 AND idEstadoPlanPagos !=4 AND idSolicitud = ?"; //sentencia sql
+    $result = $this->cnx->prepare($query);
+    $result->bindParam(1,$idSolicitud);
+    if($result->execute())
+    {
+        if($result->rowCount() > 0){ //validacion para verificar si trae datos
+            return true;
+        }
+      }
+      return false;
+}
 
 
     

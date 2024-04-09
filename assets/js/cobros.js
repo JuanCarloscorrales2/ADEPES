@@ -7,6 +7,7 @@ $('#idSoli').val(idSolicitud);
 LlenarTablaCobros(idSolicitud);
 LlenarTablaCobrosHistorico(idSolicitud)
 DatosCliente(idSolicitud);
+verificarPrestamoLiquidado();
 //valorCapitalTotal(idSolicitud);
 //FUNCION PARA LLENAR LA TABLA DE cobros por cliente AJAX
 function LlenarTablaCobros(idSolicitud) {
@@ -303,10 +304,11 @@ function AdvertenciaLiquidarPrestamo() {
             data = $.parseJSON(response);
             if (data.length > 0) { //valida que existan datos
                 var capitalAdeudado = monto - data[0]['totalAbonoCapital'];
+                var capitalAbonado = data[0]['totalAbonoCapital'] ? data[0]['totalAbonoCapital'] : 0;
                 Swal.fire({
                     title: '¿Está seguro de liquidar el préstamo?',
                     icon: 'info',
-                    html: 'Capital Abonado: L. ' + data[0]['totalAbonoCapital'] + '<br><b>Capital Adeudado: L. ' + capitalAdeudado + '</b>',
+                    html: 'Capital Abonado: L. ' + capitalAbonado + '<br><b>Capital Adeudado: L. ' + capitalAdeudado + '</b>',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -343,13 +345,19 @@ function valorCapitalTotal(idSolicitud) {
             //console.log(response);
             if (response == "success") {  //si inserto correctamente
                 tablaPagos.ajax.reload();  //actualiza la tabla
-
+                tablaPagosHistorico.ajax.reload();
                 Swal.fire({
                     icon: 'success',
                     title: 'Préstamo Liquidado',
                     allowOutsideClick: false //Evita que se cierre la advertencia de cerrar.
 
                 })//mensaje
+            } else if(response == "liquidado"){
+                Swal.fire({
+                    icon: 'warning',
+                    title: '¡Atención!',
+                    text: 'Atención el préstamo ya ha sido liquidado',
+                })
 
             } else {
                 Swal.fire({
@@ -362,6 +370,32 @@ function valorCapitalTotal(idSolicitud) {
     })
 }
 
+
+function verificarPrestamoLiquidado(idSolicitud) {
+    idSolicitud = $('#idSoli').val();
+    parametros = {
+        "idSolicitud": idSolicitud
+    }
+
+    $.ajax({
+        data: parametros,
+        url: '../controller/CobrosController.php?operador=verificar_prestamo_liquidado',
+        type: 'POST',
+        beforeSend: function () { },
+        success: function (response) {
+            //console.log(response);
+            if (response == "noLiquidado") {  //si inserto correctamente
+              //  document.getElementById("miBoton").disabled = true;
+
+            } else if(response == "liquidado"){
+               document.getElementById("btnLiquidar").disabled = true;
+
+            } else {
+                console.log("error al verificar el prestamo liquidado");
+            }
+        }
+    })
+}
 
 function reciboCuota(idPlanCuota) {
     var cliente = $('#cliente').val();
