@@ -83,7 +83,7 @@ include "layouts/head.php";
                     <div class="step" onclick="showStep(6)">Cuentas</div>
                     <div class="step" onclick="showStep(7)">Adicional</div>
 					<button type="button" id="guardarContrato" class="btn btn-info" style="float: right;"  onclick="RegistrarContrato();">Guardar</button>
-                    <button id="boton_descargar_Rroles_pdf" class="btn  btn-danger" onclick="ReporteContrato();"> <i class="fas icon-file-pdf"></i>Contrato</button>
+               
                 </div>
 				<form id="form">
                     <div class="form-step active" id="step1">
